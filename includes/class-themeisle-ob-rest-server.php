@@ -90,7 +90,7 @@ class Themeisle_OB_Rest_Server {
 		$data        = array();
 
 		foreach ( $local_data as $slug => $args ) {
-			$json_path = get_template_directory() . Themeisle_Onboarding::OBOARDING_PATH . '/demos/' . $slug . '/data.json';
+			$json_path = get_template_directory()  . '/onboarding/' . $slug . '/data.json';
 
 			if ( ! file_exists( $json_path ) || ! is_readable( $json_path ) ) {
 				continue;
@@ -104,8 +104,8 @@ class Themeisle_OB_Rest_Server {
 			$data['local'][ $slug ]                 = json_decode( $json, true );
 			$data['local'][ $slug ]['title']        = esc_html( $args['title'] );
 			$data['local'][ $slug ]['demo_url']     = esc_url( $args['url'] );
-			$data['local'][ $slug ]['content_file'] = get_template_directory() . Themeisle_Onboarding::OBOARDING_PATH . '/demos/' . $slug . '/export.xml';
-			$data['local'][ $slug ]['screenshot']   = esc_url( get_template_directory_uri() . Themeisle_Onboarding::OBOARDING_PATH . '/demos/' . $slug . '/screenshot.png' );
+			$data['local'][ $slug ]['content_file'] = get_template_directory() . '/onboarding/' . $slug . '/export.xml';
+			$data['local'][ $slug ]['screenshot']   = esc_url( get_template_directory_uri()  . '/onboarding/' . $slug . '/screenshot.png' );
 			$data['local'][ $slug ]['source']       = 'local';
 		}
 
