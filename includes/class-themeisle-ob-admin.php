@@ -134,7 +134,7 @@ class Themeisle_OB_Admin {
 			'advanced_options'    => __( 'Advanced Options', 'textdomain' ),
 			'plugins'             => __( 'Plugins', 'textdomain' ),
 			'general'             => __( 'General', 'textdomain' ),
-			'later'               => __( 'Not right now.', 'textdomain' ),
+			'later'               => __( 'Skip this step', 'textdomain' ),
 			'onboard_header'      => __( 'Get started here', 'textdomain' ),
 			'onboard_description' => __( 'This process will set up your website, install required plugins, import demo content (pages, posts, media) and set up the customizer options.', 'textdomain' ),
 			'content'             => __( 'Content', 'textdomain' ),

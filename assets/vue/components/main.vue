@@ -16,9 +16,11 @@
 				<Preview v-if="previewOpen"></Preview>
 			</div>
 		</div>
-		<a @click="cancelOnboarding" v-if="this.$store.state.onboard === 'yes' && ! isLoading" class="skip-onboarding">
-			{{strings.later}}
-		</a>
+		<div class="skip-wrap" v-if="this.$store.state.onboard === 'yes' && ! isLoading">
+			<a @click="cancelOnboarding" class="skip-onboarding button button-primary">
+				{{strings.later}}
+			</a>
+		</div>
 		<import-modal v-if="modalOpen">
 		</import-modal>
 	</div>
