@@ -45,7 +45,7 @@ class Themeisle_OB_Admin {
 	 */
 	public function add_demo_import_tab( $config ) {
 		$config['custom_tabs']['sites_library'] = array(
-			'title'           => __( 'Sites Library', 'neve' ),
+			'title'           => __( 'Sites Library', 'neve', 'hestia-pro' ),
 			'render_callback' => array(
 				$this,
 				'add_demo_import_tab_content',
@@ -124,30 +124,30 @@ class Themeisle_OB_Admin {
 	 */
 	private function get_strings() {
 		return array(
-			'preview_btn'         => __( 'Preview', 'neve' ),
-			'import_btn'          => __( 'Import', 'neve' ),
-			'cancel_btn'          => __( 'Cancel', 'neve' ),
-			'loading'             => __( 'Loading', 'neve' ),
-			'go_to_site'          => __( 'View Website', 'neve' ),
-			'back'                => __( 'Back to Sites Library', 'neve' ),
-			'note'                => __( 'Note', 'neve' ),
-			'advanced_options'    => __( 'Advanced Options', 'neve' ),
-			'plugins'             => __( 'Plugins', 'neve' ),
-			'general'             => __( 'General', 'neve' ),
-			'later'               => __( 'Not right now.', 'neve' ),
-			'onboard_header'      => __( 'Get started here', 'neve' ),
-			'onboard_description' => __( 'This process will set up your website, install required plugins, import demo content (pages, posts, media) and set up the customizer options.', 'neve' ),
-			'content'             => __( 'Content', 'neve' ),
-			'customizer'          => __( 'Customizer', 'neve' ),
-			'widgets'             => __( 'Widgets', 'neve' ),
+			'preview_btn'         => __( 'Preview', 'neve', 'hestia-pro' ),
+			'import_btn'          => __( 'Import', 'neve', 'hestia-pro' ),
+			'cancel_btn'          => __( 'Cancel', 'neve', 'hestia-pro' ),
+			'loading'             => __( 'Loading', 'neve', 'hestia-pro' ),
+			'go_to_site'          => __( 'View Website', 'neve', 'hestia-pro' ),
+			'back'                => __( 'Back to Sites Library', 'neve', 'hestia-pro' ),
+			'note'                => __( 'Note', 'neve', 'hestia-pro' ),
+			'advanced_options'    => __( 'Advanced Options', 'neve', 'hestia-pro' ),
+			'plugins'             => __( 'Plugins', 'neve', 'hestia-pro' ),
+			'general'             => __( 'General', 'neve', 'hestia-pro' ),
+			'later'               => __( 'Not right now.', 'neve', 'hestia-pro' ),
+			'onboard_header'      => __( 'Get started here', 'neve', 'hestia-pro' ),
+			'onboard_description' => __( 'This process will set up your website, install required plugins, import demo content (pages, posts, media) and set up the customizer options.', 'neve', 'hestia-pro' ),
+			'content'             => __( 'Content', 'neve', 'hestia-pro' ),
+			'customizer'          => __( 'Customizer', 'neve', 'hestia-pro' ),
+			'widgets'             => __( 'Widgets', 'neve', 'hestia-pro' ),
 			'import_steps'        => array(
-				'plugins'    => __( 'Installing Plugins', 'neve' ),
-				'content'    => __( 'Importing Content', 'neve' ),
-				'theme_mods' => __( 'Setting Up Customizer', 'neve' ),
-				'widgets'    => __( 'Importing Widgets', 'neve' ),
+				'plugins'    => __( 'Installing Plugins', 'neve', 'hestia-pro' ),
+				'content'    => __( 'Importing Content', 'neve', 'hestia-pro' ),
+				'theme_mods' => __( 'Setting Up Customizer', 'neve', 'hestia-pro' ),
+				'widgets'    => __( 'Importing Widgets', 'neve', 'hestia-pro' ),
 			),
-			'import_disclaimer'   => __( 'We recommend you backup your website content before attempting a full site import.', 'neve' ),
-			'import_done'         => __( 'Content was successfully imported. Enjoy your new site!', 'neve' ),
+			'import_disclaimer'   => __( 'We recommend you backup your website content before attempting a full site import.', 'neve', 'hestia-pro' ),
+			'import_done'         => __( 'Content was successfully imported. Enjoy your new site!', 'neve', 'hestia-pro' ),
 		);
 	}
 }
