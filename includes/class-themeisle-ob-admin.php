@@ -86,7 +86,7 @@ class Themeisle_OB_Admin {
 	 */
 	public function enqueue() {
 
-		wp_register_script( 'themeisle-site-lib', Themeisle_Onboarding::get_dir() . '/assets/js/bundle.min.js', array(), Themeisle_Onboarding::VERSION, true );
+		wp_register_script( 'themeisle-site-lib', Themeisle_Onboarding::get_dir() . '/assets/js/bundle.js', array(), Themeisle_Onboarding::VERSION, true );
 
 		wp_localize_script( 'themeisle-site-lib', 'themeisleSitesLibApi', $this->localize_sites_library() );
 

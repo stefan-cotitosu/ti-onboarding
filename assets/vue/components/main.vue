@@ -30,7 +30,7 @@
 	import Loader from './loader.vue'
 	import SiteItem from './site-item.vue'
 	import Preview from './preview.vue'
-    import ImportModal from './import-modal.vue'
+	import ImportModal from './import-modal.vue'
 
 	module.exports = {
 		name: 'app',
@@ -52,9 +52,9 @@
 			loadingString: function () {
 				return this.$store.state.strings.loading;
 			},
-            modalOpen: function () {
-                return this.$store.state.importModalState
-            },
+			modalOpen: function () {
+				return this.$store.state.importModalState
+			},
 		},
 		methods: {
 			cancelOnboarding: function () {
@@ -65,7 +65,7 @@
 			Loader,
 			SiteItem,
 			Preview,
-            ImportModal,
+			ImportModal,
 		},
 	}
 </script>
