@@ -10,33 +10,31 @@
 						<p>{{strings.onboard_description}}</p>
 					</div>
 				</template>
-
-				<div class="migration-wrapper" v-if="this.migrationData">
+				<div class="migrate-notice" v-if="Object.keys(this.migrationData).length && !dismissed">
+					<a class="migration-dismiss"
+							aria-label="Dismiss the migration notice" @click="dismissMigration()">{{ strings.dismiss}}</a>
 					<div class="ti-sites-lib">
-						<div class="site-box">
+						<div class="site-box migrate-screenshot">
 							<div class="preview-image">
 								<img :src="migrationData.screenshot" :alt="migrationData.theme_name">
 							</div>
 							<div class="footer">
 								<h4>{{migrationData.theme_name}}</h4>
-								<div class="theme-actions">
-									<button class="button button-primary" @click="runMigration()">
-										{{strings.import_btn}}
-									</button>
-								</div>
 							</div>
 						</div>
-						<div class="migrate-description">
+						<div class="migrate-text">
 							<h3>{{strings.migration_title}}</h3>
-							<p>{{migrationData.description}}</p>
+							<p class="description">{{migrationData.description}}</p>
+							<p class="button-wrapper">
+								<button class="button button-primary button-hero" @click="runMigration()">
+									{{strings.import_btn}} {{migrationData.theme_name}}
+								</button>
+							</p>
 						</div>
 					</div>
-					<hr/>
 				</div>
 
 				<h3>{{strings.templates_title}}</h3>
-				<p>{{strings.templates_description}}</p>
-
 				<div class="ti-sites-lib">
 					<div v-for="site in sites.local">
 						<SiteItem :site_data="site"></SiteItem>
@@ -69,6 +67,7 @@
 		data: function () {
 			return {
 				strings: this.$store.state.strings,
+				dismissed: false
 			}
 		},
 		computed: {
@@ -99,6 +98,14 @@
 				this.$store.dispatch( 'migrateTemplate', {
 					req: 'Migrate Site',
 					template: this.migrationData.template,
+					template_name: this.migrationData.template_name,
+				} )
+			},
+			dismissMigration: function (  ) {
+				this.dismissed = true;
+				this.$store.dispatch( 'dismissMigration', {
+					req: 'Dismiss Migration',
+					theme_mod: this.migrationData.theme_mod,
 				} )
 			}
 		},

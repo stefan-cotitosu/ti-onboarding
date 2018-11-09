@@ -158,9 +158,8 @@ class Themeisle_OB_Admin {
 			),
 			'import_disclaimer'     => __( 'We recommend you backup your website content before attempting a full site import.', 'textdomain' ),
 			'import_done'           => __( 'Content was successfully imported. Enjoy your new site!', 'textdomain' ),
-			'migration_title'             => __( 'Import previous theme.', 'textdomain' ),
+			'migration_title'       => __( 'Import previous theme.', 'textdomain' ),
 			'templates_title'       => __( 'Import your desired front page.', 'textdomain' ),
-			'templates_description' => __( 'Neve theme was successfully activated! Now, let’s get your site ready and set up your desired front page. It will only take a few minutes.', 'textdomain' ),
 		);
 	}
 }

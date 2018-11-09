@@ -73,6 +73,7 @@ const installPlugins = function ( { commit, state }, data ) {
 };
 
 const migrateTemplate = function ( { commit, state }, data ) {
+	console.log(data);
 	Vue.http( {
 		url: themeisleSitesLibApi.root + '/migrate_frontpage',
 		method: 'POST',
@@ -82,11 +83,33 @@ const migrateTemplate = function ( { commit, state }, data ) {
 		},
 		body: {
 			'template': data.template,
+			'template_name': data.template_name,
 		},
 		responseType: 'json',
 	} ).then( function ( response ) {
 		if ( response.ok ) {
 			console.log( '%c Imported front page.', 'color: #4B9BE7' );
+		} else {
+			console.error( response );
+		}
+	} );
+};
+
+const dismissMigration = function ( { commit, state }, data ) {
+	Vue.http( {
+		url: themeisleSitesLibApi.root + '/dismiss_migration',
+		method: 'POST',
+		headers: { 'X-WP-Nonce': themeisleSitesLibApi.nonce },
+		params: {
+			'req': data.req,
+		},
+		body: {
+			'theme_mod': data.theme_mod,
+		},
+		responseType: 'json',
+	} ).then( function ( response ) {
+		if ( response.ok ) {
+			console.log( '%c Notice was dismissed.', 'color: #4B9BE7' );
 		} else {
 			console.error( response );
 		}
@@ -182,5 +205,6 @@ const importWidgets = function ( { commit, state }, data ) {
 export default {
 	initialize,
 	importSite,
-	migrateTemplate
+	migrateTemplate,
+	dismissMigration
 };

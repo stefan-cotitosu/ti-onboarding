@@ -74,6 +74,15 @@ class Themeisle_OB_Rest_Server {
 				'callback' => array( $this, 'run_front_page_migration' ),
 			)
 		);
+
+		register_rest_route(
+			Themeisle_Onboarding::API_ROOT,
+			'/dismiss_migration',
+			array(
+				'methods'  => WP_REST_Server::EDITABLE,
+				'callback' => array( $this, 'dismiss_migration' ),
+			)
+		);
 	}
 
 	/**
@@ -166,10 +175,12 @@ class Themeisle_OB_Rest_Server {
 		}
 
 		return array(
-			'theme_name'  => ! empty( $data[ $old_theme ]['theme_name'] ) ? esc_html( $data[ $old_theme ]['theme_name'] ) : '',
-			'screenshot'  => get_template_directory_uri() . '/vendor/codeinwp/ti-onboarding/migration/' . $folder_name . '/' . $data[ $old_theme ]['template'] . '.png',
-			'template'    => get_template_directory() . Themeisle_Onboarding::OBOARDING_PATH . '/migration/' . $folder_name . '/' . $data[ $old_theme ]['template'] . '.json',
-			'description' => $data[ $old_theme ]['description'],
+			'theme_name'    => ! empty( $data[ $old_theme ]['theme_name'] ) ? esc_html( $data[ $old_theme ]['theme_name'] ) : '',
+			'screenshot'    => get_template_directory_uri() . '/vendor/codeinwp/ti-onboarding/migration/' . $folder_name . '/' . $data[ $old_theme ]['template'] . '.png',
+			'template'      => get_template_directory() . Themeisle_Onboarding::OBOARDING_PATH . '/migration/' . $folder_name . '/' . $data[ $old_theme ]['template'] . '.json',
+			'template_name' => $data[ $old_theme ]['template'],
+			'description'   => $data[ $old_theme ]['description'],
+			'theme_mod'     => $data[ $old_theme ]['theme_mod_check'],
 		);
 	}
 
@@ -234,11 +245,30 @@ class Themeisle_OB_Rest_Server {
 	}
 
 	public function run_front_page_migration( WP_REST_Request $request ) {
-		require_once 'importers/class-themeisle-ob-zelle-importer.php';
-		if ( ! class_exists( 'Themeisle_OB_Zelle_Importer' ) ) {
+
+		$params = $request->get_json_params();
+		if ( ! isset( $params['template'] ) ) {
+			wp_send_json_error( 'No .json file found' );
+		}
+		if ( ! isset( $params['template_name'] ) ) {
+			wp_send_json_error( 'No template name' );
+		}
+		require_once 'importers/class-themeisle-ob-'.$params['template_name'].'-importer.php';
+		$class_name = 'Themeisle_OB_'.ucfirst($params['template_name']).'_Importer';
+		if ( ! class_exists( $class_name ) ) {
 			wp_send_json_error( 'Issue with front page import.' );
 		}
-		$migrator = new Themeisle_OB_Zelle_Importer();
-		$migrator->import_zelle_frontpage( $request );
+		$migrator = new $class_name;
+		$migrator->import_zelle_frontpage( $params['template'] );
+		wp_send_json_success('Template was imported!');
+	}
+
+	public function dismiss_migration( WP_REST_Request $request ) {
+		$params = $request->get_json_params();
+		if ( ! isset( $params['theme_mod'] ) ) {
+			wp_send_json_error( 'No theme mod to set' );
+		}
+		set_theme_mod( $params['theme_mod'], 'yes' );
+		wp_send_json_success( 'Notice dismissed' );
 	}
 }

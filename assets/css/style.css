@@ -232,7 +232,7 @@ a.expander {
 	justify-content: center;
 }
 
-.is__onboarding .ti-sites-lib > div.site-box {
+.is__onboarding .ti-sites-lib > div {
 	width: 32%;
 	margin-right: 2%;
 }
@@ -240,6 +240,56 @@ a.expander {
 .is__onboarding .ti-sites-lib > div:nth-child(3n),
 .is__onboarding .ti-sites-lib > div:last-child {
 	margin-right: 0;
+}
+
+.site-box.migrate-screenshot{
+	margin-bottom: 0;
+}
+
+.migrate-notice{
+	position: relative;
+}
+
+.migration-dismiss{
+	position: absolute;
+	z-index: 10;
+	top: 0;
+	right: 10px;
+	font-size: 13px;
+	line-height: 1.23076923;
+	text-decoration: none;
+}
+
+.migration-dismiss:before{
+	background: none;
+	color: #72777c;
+	content: "\f153";
+	display: block;
+	font: normal 16px/20px dashicons;
+	speak: none;
+	height: 20px;
+	text-align: center;
+	width: 20px;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	transition: all .1s ease-in-out;
+}
+.is__onboarding .ti-sites-lib > div.migrate-text{
+	width: 65%;
+	display: flex;
+	flex-direction: column;
+}
+
+.migrate-text h3{
+	margin-top: 0;
+}
+
+.migrate-text p.description{
+	flex-grow: 1;
+}
+
+.migrate-text p.button-wrapper{
+	margin: 0;
 }
 
 @media ( max-width: 1080px ) {

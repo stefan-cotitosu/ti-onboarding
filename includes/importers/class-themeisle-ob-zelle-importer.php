@@ -46,11 +46,8 @@ class Themeisle_OB_Zelle_Importer {
 	/**
 	 * The callback of an ajax request when the user requests an import action.
 	 *
-	 * @param WP_REST_Request $request rest request
 	 */
-	public function import_zelle_frontpage( WP_REST_Request $request ) {
-		$params  = $request->get_json_params();
-
+	public function import_zelle_frontpage( $template_path ) {
 		$this->previous_theme_content = get_option( 'theme_mods_zerif-pro' );
 		if ( empty( $this->previous_theme_content ) ) {
 			$this->previous_theme_content = get_option( 'theme_mods_zerif-lite' );
@@ -59,7 +56,7 @@ class Themeisle_OB_Zelle_Importer {
 		require_once( ABSPATH . '/wp-admin/includes/image.php' );
 		require_once( ABSPATH . '/wp-admin/includes/file.php' );
 
-		$local_template = $params['template'];
+		$local_template = $template_path;
 
 		global $wp_filesystem;
 
@@ -90,9 +87,10 @@ class Themeisle_OB_Zelle_Importer {
 
 		require_once( ABSPATH . 'wp-admin' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'file.php' );
 		$uploads      = wp_upload_dir();
-		$path_to_file = $uploads['basedir'] . '/zelle-pro/zelle.json';
+		$path_to_file = $uploads['basedir'] . '/zelle.json';
 
 		$wp_filesystem->put_contents( $path_to_file, json_encode( $data ), 0644 );
+
 		$_FILES['file']['tmp_name'] = $path_to_file;
 
 		$elementor = new Source_Local();
