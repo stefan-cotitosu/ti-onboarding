@@ -66,6 +66,14 @@ class Themeisle_OB_Rest_Server {
 				'callback' => array( $this, 'run_widgets_importer' ),
 			)
 		);
+		register_rest_route(
+			Themeisle_Onboarding::API_ROOT,
+			'/migrate_frontpage',
+			array(
+				'methods'  => WP_REST_Server::EDITABLE,
+				'callback' => array( $this, 'run_front_page_migration' ),
+			)
+		);
 	}
 
 	/**
@@ -85,12 +93,16 @@ class Themeisle_OB_Rest_Server {
 		if ( empty( $theme_support[0] ) || ! is_array( $theme_support[0] ) ) {
 			return array();
 		}
-		$local_data  = isset( $theme_support[0]['local'] ) ? $theme_support[0]['local'] : array();
-		$remote_data = isset( $theme_support[0]['remote'] ) ? $theme_support[0]['remote'] : array();
-		$data        = array();
+
+		$migrate_data = isset( $theme_support[0]['can_migrate'] ) ? $theme_support[0]['can_migrate'] : array();
+		$local_data   = isset( $theme_support[0]['local'] ) ? $theme_support[0]['local'] : array();
+		$remote_data  = isset( $theme_support[0]['remote'] ) ? $theme_support[0]['remote'] : array();
+
+		$data                 = array();
+		$data['migrate_data'] = $this->get_migrateable( $migrate_data );
 
 		foreach ( $local_data as $slug => $args ) {
-			$json_path = get_template_directory()  . '/onboarding/' . $slug . '/data.json';
+			$json_path = get_template_directory() . '/onboarding/' . $slug . '/data.json';
 
 			if ( ! file_exists( $json_path ) || ! is_readable( $json_path ) ) {
 				continue;
@@ -105,7 +117,7 @@ class Themeisle_OB_Rest_Server {
 			$data['local'][ $slug ]['title']        = esc_html( $args['title'] );
 			$data['local'][ $slug ]['demo_url']     = esc_url( $args['url'] );
 			$data['local'][ $slug ]['content_file'] = get_template_directory() . '/onboarding/' . $slug . '/export.xml';
-			$data['local'][ $slug ]['screenshot']   = esc_url( get_template_directory_uri()  . '/onboarding/' . $slug . '/screenshot.png' );
+			$data['local'][ $slug ]['screenshot']   = esc_url( get_template_directory_uri() . '/onboarding/' . $slug . '/screenshot.png' );
 			$data['local'][ $slug ]['source']       = 'local';
 		}
 
@@ -130,6 +142,35 @@ class Themeisle_OB_Rest_Server {
 
 		// set_transient( Themeisle_Onboarding::STORAGE_TRANSIENT, $data, 6 * HOUR_IN_SECONDS );
 		return $data;
+	}
+
+	/**
+	 * @param $data
+	 *
+	 * @return array
+	 */
+	private function get_migrateable( $data ) {
+		$old_theme = get_theme_mod( 'ti_prev_theme' );
+		if ( ! array_key_exists( $old_theme, $data ) ) {
+			return array();
+		}
+
+		$content_imported = get_theme_mod( $data[ $old_theme ]['theme_mod_check'], 'not-imported' );
+		if ( $content_imported === 'yes' ) {
+			return array();
+		}
+
+		$folder_name = $old_theme;
+		if ( $old_theme === 'zerif-lite' || $old_theme === 'zerif-pro' ) {
+			$folder_name = 'zelle';
+		}
+
+		return array(
+			'theme_name'  => ! empty( $data[ $old_theme ]['theme_name'] ) ? esc_html( $data[ $old_theme ]['theme_name'] ) : '',
+			'screenshot'  => get_template_directory_uri() . '/vendor/codeinwp/ti-onboarding/migration/' . $folder_name . '/' . $data[ $old_theme ]['template'] . '.png',
+			'template'    => get_template_directory() . Themeisle_Onboarding::OBOARDING_PATH . '/migration/' . $folder_name . '/' . $data[ $old_theme ]['template'] . '.json',
+			'description' => $data[ $old_theme ]['description'],
+		);
 	}
 
 	/**
@@ -192,4 +233,12 @@ class Themeisle_OB_Rest_Server {
 		$theme_mods_importer->import_widgets( $request );
 	}
 
+	public function run_front_page_migration( WP_REST_Request $request ) {
+		require_once 'importers/class-themeisle-ob-zelle-importer.php';
+		if ( ! class_exists( 'Themeisle_OB_Zelle_Importer' ) ) {
+			wp_send_json_error( 'Issue with front page import.' );
+		}
+		$migrator = new Themeisle_OB_Zelle_Importer();
+		$migrator->import_zelle_frontpage( $request );
+	}
 }

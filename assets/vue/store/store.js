@@ -11,7 +11,9 @@ Vue.use( Vuex );
 export default new Vuex.Store( {
 	state: {
 		ajaxLoader: false,
-		sitesData: null,
+		sitesData: {
+			migrate_data: {}
+		},
 		previewOpen: false,
 		importModalState: false,
 		importing: false,
@@ -25,7 +27,7 @@ export default new Vuex.Store( {
 			customizer: true,
 			widgets: true,
 			installablePlugins: {},
-		}
+		},
 	},
 	actions,
 	mutations

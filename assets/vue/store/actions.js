@@ -72,6 +72,27 @@ const installPlugins = function ( { commit, state }, data ) {
 	} );
 };
 
+const migrateTemplate = function ( { commit, state }, data ) {
+	Vue.http( {
+		url: themeisleSitesLibApi.root + '/migrate_frontpage',
+		method: 'POST',
+		headers: { 'X-WP-Nonce': themeisleSitesLibApi.nonce },
+		params: {
+			'req': data.req,
+		},
+		body: {
+			'template': data.template,
+		},
+		responseType: 'json',
+	} ).then( function ( response ) {
+		if ( response.ok ) {
+			console.log( '%c Imported front page.', 'color: #4B9BE7' );
+		} else {
+			console.error( response );
+		}
+	} );
+};
+
 const importContent = function ( { commit, state }, data ) {
 	if ( state.importOptions.content === false ) {
 		importThemeMods( { commit, state }, data );
@@ -160,5 +181,6 @@ const importWidgets = function ( { commit, state }, data ) {
 
 export default {
 	initialize,
-	importSite
+	importSite,
+	migrateTemplate
 };
