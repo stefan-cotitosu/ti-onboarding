@@ -30,8 +30,8 @@ class Themeisle_OB_Rest_Server {
 			Themeisle_Onboarding::API_ROOT,
 			'/initialize_sites_library',
 			array(
-				'methods'  => WP_REST_Server::READABLE,
-				'callback' => array( $this, 'init_library' ),
+				'methods'             => WP_REST_Server::READABLE,
+				'callback'            => array( $this, 'init_library' ),
 				'permission_callback' => function () {
 					return current_user_can( 'manage_options' );
 				},
@@ -41,8 +41,8 @@ class Themeisle_OB_Rest_Server {
 			Themeisle_Onboarding::API_ROOT,
 			'/install_plugins',
 			array(
-				'methods'  => WP_REST_Server::EDITABLE,
-				'callback' => array( $this, 'run_plugin_importer' ),
+				'methods'             => WP_REST_Server::EDITABLE,
+				'callback'            => array( $this, 'run_plugin_importer' ),
 				'permission_callback' => function () {
 					return current_user_can( 'manage_options' );
 				},
@@ -52,8 +52,8 @@ class Themeisle_OB_Rest_Server {
 			Themeisle_Onboarding::API_ROOT,
 			'/import_content',
 			array(
-				'methods'  => WP_REST_Server::EDITABLE,
-				'callback' => array( $this, 'run_xml_importer' ),
+				'methods'             => WP_REST_Server::EDITABLE,
+				'callback'            => array( $this, 'run_xml_importer' ),
 				'permission_callback' => function () {
 					return current_user_can( 'manage_options' );
 				},
@@ -63,8 +63,8 @@ class Themeisle_OB_Rest_Server {
 			Themeisle_Onboarding::API_ROOT,
 			'/import_theme_mods',
 			array(
-				'methods'  => WP_REST_Server::EDITABLE,
-				'callback' => array( $this, 'run_theme_mods_importer' ),
+				'methods'             => WP_REST_Server::EDITABLE,
+				'callback'            => array( $this, 'run_theme_mods_importer' ),
 				'permission_callback' => function () {
 					return current_user_can( 'manage_options' );
 				},
@@ -74,8 +74,8 @@ class Themeisle_OB_Rest_Server {
 			Themeisle_Onboarding::API_ROOT,
 			'/import_widgets',
 			array(
-				'methods'  => WP_REST_Server::EDITABLE,
-				'callback' => array( $this, 'run_widgets_importer' ),
+				'methods'             => WP_REST_Server::EDITABLE,
+				'callback'            => array( $this, 'run_widgets_importer' ),
 				'permission_callback' => function () {
 					return current_user_can( 'manage_options' );
 				},
@@ -85,8 +85,8 @@ class Themeisle_OB_Rest_Server {
 			Themeisle_Onboarding::API_ROOT,
 			'/migrate_frontpage',
 			array(
-				'methods'  => WP_REST_Server::EDITABLE,
-				'callback' => array( $this, 'run_front_page_migration' ),
+				'methods'             => WP_REST_Server::EDITABLE,
+				'callback'            => array( $this, 'run_front_page_migration' ),
 				'permission_callback' => function () {
 					return current_user_can( 'manage_options' );
 				},
@@ -97,8 +97,8 @@ class Themeisle_OB_Rest_Server {
 			Themeisle_Onboarding::API_ROOT,
 			'/dismiss_migration',
 			array(
-				'methods'  => WP_REST_Server::EDITABLE,
-				'callback' => array( $this, 'dismiss_migration' ),
+				'methods'             => WP_REST_Server::EDITABLE,
+				'callback'            => array( $this, 'dismiss_migration' ),
 				'permission_callback' => function () {
 					return current_user_can( 'manage_options' );
 				},
@@ -274,14 +274,14 @@ class Themeisle_OB_Rest_Server {
 		if ( ! isset( $params['template_name'] ) ) {
 			wp_send_json_error( 'No template name' );
 		}
-		require_once 'importers/class-themeisle-ob-'.$params['template_name'].'-importer.php';
-		$class_name = 'Themeisle_OB_'.ucfirst($params['template_name']).'_Importer';
+		require_once 'importers/class-themeisle-ob-' . $params['template_name'] . '-importer.php';
+		$class_name = 'Themeisle_OB_' . ucfirst( $params['template_name'] ) . '_Importer';
 		if ( ! class_exists( $class_name ) ) {
 			wp_send_json_error( 'Issue with front page import.' );
 		}
 		$migrator = new $class_name;
 		$migrator->import_zelle_frontpage( $params['template'] );
-		wp_send_json_success('Template was imported!');
+		wp_send_json_success( 'Template was imported!' );
 	}
 
 	public function dismiss_migration( WP_REST_Request $request ) {

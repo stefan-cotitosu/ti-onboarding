@@ -45,7 +45,6 @@ class Themeisle_OB_Zelle_Importer {
 
 	/**
 	 * The callback of an ajax request when the user requests an import action.
-	 *
 	 */
 	public function import_zelle_frontpage( $template_path ) {
 		$this->previous_theme_content = get_option( 'theme_mods_zerif-pro' );
