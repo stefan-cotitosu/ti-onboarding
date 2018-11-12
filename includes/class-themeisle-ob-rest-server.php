@@ -87,6 +87,9 @@ class Themeisle_OB_Rest_Server {
 			array(
 				'methods'  => WP_REST_Server::EDITABLE,
 				'callback' => array( $this, 'run_front_page_migration' ),
+				'permission_callback' => function () {
+					return current_user_can( 'manage_options' );
+				},
 			)
 		);
 
@@ -96,6 +99,9 @@ class Themeisle_OB_Rest_Server {
 			array(
 				'methods'  => WP_REST_Server::EDITABLE,
 				'callback' => array( $this, 'dismiss_migration' ),
+				'permission_callback' => function () {
+					return current_user_can( 'manage_options' );
+				},
 			)
 		);
 	}
