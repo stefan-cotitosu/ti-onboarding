@@ -209,7 +209,6 @@ a.expander {
 }
 
 .is__onboarding .site-box {
-	margin-right: 1%;
 	margin-bottom: 25px;
 }
 
@@ -231,6 +230,10 @@ a.expander {
 	flex-wrap: wrap;
 	-webkit-justify-content: center;
 	justify-content: center;
+}
+
+.migrate-notice .ti-sites-lib{
+	justify-content: right;
 }
 
 .is__onboarding .ti-sites-lib > div,
@@ -257,7 +260,7 @@ a.expander {
 	position: absolute;
 	z-index: 10;
 	top: 0;
-	right: 10px;
+	right: 0;
 	font-size: 13px;
 	line-height: 1.23076923;
 	text-decoration: none;
@@ -305,6 +308,19 @@ a.expander {
 
 	.ti-sites-lib .site-box {
 		margin-bottom: 20px;
+	}
+	.ti-sites-lib .site-box.migrate-screenshot{
+		margin-bottom: 0;
+	}
+
+	.is__onboarding .ti-sites-lib > div,
+	.migrate-notice .ti-sites-lib > div{
+		width: 48%;
+	}
+
+	.is__onboarding .ti-sites-lib > div.migrate-text,
+	.migrate-notice .ti-sites-lib > div.migrate-text{
+		width: 48%;
 	}
 }
 
@@ -355,10 +371,30 @@ a.expander {
 	.is__onboarding .ti-sites-lib > div:last-child {
 		margin-right: 0;
 	}
+
+	.migrate-notice .ti-sites-lib > div{
+		margin: 25px 0;
+		display: block;
+		width: 100%;
+	}
+	.is__onboarding .migrate-notice .ti-sites-lib > div{
+		width: 48%;
+	}
+
+	.is__onboarding .ti-sites-lib > div.migrate-text,
+	.migrate-notice .ti-sites-lib > div.migrate-text{
+		display: block;
+		width: 100%;
+	}
+
+	.migrate-text .button-hero{
+		margin-top: .6em;
+	}
 }
 
 @media (max-width: 580px) {
-	.is__onboarding .ti-sites-lib > div {
+	.is__onboarding .ti-sites-lib > div,
+	.is__onboarding .migrate-notice .ti-sites-lib > div{
 		width: 100%;
 		margin-right: 0 !important;
 	}
