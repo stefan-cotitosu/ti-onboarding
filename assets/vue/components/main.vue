@@ -26,9 +26,21 @@
 							<h3>{{strings.migration_title}}</h3>
 							<p class="description">{{migrationData.description}}</p>
 							<p class="button-wrapper">
-								<button class="button button-primary button-hero" @click="runMigration()">
-									{{strings.import_btn}} {{migrationData.theme_name}}
-								</button>
+								<template v-if="this.$store.state.migration === 'inactive'">
+									<button class="button button-hero" @click="runMigration()">
+										{{strings.import_btn}} {{migrationData.theme_name}}
+									</button>
+								</template>
+								<template v-else-if="this.$store.state.migration === 'isRunning'">
+									<button class="button button-hero">
+										<Loader class="loader" :loading-message="strings.importing"></Loader>
+									</button>
+								</template>
+								<template v-else="this.$store.state.migration === 'complete'" >
+									<button class="button button-primary button-hero" @click="redirectToHome()">
+										{{strings.go_to_site}}
+									</button>
+								</template>
 							</p>
 						</div>
 					</div>
@@ -67,7 +79,7 @@
 		data: function () {
 			return {
 				strings: this.$store.state.strings,
-				dismissed: false
+				dismissed: false,
 			}
 		},
 		computed: {
@@ -88,18 +100,19 @@
 			},
 			migrationData: function () {
 				return this.$store.state.sitesData.migrate_data
-			}
+			},
 		},
 		methods: {
 			cancelOnboarding: function () {
 				this.$store.state.onboard = null;
 			},
 			runMigration: function () {
+				this.$store.state.migration = 'isRunning';
 				this.$store.dispatch( 'migrateTemplate', {
 					req: 'Migrate Site',
 					template: this.migrationData.template,
 					template_name: this.migrationData.template_name,
-				} )
+				} );
 			},
 			dismissMigration: function (  ) {
 				this.dismissed = true;
@@ -107,7 +120,10 @@
 					req: 'Dismiss Migration',
 					theme_mod: this.migrationData.theme_mod,
 				} )
-			}
+			},
+			redirectToHome: function () {
+				window.location.replace( this.$store.state.homeUrl );
+			},
 		},
 		components: {
 			Loader,
@@ -153,5 +169,9 @@
 		padding: 10px 15px;
 		background-color: rgba(244, 244, 244, 0.7);
 		border-left: 1px solid rgba(0, 0, 0, 0.05);
+	}
+
+	.button .updating-message p{
+		margin: auto;
 	}
 </style>

@@ -73,7 +73,7 @@ const installPlugins = function ( { commit, state }, data ) {
 };
 
 const migrateTemplate = function ( { commit, state }, data ) {
-	console.log(data);
+
 	Vue.http( {
 		url: themeisleSitesLibApi.root + '/migrate_frontpage',
 		method: 'POST',
@@ -89,6 +89,7 @@ const migrateTemplate = function ( { commit, state }, data ) {
 	} ).then( function ( response ) {
 		if ( response.ok ) {
 			console.log( '%c Imported front page.', 'color: #4B9BE7' );
+			commit( 'migrationComplete', 'done');
 		} else {
 			console.error( response );
 		}

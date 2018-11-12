@@ -21,6 +21,7 @@ export default new Vuex.Store( {
 		strings: themeisleSitesLibApi.i18ln,
 		homeUrl: themeisleSitesLibApi.homeUrl,
 		currentStep: 'inactive',
+		migration: 'inactive',
 		onboard: themeisleSitesLibApi.onboarding,
 		importOptions: {
 			content: true,

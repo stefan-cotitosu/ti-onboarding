@@ -136,6 +136,7 @@ class Themeisle_OB_Admin {
 		return array(
 			'preview_btn'           => __( 'Preview', 'textdomain' ),
 			'import_btn'            => __( 'Import', 'textdomain' ),
+			'importing'				=> __( 'Importing', 'textdomain'),
 			'cancel_btn'            => __( 'Cancel', 'textdomain' ),
 			'loading'               => __( 'Loading', 'textdomain' ),
 			'go_to_site'            => __( 'View Website', 'textdomain' ),
