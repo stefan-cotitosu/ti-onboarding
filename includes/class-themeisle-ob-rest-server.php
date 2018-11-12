@@ -32,6 +32,9 @@ class Themeisle_OB_Rest_Server {
 			array(
 				'methods'  => WP_REST_Server::READABLE,
 				'callback' => array( $this, 'init_library' ),
+				'permission_callback' => function () {
+					return current_user_can( 'manage_options' );
+				},
 			)
 		);
 		register_rest_route(
@@ -40,6 +43,9 @@ class Themeisle_OB_Rest_Server {
 			array(
 				'methods'  => WP_REST_Server::EDITABLE,
 				'callback' => array( $this, 'run_plugin_importer' ),
+				'permission_callback' => function () {
+					return current_user_can( 'manage_options' );
+				},
 			)
 		);
 		register_rest_route(
@@ -48,6 +54,9 @@ class Themeisle_OB_Rest_Server {
 			array(
 				'methods'  => WP_REST_Server::EDITABLE,
 				'callback' => array( $this, 'run_xml_importer' ),
+				'permission_callback' => function () {
+					return current_user_can( 'manage_options' );
+				},
 			)
 		);
 		register_rest_route(
@@ -56,6 +65,9 @@ class Themeisle_OB_Rest_Server {
 			array(
 				'methods'  => WP_REST_Server::EDITABLE,
 				'callback' => array( $this, 'run_theme_mods_importer' ),
+				'permission_callback' => function () {
+					return current_user_can( 'manage_options' );
+				},
 			)
 		);
 		register_rest_route(
@@ -64,6 +76,9 @@ class Themeisle_OB_Rest_Server {
 			array(
 				'methods'  => WP_REST_Server::EDITABLE,
 				'callback' => array( $this, 'run_widgets_importer' ),
+				'permission_callback' => function () {
+					return current_user_can( 'manage_options' );
+				},
 			)
 		);
 		register_rest_route(
