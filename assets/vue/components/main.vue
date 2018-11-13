@@ -10,42 +10,7 @@
 						<p>{{strings.onboard_description}}</p>
 					</div>
 				</template>
-				<div class="migrate-notice" v-if="Object.keys(this.migrationData).length && !dismissed">
-					<a class="migration-dismiss"
-							aria-label="Dismiss the migration notice" @click="dismissMigration()">{{ strings.dismiss}}</a>
-					<div class="ti-sites-lib">
-						<div class="site-box migrate-screenshot">
-							<div class="preview-image">
-								<img :src="migrationData.screenshot" :alt="migrationData.theme_name">
-							</div>
-							<div class="footer">
-								<h4>{{migrationData.theme_name}}</h4>
-							</div>
-						</div>
-						<div class="migrate-text">
-							<h3>{{strings.migration_title}}</h3>
-							<p class="description">{{migrationData.description}}</p>
-							<p class="button-wrapper">
-								<template v-if="this.$store.state.migration === 'inactive'">
-									<button class="button button-hero" @click="runMigration()">
-										{{strings.import_btn}} {{migrationData.theme_name}}
-									</button>
-								</template>
-								<template v-else-if="this.$store.state.migration === 'isRunning'">
-									<button class="button button-hero">
-										<Loader class="loader" :loading-message="strings.importing"></Loader>
-									</button>
-								</template>
-								<template v-else="this.$store.state.migration === 'complete'" >
-									<button class="button button-primary button-hero" @click="redirectToHome()">
-										{{strings.go_to_site}}
-									</button>
-								</template>
-							</p>
-						</div>
-					</div>
-				</div>
-
+				<MigrateNotice></MigrateNotice>
 				<h3>{{strings.templates_title}}</h3>
 				<div class="ti-sites-lib">
 					<div v-for="site in sites.local">
@@ -73,13 +38,13 @@
 	import SiteItem from './site-item.vue'
 	import Preview from './preview.vue'
 	import ImportModal from './import-modal.vue'
+	import MigrateNotice from './migrate-notice.vue'
 
 	module.exports = {
 		name: 'app',
 		data: function () {
 			return {
 				strings: this.$store.state.strings,
-				dismissed: false,
 			}
 		},
 		computed: {
@@ -98,31 +63,10 @@
 			modalOpen: function () {
 				return this.$store.state.importModalState
 			},
-			migrationData: function () {
-				return this.$store.state.sitesData.migrate_data
-			},
 		},
 		methods: {
 			cancelOnboarding: function () {
 				this.$store.state.onboard = null;
-			},
-			runMigration: function () {
-				this.$store.state.migration = 'isRunning';
-				this.$store.dispatch( 'migrateTemplate', {
-					req: 'Migrate Site',
-					template: this.migrationData.template,
-					template_name: this.migrationData.template_name,
-				} );
-			},
-			dismissMigration: function (  ) {
-				this.dismissed = true;
-				this.$store.dispatch( 'dismissMigration', {
-					req: 'Dismiss Migration',
-					theme_mod: this.migrationData.theme_mod,
-				} )
-			},
-			redirectToHome: function () {
-				window.location.replace( this.$store.state.homeUrl );
 			},
 		},
 		components: {
@@ -130,48 +74,7 @@
 			SiteItem,
 			Preview,
 			ImportModal,
+			MigrateNotice,
 		},
 	}
-</script>
-
-<style>
-	h4 {
-		display: block;
-		white-space: nowrap;
-		text-overflow: ellipsis;
-		margin: 0;
-		overflow: hidden;
-		max-width: 70%;
-		font-size: 15px;
-	}
-
-	.site-box {
-		border: 1px solid #ccc;
-	}
-
-	.site-box:hover .footer .theme-actions {
-		display: block;
-	}
-
-	.footer {
-		position: relative;
-		border-top: 1px solid #ccc;
-		display: flex;
-		padding: 15px;
-		flex-wrap: wrap;
-		align-items: center;
-	}
-
-	.footer .theme-actions {
-		display: none;
-		position: absolute;
-		right: 0;
-		padding: 10px 15px;
-		background-color: rgba(244, 244, 244, 0.7);
-		border-left: 1px solid rgba(0, 0, 0, 0.05);
-	}
-
-	.button .updating-message p{
-		margin: auto;
-	}
-</style>
+</script>Z

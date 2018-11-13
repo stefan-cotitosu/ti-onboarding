@@ -180,7 +180,7 @@ class Themeisle_OB_Rest_Server {
 	 * @return array
 	 */
 	private function get_migrateable( $data ) {
-		$old_theme = get_theme_mod( 'ti_prev_theme' );
+		$old_theme = get_theme_mod( 'ti_prev_theme', 'ti_onboarding_undefined' );
 		if ( ! array_key_exists( $old_theme, $data ) ) {
 			return array();
 		}
