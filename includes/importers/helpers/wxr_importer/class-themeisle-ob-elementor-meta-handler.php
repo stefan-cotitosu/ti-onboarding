@@ -58,6 +58,38 @@ class Themeisle_OB_Elementor_Meta_Handler {
 			return $val;
 		}
 
+		$this->replace_urls();
+
 		return $this->value;
+	}
+
+	/**
+	 * Replace demo urls in meta with site urls.
+	 */
+	private function replace_urls() {
+		$string = str_replace( '\\', '', $this->value );
+		$urls   = wp_extract_urls( $string );
+
+		array_walk( $urls, function ( $item ) {
+			$old_url = $item;
+			$item    = parse_url( $item );
+			if ( ! isset( $item['host'] ) ) {
+				return;
+			}
+			if ( $item['host'] !== 'demo.themeisle.com' ) {
+				return;
+			}
+			$uploads_dir  = wp_get_upload_dir();
+			$uploads_url  = $uploads_dir['baseurl'];
+			$item['path'] = preg_split( '/\//', $item['path'] );
+			$item['path'] = array_slice( $item['path'], - 3 );
+
+			$item = array(
+				'old_url' => str_replace( '/', '\\/', $old_url ),
+				'new_url' => str_replace( '/', '\\/', esc_url( $uploads_url . '/' . join( '/', $item['path'] ) ) ),
+			);
+
+			$this->value = str_replace( $item['old_url'], $item['new_url'], $this->value );
+		} );
 	}
 }
