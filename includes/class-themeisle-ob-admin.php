@@ -112,11 +112,12 @@ class Themeisle_OB_Admin {
 	 */
 	private function localize_sites_library() {
 		$api = array(
-			'root'       => esc_url_raw( rest_url( Themeisle_Onboarding::API_ROOT ) ),
-			'nonce'      => wp_create_nonce( 'wp_rest' ),
-			'homeUrl'    => esc_url( home_url() ),
-			'i18ln'      => $this->get_strings(),
-			'onboarding' => 'no',
+			'root'            => esc_url_raw( rest_url( Themeisle_Onboarding::API_ROOT ) ),
+			'nonce'           => wp_create_nonce( 'wp_rest' ),
+			'homeUrl'         => esc_url( home_url() ),
+			'i18ln'           => $this->get_strings(),
+			'onboarding'      => 'no',
+			'contentImported' => get_theme_mod( 'ti_content_imported', 'no' ),
 		);
 
 		$is_onboarding = isset( $_GET['onboarding'] ) && $_GET['onboarding'] === 'yes';

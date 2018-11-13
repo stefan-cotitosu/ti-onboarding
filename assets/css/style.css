@@ -322,6 +322,15 @@ a.expander {
 	.migrate-notice .ti-sites-lib > div.migrate-text{
 		width: 48%;
 	}
+
+	.is__onboarding .ti-sites-lib > div:nth-child(3n) {
+		margin-right: 2%;
+	}
+
+	.is__onboarding .ti-sites-lib > div:nth-child(2n),
+	.is__onboarding .ti-sites-lib > div:last-child {
+		margin-right: 0;
+	}
 }
 
 @media ( max-width: 768px ) {

@@ -13,6 +13,7 @@
 				<MigrateNotice></MigrateNotice>
 				<h3>{{strings.templates_title}}</h3>
 				<div class="ti-sites-lib">
+					<DefaultItem></DefaultItem>
 					<div v-for="site in sites.local">
 						<SiteItem :site_data="site"></SiteItem>
 					</div>
@@ -39,7 +40,10 @@
 	import Preview from './preview.vue'
 	import ImportModal from './import-modal.vue'
 	import MigrateNotice from './migrate-notice.vue'
-
+	import DefaultItem from './default-item.vue'
+	export default {
+		components: { DefaultItem }
+	}
 	module.exports = {
 		name: 'app',
 		data: function () {
@@ -75,6 +79,7 @@
 			Preview,
 			ImportModal,
 			MigrateNotice,
+			DefaultItem,
 		},
 	}
 </script>Z

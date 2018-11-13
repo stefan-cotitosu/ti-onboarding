@@ -23,6 +23,7 @@ export default new Vuex.Store( {
 		currentStep: 'inactive',
 		migration: 'inactive',
 		onboard: themeisleSitesLibApi.onboarding,
+		contentImported: themeisleSitesLibApi.contentImported,
 		importOptions: {
 			content: true,
 			customizer: true,

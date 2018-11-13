@@ -110,6 +110,7 @@ class Themeisle_OB_Zelle_Importer {
 			update_option( 'page_on_front', $post_id );
 			update_option( 'show_on_front', 'page' );
 
+			set_theme_mod( 'ti_content_imported', 'yes');
 			// on success we return the page url because we'll redirect to it.
 			wp_send_json_success( esc_url( get_permalink( $post_id ) ) );
 		}

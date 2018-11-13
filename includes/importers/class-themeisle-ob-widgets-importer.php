@@ -32,6 +32,7 @@ class Themeisle_OB_Widgets_Importer {
 
 		do_action( 'themeisle_ob_after_widgets_import' );
 
+		set_theme_mod( 'ti_content_imported', 'yes' );
 		wp_send_json_success( 'Widgets Imported.' );
 	}
 

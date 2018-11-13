@@ -124,9 +124,10 @@ class Themeisle_OB_Rest_Server {
 			return array();
 		}
 
-		$migrate_data = isset( $theme_support[0]['can_migrate'] ) ? $theme_support[0]['can_migrate'] : array();
-		$local_data   = isset( $theme_support[0]['local'] ) ? $theme_support[0]['local'] : array();
-		$remote_data  = isset( $theme_support[0]['remote'] ) ? $theme_support[0]['remote'] : array();
+		$migrate_data     = isset( $theme_support[0]['can_migrate'] ) ? $theme_support[0]['can_migrate'] : array();
+		$local_data       = isset( $theme_support[0]['local'] ) ? $theme_support[0]['local'] : array();
+		$remote_data      = isset( $theme_support[0]['remote'] ) ? $theme_support[0]['remote'] : array();
+		$default_template = isset( $theme_support[0]['default_template'] ) ? $theme_support[0]['default_template'] : array();
 
 		$data                 = array();
 		$data['migrate_data'] = $this->get_migrateable( $migrate_data );
@@ -169,6 +170,9 @@ class Themeisle_OB_Rest_Server {
 			$data['remote'][ $slug ]['screenshot'] = esc_url( $args['screenshot'] );
 			$data['remote'][ $slug ]['source']     = 'remote';
 		}
+
+		$data['default_template']['screenshot'] = $default_template['screenshot'];
+		$data['default_template']['name']       = $default_template['name'];
 
 		// set_transient( Themeisle_Onboarding::STORAGE_TRANSIENT, $data, 6 * HOUR_IN_SECONDS );
 		return $data;
