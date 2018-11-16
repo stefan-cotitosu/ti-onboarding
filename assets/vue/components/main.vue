@@ -5,13 +5,16 @@
 			<Loader v-if="isLoading" :loading-message="loadingString"></Loader>
 			<template v-else>
 				<template v-if="this.$store.state.onboard === 'yes'">
-					<div class="header">
-						<h1>{{strings.onboard_header}}</h1>
-						<p>{{strings.onboard_description}}</p>
+					<div class="header" v-if="Object.keys(themeStrings).length">
+						<h1 v-if="containsKey(themeStrings,'onboard_header')">
+							{{themeStrings.onboard_header}}</h1>
+						<p v-if="containsKey(themeStrings,'onboard_description')">
+							{{themeStrings.onboard_description}}</p>
 					</div>
 				</template>
 				<MigrateNotice></MigrateNotice>
-				<h3>{{strings.templates_title}}</h3>
+				<h3 v-if="containsKey(themeStrings, 'templates_title')">{{themeStrings.templates_title}}</h3>
+				<p v-if="containsKey(themeStrings, 'templates_description')">{{themeStrings.templates_description}}</p>
 				<div class="ti-sites-lib">
 					<DefaultItem></DefaultItem>
 					<div v-for="site in sites.local">
@@ -41,6 +44,7 @@
 	import ImportModal from './import-modal.vue'
 	import MigrateNotice from './migrate-notice.vue'
 	import DefaultItem from './default-item.vue'
+
 	export default {
 		components: { DefaultItem }
 	}
@@ -67,10 +71,16 @@
 			modalOpen: function () {
 				return this.$store.state.importModalState
 			},
+			themeStrings: function () {
+				return this.$store.state.sitesData.i18n
+			}
 		},
 		methods: {
 			cancelOnboarding: function () {
 				this.$store.state.onboard = null;
+			},
+			containsKey( obj, key ) {
+				return Object.keys( obj ).includes( key );
 			},
 		},
 		components: {

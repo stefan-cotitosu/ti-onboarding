@@ -147,8 +147,6 @@ class Themeisle_OB_Admin {
 			'plugins'             => __( 'Plugins', 'textdomain' ),
 			'general'             => __( 'General', 'textdomain' ),
 			'later'               => __( 'Skip this step', 'textdomain' ),
-			'onboard_header'      => __( 'Get started here', 'textdomain' ),
-			'onboard_description' => __( 'This process will set up your website, install required plugins, import demo content (pages, posts, media) and set up the customizer options.', 'textdomain' ),
 			'content'             => __( 'Content', 'textdomain' ),
 			'customizer'          => __( 'Customizer', 'textdomain' ),
 			'widgets'             => __( 'Widgets', 'textdomain' ),
@@ -160,8 +158,6 @@ class Themeisle_OB_Admin {
 			),
 			'import_disclaimer'   => __( 'We recommend you backup your website content before attempting a full site import.', 'textdomain' ),
 			'import_done'         => __( 'Content was successfully imported. Enjoy your new site!', 'textdomain' ),
-			'migration_title'     => __( 'Import previous theme.', 'textdomain' ),
-			'templates_title'     => __( 'Import your desired front page.', 'textdomain' ),
 		);
 	}
 }

@@ -123,13 +123,14 @@ class Themeisle_OB_Rest_Server {
 		if ( empty( $theme_support[0] ) || ! is_array( $theme_support[0] ) ) {
 			return array();
 		}
-
+		$i18n             = isset( $theme_support[0]['i18n'] ) ? $theme_support[0]['i18n'] : array();
 		$migrate_data     = isset( $theme_support[0]['can_migrate'] ) ? $theme_support[0]['can_migrate'] : array();
 		$local_data       = isset( $theme_support[0]['local'] ) ? $theme_support[0]['local'] : array();
 		$remote_data      = isset( $theme_support[0]['remote'] ) ? $theme_support[0]['remote'] : array();
 		$default_template = isset( $theme_support[0]['default_template'] ) ? $theme_support[0]['default_template'] : array();
 
 		$data                 = array();
+		$data['i18n']         = $i18n;
 		$data['migrate_data'] = $this->get_migrateable( $migrate_data );
 
 		foreach ( $local_data as $slug => $args ) {
@@ -204,6 +205,7 @@ class Themeisle_OB_Rest_Server {
 			'screenshot'    => get_template_directory_uri() . '/vendor/codeinwp/ti-onboarding/migration/' . $folder_name . '/' . $data[ $old_theme ]['template'] . '.png',
 			'template'      => get_template_directory() . Themeisle_Onboarding::OBOARDING_PATH . '/migration/' . $folder_name . '/' . $data[ $old_theme ]['template'] . '.json',
 			'template_name' => $data[ $old_theme ]['template'],
+			'heading'       => $data[ $old_theme ]['heading'],
 			'description'   => $data[ $old_theme ]['description'],
 			'theme_mod'     => $data[ $old_theme ]['theme_mod_check'],
 		);

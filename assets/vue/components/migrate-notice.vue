@@ -2,18 +2,23 @@
 	<div class="migrate-notice" v-if="Object.keys(this.migrationData).length && !dismissed">
 		<a class="migration-dismiss"
 				aria-label="Dismiss the migration notice" @click="dismissMigration()">{{ strings.dismiss}}</a>
-		<div class="ti-sites-lib">
-			<div class="site-box migrate-screenshot">
-				<div class="preview-image">
-					<img :src="migrationData.screenshot" :alt="migrationData.theme_name">
-				</div>
-				<div class="footer">
-					<h4>{{migrationData.theme_name}}</h4>
-				</div>
-			</div>
+
+
 			<div class="migrate-text">
-				<h3>{{strings.migration_title}}</h3>
+				<h3>{{migrationData.heading}}</h3>
 				<p class="description">{{migrationData.description}}</p>
+
+				<div class="ti-sites-lib">
+					<div class="site-box migrate-screenshot">
+						<div class="preview-image">
+							<img :src="migrationData.screenshot" :alt="migrationData.theme_name">
+						</div>
+						<div class="footer">
+							<h4>{{migrationData.theme_name}}</h4>
+						</div>
+					</div>
+				</div>
+
 				<p class="button-wrapper">
 					<button v-if="this.$store.state.migration === 'inactive'" class="button button-hero" @click="runMigration()">
 						{{strings.import_btn}} {{migrationData.theme_name}}
@@ -26,7 +31,7 @@
 					</button>
 				</p>
 			</div>
-		</div>
+
 	</div>
 </template>
 

@@ -188,7 +188,9 @@ a.expander {
 	padding: 100px 0;
 	background: #f1f1f1;
 }
-
+.library-wrapper{
+	text-align: center;
+}
 .is__onboarding .library-wrapper {
 	max-width: 1000px;
 	margin: 0 auto;
@@ -233,7 +235,7 @@ a.expander {
 }
 
 .migrate-notice .ti-sites-lib{
-	justify-content: right;
+	justify-content: center;
 }
 
 .is__onboarding .ti-sites-lib > div,
@@ -254,6 +256,7 @@ a.expander {
 
 .migrate-notice{
 	position: relative;
+	text-align: center;
 }
 
 .migration-dismiss{
@@ -282,9 +285,8 @@ a.expander {
 }
 .is__onboarding .ti-sites-lib > div.migrate-text,
 .migrate-notice .ti-sites-lib > div.migrate-text{
-	width: 65%;
-	display: flex;
-	flex-direction: column;
+	width: 100%;
+	text-align: center;
 }
 
 .migrate-text h3{
@@ -297,6 +299,10 @@ a.expander {
 
 .migrate-text p.button-wrapper{
 	margin: 0;
+}
+
+.migrate-text .ti-sites-lib{
+	margin: 1.25em 0;
 }
 
 @media ( max-width: 1080px ) {
