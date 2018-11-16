@@ -22,6 +22,15 @@ class Themeisle_OB_Admin {
 	public function init() {
 		add_filter( 'query_vars', array( $this, 'add_onboarding_query_var' ) );
 		add_filter( 'ti_about_config_filter', array( $this, 'add_demo_import_tab' ), 15 );
+		add_action( 'after_switch_theme', array( $this, 'get_previous_theme' ) );
+	}
+
+	/**
+	 * Memorize the previous theme to later display the import template for it.
+	 */
+	public function get_previous_theme() {
+		$previous_theme = strtolower( get_option( 'theme_switched' ) );
+		set_theme_mod( 'ti_prev_theme', $previous_theme );
 	}
 
 	/**
@@ -41,6 +50,7 @@ class Themeisle_OB_Admin {
 	 * Add about page tab list item.
 	 *
 	 * @param array $config about page config.
+	 *
 	 * @return array
 	 */
 	public function add_demo_import_tab( $config ) {
@@ -102,11 +112,12 @@ class Themeisle_OB_Admin {
 	 */
 	private function localize_sites_library() {
 		$api = array(
-			'root'       => esc_url_raw( rest_url( Themeisle_Onboarding::API_ROOT ) ),
-			'nonce'      => wp_create_nonce( 'wp_rest' ),
-			'homeUrl'    => esc_url( home_url() ),
-			'i18ln'      => $this->get_strings(),
-			'onboarding' => 'no',
+			'root'            => esc_url_raw( rest_url( Themeisle_Onboarding::API_ROOT ) ),
+			'nonce'           => wp_create_nonce( 'wp_rest' ),
+			'homeUrl'         => esc_url( home_url() ),
+			'i18ln'           => $this->get_strings(),
+			'onboarding'      => 'no',
+			'contentImported' => get_theme_mod( 'ti_content_imported', 'no' ),
 		);
 
 		$is_onboarding = isset( $_GET['onboarding'] ) && $_GET['onboarding'] === 'yes';
@@ -126,6 +137,7 @@ class Themeisle_OB_Admin {
 		return array(
 			'preview_btn'         => __( 'Preview', 'textdomain' ),
 			'import_btn'          => __( 'Import', 'textdomain' ),
+			'importing'           => __( 'Importing', 'textdomain' ),
 			'cancel_btn'          => __( 'Cancel', 'textdomain' ),
 			'loading'             => __( 'Loading', 'textdomain' ),
 			'go_to_site'          => __( 'View Website', 'textdomain' ),
@@ -135,8 +147,6 @@ class Themeisle_OB_Admin {
 			'plugins'             => __( 'Plugins', 'textdomain' ),
 			'general'             => __( 'General', 'textdomain' ),
 			'later'               => __( 'Skip this step', 'textdomain' ),
-			'onboard_header'      => __( 'Get started here', 'textdomain' ),
-			'onboard_description' => __( 'This process will set up your website, install required plugins, import demo content (pages, posts, media) and set up the customizer options.', 'textdomain' ),
 			'content'             => __( 'Content', 'textdomain' ),
 			'customizer'          => __( 'Customizer', 'textdomain' ),
 			'widgets'             => __( 'Widgets', 'textdomain' ),

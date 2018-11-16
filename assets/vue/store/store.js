@@ -11,21 +11,28 @@ Vue.use( Vuex );
 export default new Vuex.Store( {
 	state: {
 		ajaxLoader: false,
-		sitesData: null,
+		sitesData: {
+			migrate_data: {},
+			i18n: {},
+			local: {},
+			remote: {},
+		},
 		previewOpen: false,
 		importModalState: false,
 		importing: false,
 		previewData: {},
-		strings: themeisleSitesLibApi.i18ln,
+		strings: themeisleSitesLibApi.i18ln ,
 		homeUrl: themeisleSitesLibApi.homeUrl,
 		currentStep: 'inactive',
+		migration: 'inactive',
 		onboard: themeisleSitesLibApi.onboarding,
+		contentImported: themeisleSitesLibApi.contentImported,
 		importOptions: {
 			content: true,
 			customizer: true,
 			widgets: true,
 			installablePlugins: {},
-		}
+		},
 	},
 	actions,
 	mutations
