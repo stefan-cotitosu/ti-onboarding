@@ -8,15 +8,17 @@
 					<div class="header" v-if="Object.keys(themeStrings).length">
 						<h1 v-if="containsKey(themeStrings,'onboard_header')">
 							{{themeStrings.onboard_header}}</h1>
-						<p v-if="containsKey(themeStrings,'onboard_description')">
-							{{themeStrings.onboard_description}}</p>
+						<!--<p v-if="containsKey(themeStrings,'onboard_description')">-->
+							<!--{{themeStrings.onboard_description}}</p>-->
 					</div>
 				</template>
 				<MigrateNotice></MigrateNotice>
+				<template v-if="Object.keys(themeStrings).length">
 				<h3 v-if="containsKey(themeStrings, 'templates_title')">{{themeStrings.templates_title}}</h3>
 				<p v-if="containsKey(themeStrings, 'templates_description')">{{themeStrings.templates_description}}</p>
+				</template>
 				<div class="ti-sites-lib">
-					<DefaultItem></DefaultItem>
+					<default-item v-if="this.$store.state.sitesData.default_template"></default-item>
 					<div v-for="site in sites.local">
 						<SiteItem :site_data="site"></SiteItem>
 					</div>
@@ -45,9 +47,6 @@
 	import MigrateNotice from './migrate-notice.vue'
 	import DefaultItem from './default-item.vue'
 
-	export default {
-		components: { DefaultItem }
-	}
 	module.exports = {
 		name: 'app',
 		data: function () {

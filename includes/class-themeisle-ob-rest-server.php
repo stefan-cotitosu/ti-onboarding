@@ -172,8 +172,10 @@ class Themeisle_OB_Rest_Server {
 			$data['remote'][ $slug ]['source']     = 'remote';
 		}
 
-		$data['default_template']['screenshot'] = $default_template['screenshot'];
-		$data['default_template']['name']       = $default_template['name'];
+		if ( isset( $data['default_template'] ) ) {
+			$data['default_template']['screenshot'] = $default_template['screenshot'];
+			$data['default_template']['name']       = $default_template['name'];
+		}
 
 		// set_transient( Themeisle_Onboarding::STORAGE_TRANSIENT, $data, 6 * HOUR_IN_SECONDS );
 		return $data;

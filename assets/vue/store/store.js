@@ -12,13 +12,16 @@ export default new Vuex.Store( {
 	state: {
 		ajaxLoader: false,
 		sitesData: {
-			migrate_data: {}
+			migrate_data: {},
+			i18n: {},
+			local: {},
+			remote: {},
 		},
 		previewOpen: false,
 		importModalState: false,
 		importing: false,
 		previewData: {},
-		strings: themeisleSitesLibApi.i18ln,
+		strings: themeisleSitesLibApi.i18ln ,
 		homeUrl: themeisleSitesLibApi.homeUrl,
 		currentStep: 'inactive',
 		migration: 'inactive',
