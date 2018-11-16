@@ -8,8 +8,8 @@
 					<div class="header" v-if="Object.keys(themeStrings).length">
 						<h1 v-if="containsKey(themeStrings,'onboard_header')">
 							{{themeStrings.onboard_header}}</h1>
-						<!--<p v-if="containsKey(themeStrings,'onboard_description')">-->
-							<!--{{themeStrings.onboard_description}}</p>-->
+						<p v-if="containsKey(themeStrings,'onboard_description')">
+							{{themeStrings.onboard_description}}</p>
 					</div>
 				</template>
 				<MigrateNotice></MigrateNotice>

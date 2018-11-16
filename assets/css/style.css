@@ -191,6 +191,9 @@ a.expander {
 .library-wrapper{
 	text-align: center;
 }
+.library-wrapper .header h1{
+	margin: 0;
+}
 .is__onboarding .library-wrapper {
 	max-width: 1000px;
 	margin: 0 auto;
