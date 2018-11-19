@@ -190,7 +190,7 @@ class Themeisle_OB_Rest_Server {
 			$data['upsell'][ $slug ]['in_pro']     = true;
 		}
 
-		if ( isset( $data['default_template'] ) ) {
+		if ( isset( $default_template ) ) {
 			$data['default_template']['screenshot'] = $default_template['screenshot'];
 			$data['default_template']['name']       = $default_template['name'];
 		}
