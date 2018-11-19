@@ -123,13 +123,13 @@ class Themeisle_OB_Rest_Server {
 		if ( empty( $theme_support[0] ) || ! is_array( $theme_support[0] ) ) {
 			return array();
 		}
-		$i18n             = isset( $theme_support[0]['i18n'] ) ? $theme_support[0]['i18n'] : array();
-		$migrate_data     = isset( $theme_support[0]['can_migrate'] ) ? $theme_support[0]['can_migrate'] : array();
-		$local_data       = isset( $theme_support[0]['local'] ) ? $theme_support[0]['local'] : array();
-		$remote_data      = isset( $theme_support[0]['remote'] ) ? $theme_support[0]['remote'] : array();
-		$upsell_data      = isset( $theme_support[0]['upsell'] ) ? $theme_support[0]['upsell'] : array();
-		$default_template = isset( $theme_support[0]['default_template'] ) ? $theme_support[0]['default_template'] : array();
-
+		$i18n                 = isset( $theme_support[0]['i18n'] ) ? $theme_support[0]['i18n'] : array();
+		$migrate_data         = isset( $theme_support[0]['can_migrate'] ) ? $theme_support[0]['can_migrate'] : array();
+		$local_data           = isset( $theme_support[0]['local'] ) ? $theme_support[0]['local'] : array();
+		$remote_data          = isset( $theme_support[0]['remote'] ) ? $theme_support[0]['remote'] : array();
+		$upsell_data          = isset( $theme_support[0]['upsell'] ) ? $theme_support[0]['upsell'] : array();
+		$default_template     = isset( $theme_support[0]['default_template'] ) ? $theme_support[0]['default_template'] : array();
+		$pro_link             = isset( $theme_support[0]['pro_link'] ) ? $theme_support[0]['pro_link'] : '';
 		$data                 = array();
 		$data['i18n']         = $i18n;
 		$data['migrate_data'] = $this->get_migrateable( $migrate_data );
@@ -193,6 +193,10 @@ class Themeisle_OB_Rest_Server {
 		if ( isset( $data['default_template'] ) ) {
 			$data['default_template']['screenshot'] = $default_template['screenshot'];
 			$data['default_template']['name']       = $default_template['name'];
+		}
+
+		if ( isset( $pro_link ) ) {
+			$data['pro_link'] = $pro_link;
 		}
 
 		// set_transient( Themeisle_Onboarding::STORAGE_TRANSIENT, $data, 6 * HOUR_IN_SECONDS );
