@@ -16,6 +16,7 @@ export default new Vuex.Store( {
 			i18n: {},
 			local: {},
 			remote: {},
+			upsell: {},
 		},
 		previewOpen: false,
 		importModalState: false,

@@ -127,6 +127,7 @@ class Themeisle_OB_Rest_Server {
 		$migrate_data     = isset( $theme_support[0]['can_migrate'] ) ? $theme_support[0]['can_migrate'] : array();
 		$local_data       = isset( $theme_support[0]['local'] ) ? $theme_support[0]['local'] : array();
 		$remote_data      = isset( $theme_support[0]['remote'] ) ? $theme_support[0]['remote'] : array();
+		$upsell_data      = isset( $theme_support[0]['upsell'] ) ? $theme_support[0]['upsell'] : array();
 		$default_template = isset( $theme_support[0]['default_template'] ) ? $theme_support[0]['default_template'] : array();
 
 		$data                 = array();
@@ -170,6 +171,23 @@ class Themeisle_OB_Rest_Server {
 			$data['remote'][ $slug ]['demo_url']   = esc_url( $args['url'] );
 			$data['remote'][ $slug ]['screenshot'] = esc_url( $args['screenshot'] );
 			$data['remote'][ $slug ]['source']     = 'remote';
+		}
+
+		foreach ( $upsell_data as $slug => $args ) {
+			$request       = wp_remote_get( $args['url'] . '/wp-json/ti-demo-data/data' );
+			$response_code = wp_remote_retrieve_response_code( $request );
+			if ( $response_code !== 200 ) {
+				continue;
+			}
+			if ( empty( $request['body'] ) || ! isset( $request['body'] ) ) {
+				continue;
+			}
+			$data['upsell'][ $slug ]               = json_decode( $request['body'], true );
+			$data['upsell'][ $slug ]['title']      = esc_html( $args['title'] );
+			$data['upsell'][ $slug ]['demo_url']   = esc_url( $args['url'] );
+			$data['upsell'][ $slug ]['screenshot'] = esc_url( $args['screenshot'] );
+			$data['upsell'][ $slug ]['source']     = 'remote';
+			$data['upsell'][ $slug ]['in_pro']     = true;
 		}
 
 		if ( isset( $data['default_template'] ) ) {

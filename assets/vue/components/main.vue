@@ -25,6 +25,9 @@
 					<div v-for="site in sites.remote">
 						<SiteItem :site_data="site"></SiteItem>
 					</div>
+					<div v-for="site in sites.upsell">
+						<SiteItem :site_data="site"></SiteItem>
+					</div>
 					<Preview v-if="previewOpen"></Preview>
 				</div>
 			</template>

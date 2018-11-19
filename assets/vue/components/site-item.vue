@@ -9,7 +9,7 @@
                 <button class="button button-secondary" v-on:click="showPreview()">
                     {{this.$store.state.strings.preview_btn}}
                 </button>
-                <button class="button button-primary" v-on:click="importSite()">
+                <button class="button button-primary" v-if="! site_data.in_pro" v-on:click="importSite()">
                     {{strings.import_btn}}
                 </button>
             </div>
