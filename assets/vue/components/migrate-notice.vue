@@ -6,7 +6,7 @@
 
 			<div class="migrate-text">
 				<h3>{{migrationData.heading}}</h3>
-				<p class="description">{{migrationData.description}}</p>
+				<p>{{migrationData.description}}</p>
 
 				<div class="ti-sites-lib">
 					<div class="site-box migrate-screenshot">
