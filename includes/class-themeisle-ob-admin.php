@@ -146,7 +146,7 @@ class Themeisle_OB_Admin {
 			'advanced_options'    => __( 'Advanced Options', 'textdomain' ),
 			'plugins'             => __( 'Plugins', 'textdomain' ),
 			'general'             => __( 'General', 'textdomain' ),
-			'later'               => __( 'Skip this step', 'textdomain' ),
+			'later'               => __( 'Keep current layout', 'textdomain' ),
 			'content'             => __( 'Content', 'textdomain' ),
 			'customizer'          => __( 'Customizer', 'textdomain' ),
 			'widgets'             => __( 'Widgets', 'textdomain' ),
