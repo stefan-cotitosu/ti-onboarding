@@ -1,7 +1,7 @@
 <template>
-	<div class="site-box">
-		<div class="site-box" :class="site_data.pricing">
-			<div v-if="site_data.in_pro" class="demo-pro"></div>
+	<div class="site-box" :class="site_data.pricing">
+		<div v-if="site_data.in_pro" class="demo-pro"></div>
+		<div class="preview-image">
 			<img :src="site_data.screenshot" :alt="site_data.title">
 		</div>
 		<div class="footer">

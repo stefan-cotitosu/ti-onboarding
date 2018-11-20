@@ -5,7 +5,7 @@
 			<Loader v-if="isLoading" :loading-message="loadingString"></Loader>
 			<template v-else>
 				<template v-if="this.$store.state.onboard === 'yes'">
-					<div class="header" v-if="Object.keys(themeStrings).length">
+					<div class="header" v-if="containsKey(themeStrings,'onboard_header') || containsKey(themeStrings,'onboard_description')">
 						<h1 v-if="containsKey(themeStrings,'onboard_header')">
 							{{themeStrings.onboard_header}}</h1>
 						<p v-if="containsKey(themeStrings,'onboard_description')">
