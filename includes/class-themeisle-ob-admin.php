@@ -55,7 +55,7 @@ class Themeisle_OB_Admin {
 	 */
 	public function add_demo_import_tab( $config ) {
 		$config['custom_tabs']['sites_library'] = array(
-			'title'           => __( 'Sites Library', 'textdomain' ),
+			'title'           => __( 'Sites Library', 'hestia-pro' ),
 			'render_callback' => array(
 				$this,
 				'add_demo_import_tab_content',
@@ -135,30 +135,30 @@ class Themeisle_OB_Admin {
 	 */
 	private function get_strings() {
 		return array(
-			'preview_btn'         => __( 'Preview', 'textdomain' ),
-			'import_btn'          => __( 'Import', 'textdomain' ),
-			'pro_btn'             => __( 'Get the PRO version!', 'textdomain' ),
-			'importing'           => __( 'Importing', 'textdomain' ),
-			'cancel_btn'          => __( 'Cancel', 'textdomain' ),
-			'loading'             => __( 'Loading', 'textdomain' ),
-			'back'                => __( 'Back to Sites Library', 'textdomain' ),
-			'note'                => __( 'Note', 'textdomain' ),
-			'advanced_options'    => __( 'Advanced Options', 'textdomain' ),
-			'plugins'             => __( 'Plugins', 'textdomain' ),
-			'general'             => __( 'General', 'textdomain' ),
-			'later'               => __( 'Skip this step', 'textdomain' ),
-			'content'             => __( 'Content', 'textdomain' ),
-			'customizer'          => __( 'Customizer', 'textdomain' ),
-			'widgets'             => __( 'Widgets', 'textdomain' ),
+			'preview_btn'         => __( 'Preview', 'hestia-pro' ),
+			'import_btn'          => __( 'Import', 'hestia-pro' ),
+			'pro_btn'             => __( 'Get the PRO version!', 'hestia-pro' ),
+			'importing'           => __( 'Importing', 'hestia-pro' ),
+			'cancel_btn'          => __( 'Cancel', 'hestia-pro' ),
+			'loading'             => __( 'Loading', 'hestia-pro' ),
+			'back'                => __( 'Back to Sites Library', 'hestia-pro' ),
+			'note'                => __( 'Note', 'hestia-pro' ),
+			'advanced_options'    => __( 'Advanced Options', 'hestia-pro' ),
+			'plugins'             => __( 'Plugins', 'hestia-pro' ),
+			'general'             => __( 'General', 'hestia-pro' ),
+			'later'               => __( 'Skip this step', 'hestia-pro' ),
+			'content'             => __( 'Content', 'hestia-pro' ),
+			'customizer'          => __( 'Customizer', 'hestia-pro' ),
+			'widgets'             => __( 'Widgets', 'hestia-pro' ),
 			'import_steps'        => array(
-				'plugins'    => __( 'Installing Plugins', 'textdomain' ),
-				'content'    => __( 'Importing Content', 'textdomain' ),
-				'theme_mods' => __( 'Setting Up Customizer', 'textdomain' ),
-				'widgets'    => __( 'Importing Widgets', 'textdomain' ),
+				'plugins'    => __( 'Installing Plugins', 'hestia-pro' ),
+				'content'    => __( 'Importing Content', 'hestia-pro' ),
+				'theme_mods' => __( 'Setting Up Customizer', 'hestia-pro' ),
+				'widgets'    => __( 'Importing Widgets', 'hestia-pro' ),
 			),
-			'import_disclaimer'   => __( 'We recommend you backup your website content before attempting a full site import.', 'textdomain' ),
-			'import_done'         => __( 'Content was successfully imported. Enjoy your new site!', 'textdomain' ),
-			'pro_demo'            => __( 'Available in the PRO version', 'textdomain' ),
+			'import_disclaimer'   => __( 'We recommend you backup your website content before attempting a full site import.', 'hestia-pro' ),
+			'import_done'         => __( 'Content was successfully imported. Enjoy your new site!', 'hestia-pro' ),
+			'pro_demo'            => __( 'Available in the PRO version', 'hestia-pro' ),
 		);
 	}
 }

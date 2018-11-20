@@ -1,6 +1,7 @@
 <template>
 	<div class="site-box">
-		<div class="preview-image">
+		<div class="site-box" :class="site_data.pricing">
+			<div v-if="site_data.in_pro" class="demo-pro"></div>
 			<img :src="site_data.screenshot" :alt="site_data.title">
 		</div>
 		<div class="footer">
@@ -95,5 +96,19 @@
 	button.button-secondary.button {
 		align-self: flex-end;
 		margin-left: auto;
+	}
+
+	.demo-pro {
+		position: relative;
+	}
+	.demo-pro::after {
+		content: "Pro";
+		position: absolute;
+		top: 0;
+		right: 0;
+		color: #fff;
+		background-color: #e91e63;
+		border-radius: 5px;
+		padding: 5px;
 	}
 </style>
