@@ -69,7 +69,7 @@ class Themeisle_OB_Zelle_Importer {
 		unset( $this->content[9] );
 
 		if ( empty( $data ) ) {
-			wp_send_json_error( 'Invalid File.' );
+			wp_send_json_error( 'error', 500 );
 		}
 
 		$this->map_bigtitle_section();
@@ -97,7 +97,7 @@ class Themeisle_OB_Zelle_Importer {
 		$el_template_post = $elementor->import_template( $this->name, $path_to_file );
 
 		if ( empty( $el_template_post ) ) {
-			wp_send_json_error( 'cannot create template' );
+			wp_send_json_error( 'error', 500 );
 		}
 
 		unlink( $path_to_file );
@@ -115,7 +115,7 @@ class Themeisle_OB_Zelle_Importer {
 			wp_send_json_success( esc_url( get_permalink( $post_id ) ) );
 		}
 
-		wp_send_json_error( 'something went wrong' );
+		wp_send_json_error( 'error', 500 );
 
 	}
 
