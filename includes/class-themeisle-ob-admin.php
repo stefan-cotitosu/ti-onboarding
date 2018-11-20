@@ -55,7 +55,7 @@ class Themeisle_OB_Admin {
 	 */
 	public function add_demo_import_tab( $config ) {
 		$config['custom_tabs']['sites_library'] = array(
-			'title'           => __( 'Sites Library', 'textarea' ),
+			'title'           => __( 'Sites Library', 'textdomain' ),
 			'render_callback' => array(
 				$this,
 				'add_demo_import_tab_content',
@@ -135,31 +135,30 @@ class Themeisle_OB_Admin {
 	 */
 	private function get_strings() {
 		return array(
-			'preview_btn'         => __( 'Preview', 'textarea' ),
-			'import_btn'          => __( 'Import', 'textarea' ),
-			'pro_btn'             => __( 'Get the PRO version!', 'textarea' ),
-			'importing'           => __( 'Importing', 'textarea' ),
-			'cancel_btn'          => __( 'Cancel', 'textarea' ),
-			'loading'             => __( 'Loading', 'textarea' ),
-			'go_to_site'          => __( 'View Website', 'textarea' ),
-			'back'                => __( 'Back to Sites Library', 'textarea' ),
-			'note'                => __( 'Note', 'textarea' ),
-			'advanced_options'    => __( 'Advanced Options', 'textarea' ),
-			'plugins'             => __( 'Plugins', 'textarea' ),
-			'general'             => __( 'General', 'textarea' ),
-			'later'               => __( 'Skip this step', 'textarea' ),
-			'content'             => __( 'Content', 'textarea' ),
-			'customizer'          => __( 'Customizer', 'textarea' ),
-			'widgets'             => __( 'Widgets', 'textarea' ),
+			'preview_btn'         => __( 'Preview', 'textdomain' ),
+			'import_btn'          => __( 'Import', 'textdomain' ),
+			'pro_btn'             => __( 'Get the PRO version!', 'textdomain' ),
+			'importing'           => __( 'Importing', 'textdomain' ),
+			'cancel_btn'          => __( 'Cancel', 'textdomain' ),
+			'loading'             => __( 'Loading', 'textdomain' ),
+			'back'                => __( 'Back to Sites Library', 'textdomain' ),
+			'note'                => __( 'Note', 'textdomain' ),
+			'advanced_options'    => __( 'Advanced Options', 'textdomain' ),
+			'plugins'             => __( 'Plugins', 'textdomain' ),
+			'general'             => __( 'General', 'textdomain' ),
+			'later'               => __( 'Skip this step', 'textdomain' ),
+			'content'             => __( 'Content', 'textdomain' ),
+			'customizer'          => __( 'Customizer', 'textdomain' ),
+			'widgets'             => __( 'Widgets', 'textdomain' ),
 			'import_steps'        => array(
-				'plugins'    => __( 'Installing Plugins', 'textarea' ),
-				'content'    => __( 'Importing Content', 'textarea' ),
-				'theme_mods' => __( 'Setting Up Customizer', 'textarea' ),
-				'widgets'    => __( 'Importing Widgets', 'textarea' ),
+				'plugins'    => __( 'Installing Plugins', 'textdomain' ),
+				'content'    => __( 'Importing Content', 'textdomain' ),
+				'theme_mods' => __( 'Setting Up Customizer', 'textdomain' ),
+				'widgets'    => __( 'Importing Widgets', 'textdomain' ),
 			),
-			'import_disclaimer'   => __( 'We recommend you backup your website content before attempting a full site import.', 'textarea' ),
-			'import_done'         => __( 'Content was successfully imported. Enjoy your new site!', 'textarea' ),
-			'pro_demo'            => __( 'Available in the PRO version', 'textarea' ),
+			'import_disclaimer'   => __( 'We recommend you backup your website content before attempting a full site import.', 'textdomain' ),
+			'import_done'         => __( 'Content was successfully imported. Enjoy your new site!', 'textdomain' ),
+			'pro_demo'            => __( 'Available in the PRO version', 'textdomain' ),
 		);
 	}
 }

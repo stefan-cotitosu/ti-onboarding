@@ -8,7 +8,7 @@
 				<h4>{{defaultTemplate.name}}</h4>
 				<div class="theme-actions">
 					<button class="button button-primary" @click="redirectToHome">
-						{{strings.go_to_site}}
+						{{strings.preview_btn}}
 					</button>
 				</div>
 			</div>
