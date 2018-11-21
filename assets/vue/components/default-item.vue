@@ -29,7 +29,7 @@
 				<h4>{{defaultTemplate.name}}</h4>
 				<div class="theme-actions">
 					<button class="button button-primary" @click="redirectToHome">
-						{{strings.preview_btn}}
+						{{strings.go_to_site}}
 					</button>
 				</div>
 			</div>

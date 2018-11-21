@@ -27,7 +27,7 @@
 						<Loader class="loader" :loading-message="strings.importing"></Loader>
 					</button>
 					<button v-else-if="this.$store.state.migration === 'complete'" class="button button-primary button-hero" @click="redirectToHome()">
-						{{strings.preview_btn}}
+						{{strings.go_to_site}}
 					</button>
 				</p>
 			</div>

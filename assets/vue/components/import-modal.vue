@@ -70,7 +70,7 @@
 				</template>
 				<div v-else class="after__actions">
 					<button class="button button-secondary" v-if="this.$store.state.onboard !== 'yes'" v-on:click="resetImport">{{strings.back}}</button>
-					<button class="button button-primary" v-on:click="redirectToHome">{{strings.preview_btn}}</button>
+					<button class="button button-primary" v-on:click="redirectToHome">{{strings.go_to_site}}</button>
 				</div>
 			</div>
 		</div>
