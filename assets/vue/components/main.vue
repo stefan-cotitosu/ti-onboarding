@@ -79,7 +79,7 @@
 		},
 		methods: {
 			cancelOnboarding: function () {
-				this.$store.state.onboard = null;
+				window.location.replace( this.$store.state.aboutUrl );
 			},
 			containsKey( obj, key ) {
 				return Object.keys( obj ).includes( key );
@@ -94,4 +94,4 @@
 			DefaultItem,
 		},
 	}
-</script>Z
+</script>

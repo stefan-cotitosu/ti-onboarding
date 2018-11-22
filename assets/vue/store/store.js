@@ -22,6 +22,7 @@ export default new Vuex.Store( {
 		importModalState: false,
 		importing: false,
 		previewData: {},
+		aboutUrl: themeisleSitesLibApi.aboutUrl,
 		strings: themeisleSitesLibApi.i18ln ,
 		homeUrl: themeisleSitesLibApi.homeUrl,
 		currentStep: 'inactive',

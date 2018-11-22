@@ -260,7 +260,7 @@ a.expander {
 .migrate-notice{
 	position: relative;
 	text-align: center;
-	margin-bottom: 1.25em;
+	margin-bottom: 25px;
 }
 
 .migration-dismiss{
@@ -417,4 +417,8 @@ a.expander {
 		width: 100%;
 		margin-right: 0 !important;
 	}
+}
+
+.about-wrap h3{
+	margin: 0;
 }
