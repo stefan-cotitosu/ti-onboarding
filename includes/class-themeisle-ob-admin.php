@@ -120,8 +120,8 @@ class Themeisle_OB_Admin {
 			'homeUrl'         => esc_url( home_url() ),
 			'i18ln'           => $this->get_strings(),
 			'onboarding'      => 'no',
-			'contentImported' => get_theme_mod( 'ti_content_imported', 'no' ),
-			'aboutUrl'       => admin_url( 'themes.php?page=' . $theme->__get( 'stylesheet' ) . '-welcome' ),
+			'contentImported' => $this->escape_bool_text( get_theme_mod( 'ti_content_imported', 'no' ) ),
+			'aboutUrl'        => esc_url( admin_url( 'themes.php?page=' . $theme->__get( 'stylesheet' ) . '-welcome' ) ),
 		);
 
 		$is_onboarding = isset( $_GET['onboarding'] ) && $_GET['onboarding'] === 'yes';
@@ -165,5 +165,22 @@ class Themeisle_OB_Admin {
 			'import_done'       => __( 'Content was successfully imported. Enjoy your new site!', 'textdomain' ),
 			'pro_demo'          => __( 'Available in the PRO version', 'textdomain' ),
 		);
+	}
+
+	/**
+	 * Escape settings that return 'yes', 'no'.
+	 *
+	 * @param $value
+	 *
+	 * @return string
+	 */
+	private function escape_bool_text( $value ) {
+		$allowed = array( 'yes', 'no' );
+
+		if ( ! in_array( $value, $allowed ) ) {
+			return 'no';
+		}
+
+		return esc_html( $value );
 	}
 }
