@@ -113,7 +113,7 @@ This holds the widgets that you will import. You can get the content of this usi
 
 ---
 ##### The `recommended_plugins` key:
-This holds `key:value` pairs of the plugins you want to recommend and the nicename that will be diplayed in the plugins list.
+This holds the plugins that you recommend. The format used is `"plugin-slug":"Plugin Nicename"`.
 
 ---
 ##### The `front_page` key:
