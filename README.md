@@ -1,5 +1,5 @@
 # ThemeIsle Onboarding Module
-[![GitHub version](https://badge.fury.io/gh/Codeinwp%2Fti-onboarding.svg)](https://github.com/codeinwp/StrapDown.js)
+[![GitHub version](https://badge.fury.io/gh/Codeinwp%2Fti-onboarding.svg)](https://github.com/codeinwp/ti-onboarding)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) 
 [![Monthly Downloads](https://poser.pugx.org/codeinwp/ti-onboarding/d/monthly)](https://packagist.org/packages/codeinwp/ti-onboarding)
 
