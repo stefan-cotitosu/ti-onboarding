@@ -21,6 +21,7 @@
 			previewData: function () {
 				return this.$store.state.previewData
 			},
+
 			loadingString: function() {
 				return this.$store.state.strings.loading
 			}

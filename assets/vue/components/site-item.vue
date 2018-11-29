@@ -1,6 +1,6 @@
 <template>
-	<div class="site-box" :class="site_data.pricing">
-		<div v-if="site_data.in_pro" class="demo-pro"></div>
+	<div class="site-box theme" :class="site_data.pricing">
+        <div v-if="site_data.in_pro" class="notice inline notice-warning notice-alt"><p>{{this.$store.state.strings.pro_demo}}</p></div>
 		<div class="preview-image">
 			<img :src="site_data.screenshot" :alt="site_data.title">
 		</div>
@@ -22,9 +22,9 @@
 	export default {
 		name: 'site-item',
         data: function() {
-            return {
-                strings: this.$store.state.strings
-            }
+		  return {
+		      strings: this.$store.state.strings
+          }
         },
 		props: {
 			site_data: {
@@ -34,7 +34,7 @@
 			},
 		},
 		methods: {
-            setupImportData: function () {
+			setupImportData: function () {
 				let plugins = Object.keys( this.site_data.recommended_plugins ).reduce( function ( previous, current ) {
 					previous[ current ] = true;
 					return previous;
@@ -42,7 +42,7 @@
 
 				this.$store.commit( 'updatePlugins', plugins );
 			},
-            importSite: function() {
+            importSite: function () {
                 this.setupImportData();
                 this.$store.commit( 'populatePreview', this.site_data );
                 this.$store.commit( 'showImportModal', true );
@@ -69,21 +69,25 @@
 
 	.site-box {
 		border: 1px solid #ccc;
+        position: relative;
 	}
 
     .site-box:hover .footer .theme-actions {
         display: block;
     }
 
+    .site-box .notice {
+        display: block !important;
+    }
+
 	.footer {
         position: relative;
 		border-top: 1px solid #ccc;
 		display: flex;
-		padding: 15px;
+        padding: 15px;
 		flex-wrap: wrap;
 		align-items: center;
 	}
-
     .footer .theme-actions {
         display: none;
         position: absolute;
@@ -98,17 +102,4 @@
 		margin-left: auto;
 	}
 
-	.demo-pro {
-		position: relative;
-	}
-	.demo-pro::after {
-		content: "Pro";
-		position: absolute;
-		top: 0;
-		right: 0;
-		color: #fff;
-		background-color: #e91e63;
-		border-radius: 5px;
-		padding: 5px;
-	}
 </style>

@@ -21,7 +21,7 @@ class Themeisle_OB_Content_Importer {
 	public function import_remote_xml( WP_REST_Request $request ) {
 
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( 'error', 500 );
+			wp_send_json_error( 'Not allowed to import content.' );
 		}
 
 		do_action( 'themeisle_ob_before_xml_import' );
@@ -31,11 +31,11 @@ class Themeisle_OB_Content_Importer {
 		$content_file_url = $body['contentFile'];
 
 		if ( empty( $content_file_url ) ) {
-			wp_send_json_error( 'error', 500 );
+			wp_send_json_error( 'No content to import.' );
 		}
 
 		if ( ! isset( $body['source'] ) || empty( $body['source'] ) ) {
-			wp_send_json_error( 'error', 500 );
+			wp_send_json_error( 'Unkown source.' );
 		}
 
 		set_time_limit( 10000 );
@@ -44,10 +44,17 @@ class Themeisle_OB_Content_Importer {
 		require_once( ABSPATH . 'wp-admin/includes/media.php' );
 
 		if ( $body['source'] === 'remote' ) {
-			require_once( ABSPATH . '/wp-admin/includes/file.php' );
+
+			require_once( ABSPATH . 'wp-admin' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'file.php' );
+
 			global $wp_filesystem;
+
 			WP_Filesystem();
-			$content_file      = $wp_filesystem->get_contents( $content_file_url );
+
+			$content_file = $wp_filesystem->get_contents( $content_file_url );
+
+			print_r( $content_file );
+
 			$content_file_path = $this->save_xhr_return_path( $content_file );
 		} else {
 			$content_file_path = $content_file_url;
@@ -92,10 +99,14 @@ class Themeisle_OB_Content_Importer {
 		ob_start();
 		echo $content;
 		$result = ob_get_clean();
-		require_once( ABSPATH . '/wp-admin/includes/file.php' );
+
+		require_once( ABSPATH . 'wp-admin' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'file.php' );
+
 		global $wp_filesystem;
+
 		WP_Filesystem();
-		$wp_filesystem->put_contents( $file_path, $result );
+
+		$wp_filesystem->put_contents( $file_path, $result, 0644 );
 
 		return $file_path;
 	}
@@ -170,7 +181,7 @@ class Themeisle_OB_Content_Importer {
 	private function maybe_bust_elementor_cache() {
 		if ( class_exists( '\Elementor\Plugin' ) ) {
 			wp_remote_post(
-				esc_url( admin_url( 'admin-ajax.php' ) ),
+				admin_url( 'admin-ajax.php' ),
 				array(
 					'body' => array(
 						'action' => 'elementor_clear_cache',
@@ -188,7 +199,7 @@ class Themeisle_OB_Content_Importer {
 	 */
 	private function import_file( $file_path ) {
 		if ( empty( $file_path ) || ! file_exists( $file_path ) || ! is_readable( $file_path ) ) {
-			wp_send_json_error( 'error', 500 );
+			wp_send_json_error( 'Export non-existent or is not readable.' );
 		}
 		$this->load_importer();
 		$logger   = new Themeisle_OB_Logger();
@@ -196,7 +207,7 @@ class Themeisle_OB_Content_Importer {
 		$importer->set_logger( $logger );
 		$result = $importer->import( $file_path );
 		if ( is_wp_error( $result ) ) {
-			wp_send_json_error( 'error', 500 );
+			wp_send_json_error( 'Could not import content.' );
 		}
 	}
 

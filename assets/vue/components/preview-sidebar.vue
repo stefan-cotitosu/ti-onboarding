@@ -35,10 +35,10 @@
 			showModal: function () {
 				this.$store.commit( 'showImportModal', true );
 			},
-			buyPro: function () {
-				var win = window.open(this.$store.state.sitesData.pro_link, '_blank');
-				win.focus();
-			},
+            buyPro: function () {
+                var win = window.open('https://themeisle.com/themes/hestia-pro/upgrade/', '_blank');
+                win.focus();
+            },
 		}
 	}
 </script>

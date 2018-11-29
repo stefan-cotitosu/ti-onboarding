@@ -40,10 +40,6 @@ const resetStates = ( state ) => {
 	};
 };
 
-const migrationComplete = ( state ) => {
-	state.migration = 'complete';
-};
-
 export default {
 	setAjaxState,
 	saveSitesData,
@@ -54,6 +50,5 @@ export default {
 	updateSteps,
 	updatePlugins,
 	updateImportOptions,
-	resetStates,
-	migrationComplete,
+	resetStates
 };

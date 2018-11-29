@@ -26,7 +26,7 @@ class Themeisle_Onboarding {
 	 *
 	 * @var string Version string.
 	 */
-	const VERSION = '1.0.3';
+	const VERSION = '1.0.0';
 
 	/**
 	 * Sites Library API URL.
@@ -47,7 +47,7 @@ class Themeisle_Onboarding {
 	 *
 	 * @var string Onboarding root path.
 	 */
-	const OBOARDING_PATH = '/vendor/codeinwp/ti-onboarding';
+	const OBOARDING_PATH = '/inc/admin/onboarding';
 
 	/**
 	 * Holds the sites data.
@@ -55,7 +55,6 @@ class Themeisle_Onboarding {
 	 * @var null
 	 */
 	private function init() {
-
 		if ( ! $this->should_load() ) {
 			return;
 		}
