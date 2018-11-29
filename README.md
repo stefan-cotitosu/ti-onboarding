@@ -1,6 +1,6 @@
 # ThemeIsle Onboarding Module
 [![GitHub version](https://badge.fury.io/gh/Codeinwp%2Fti-onboarding.svg)](https://github.com/codeinwp/ti-onboarding)
-[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) 
+[![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/gpl-2.0) 
 [![Monthly Downloads](https://poser.pugx.org/codeinwp/ti-onboarding/d/monthly)](https://packagist.org/packages/codeinwp/ti-onboarding)
 
 The ThemeIsle onboarding module serves as aid for theme authors to enable an easier onboarding UX, allowing to install and activate plugins, change theme mods, and import content with XML files.
@@ -127,9 +127,9 @@ This holds key value pairs for the shop pages that you want to set in case you'r
 
 License
 ---
-The ThemeIsle Onboarding Module is licensed under the GPLv3 or later. 
+The ThemeIsle Onboarding Module is licensed under the GPLv2 or later. 
 
 Credits
 ---
 - The XML importer is based on the [HumanMade WordPress-Importer](https://github.com/humanmade/WordPress-Importer) repository, licensed under GPLv2 or later.
-- The widgets importer is based on the [CrunchThemes Widget Importer & Exporter](https://github.com/churchthemes/widget-importer-exporter), licensed under GPLv3 or later.
+- The widgets importer is based on the [CrunchThemes Widget Importer & Exporter](https://github.com/churchthemes/widget-importer-exporter), licensed under GPLv2 or later.
