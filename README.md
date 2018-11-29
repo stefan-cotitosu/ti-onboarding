@@ -133,5 +133,3 @@ Credits
 ---
 - The XML importer is based on the [HumanMade WordPress-Importer](https://github.com/humanmade/WordPress-Importer) repository, licensed under GPLv2 or later.
 - The widgets importer is based on the [CrunchThemes Widget Importer & Exporter](https://github.com/churchthemes/widget-importer-exporter), licensed under GPLv3 or later.
-
-![onboarding screenshot](https://i.imgur.com/BuwktKD.png)
