@@ -127,7 +127,7 @@ This holds key value pairs for the shop pages that you want to set in case you'r
 
 License
 ---
-The ThemeIsle Onboarding Module is licensed under the GPLv2 or later. 
+The ThemeIsle Onboarding Module is licensed under the GPLv3 or later. 
 
 Credits
 ---
