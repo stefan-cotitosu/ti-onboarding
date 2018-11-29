@@ -5,8 +5,6 @@
 
 The ThemeIsle onboarding module serves as aid for theme authors to enable an easier onboarding UX, allowing to install and activate plugins, change theme mods, and import content with XML files.
 
-![onboarding screenshot](https://i.imgur.com/4VGhM3O.png)
-
 How do I use this?
 ---
 1. [Include the ThemeIsle Onboarding Module.](#1-include-the-themeisle-onboarding-module)
