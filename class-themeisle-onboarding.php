@@ -11,7 +11,7 @@
 /**
  * Class Themeisle_Onboarding
  *
- * @package ThemeIsle
+ * @package themeisle-onboarding
  */
 class Themeisle_Onboarding {
 	/**

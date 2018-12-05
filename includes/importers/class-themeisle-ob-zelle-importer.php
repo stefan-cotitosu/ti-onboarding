@@ -2,13 +2,13 @@
 /**
  * Import Zelle to Elementor template.
  *
- * @package Neve\Content_Import
+ * @package themeisle-onboarding
  */
 
 /**
  * Class to import Zelle to an Elementor template.
  *
- * @package Neve\Content_Import
+ * @package themeisle-onboarding
  */
 class Themeisle_OB_Zelle_Importer {
 
