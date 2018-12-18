@@ -17,11 +17,22 @@
 				<h3 v-if="containsKey(themeStrings, 'templates_title')">{{themeStrings.templates_title}}</h3>
 				<p v-if="containsKey(themeStrings, 'templates_description')">{{themeStrings.templates_description}}</p>
 				</template>
+
+
 				<div class="ti-sites-lib">
+					<tabs>
+						<template v-for="(editor_sites, editor) in sites.local">
+							<tab v-bind:name="editor">
+								<div v-for="site in editor_sites" >
+									<SiteItem :site_data="site"></SiteItem>
+								</div>
+							</tab>
+						</template>
+					</tabs>
+
+
+					<!-- TODO: SEE WHAT TO DO WITH THIS -->
 					<default-item v-if="this.$store.state.sitesData.default_template"></default-item>
-					<div v-for="site in sites.local">
-						<SiteItem :site_data="site"></SiteItem>
-					</div>
 					<div v-for="site in sites.remote">
 						<SiteItem :site_data="site"></SiteItem>
 					</div>
@@ -49,6 +60,8 @@
 	import ImportModal from './import-modal.vue'
 	import MigrateNotice from './migrate-notice.vue'
 	import DefaultItem from './default-item.vue'
+	import Tab from './tab.vue';
+	import Tabs from './tabs.vue';
 
 	module.exports = {
 		name: 'app',
@@ -92,6 +105,8 @@
 			ImportModal,
 			MigrateNotice,
 			DefaultItem,
+			Tab,
+			Tabs
 		},
 	}
 </script>

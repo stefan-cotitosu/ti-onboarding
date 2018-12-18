@@ -71,6 +71,7 @@
 				<div v-else class="after__actions">
 					<button class="button button-secondary" v-if="this.$store.state.onboard !== 'yes'" v-on:click="resetImport">{{strings.back}}</button>
 					<button class="button button-primary" v-on:click="redirectToHome">{{strings.go_to_site}}</button>
+					<button class="button button-primary" v-on:click="editTemplate">{{strings.go_to_site}}</button>
 				</div>
 			</div>
 		</div>
@@ -81,6 +82,7 @@
 	import { directive as onClickaway } from 'vue-clickaway'
 	import Stepper from './stepper.vue'
 	import Loader from './loader.vue'
+	import Tabs from './tabs.vue'
 
 	export default {
 		name: 'import-modal',
@@ -159,6 +161,12 @@
 			},
 			resetImport: function () {
 				this.$store.commit( 'resetStates' );
+			},
+			editTemplate: function (  ) {
+				var currentTab = Tabs.getActiveTab();
+				if( currentTab === 'elementor' ){
+					alert('sss');
+				}
 			}
 		},
 		directives: {
@@ -167,6 +175,7 @@
 		components: {
 			Stepper,
 			Loader,
+			Tabs
 		}
 	}
 </script>
