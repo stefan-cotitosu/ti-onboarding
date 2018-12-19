@@ -122,7 +122,7 @@
 				this.activeTabIndex = this.getTabIndex(selectedTabHash);
 
 				this.lastActiveTabHash = this.activeTabHash = selectedTab.hash;
-
+				this.$store.commit( 'updateEditor',  selectedTab.computedId );
 				expiringStorage.set(this.storageKey, selectedTab.hash, this.cacheLifetime);
 			},
 

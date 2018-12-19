@@ -17,28 +17,31 @@
 				<h3 v-if="containsKey(themeStrings, 'templates_title')">{{themeStrings.templates_title}}</h3>
 				<p v-if="containsKey(themeStrings, 'templates_description')">{{themeStrings.templates_description}}</p>
 				</template>
-
-
 				<div class="ti-sites-lib">
 					<tabs>
-						<template v-for="(editor_sites, editor) in sites.local">
+						<template v-for="editor in editors">
 							<tab v-bind:name="editor">
-								<div v-for="site in editor_sites" >
-									<SiteItem :site_data="site"></SiteItem>
-								</div>
+								<template v-for="(editor_sites, site_editor) in sites.local">
+									<div v-if="site_editor===editor" v-for="site in editor_sites" >
+										<SiteItem :site_data="site"></SiteItem>
+									</div>
+								</template>
+
+								<template v-for="(editor_sites, site_editor) in sites.remote">
+									<div v-if="site_editor===editor" v-for="site in editor_sites" >
+										<SiteItem :site_data="site"></SiteItem>
+									</div>
+								</template>
+
+								<template v-for="(editor_sites, site_editor) in sites.upsell">
+									<div v-if="site_editor===editor" v-for="site in editor_sites" >
+										<SiteItem :site_data="site"></SiteItem>
+									</div>
+								</template>
+
 							</tab>
 						</template>
 					</tabs>
-
-
-					<!-- TODO: SEE WHAT TO DO WITH THIS -->
-					<default-item v-if="this.$store.state.sitesData.default_template"></default-item>
-					<div v-for="site in sites.remote">
-						<SiteItem :site_data="site"></SiteItem>
-					</div>
-					<div v-for="site in sites.upsell">
-						<SiteItem :site_data="site"></SiteItem>
-					</div>
 					<Preview v-if="previewOpen"></Preview>
 				</div>
 			</template>
@@ -59,7 +62,6 @@
 	import Preview from './preview.vue'
 	import ImportModal from './import-modal.vue'
 	import MigrateNotice from './migrate-notice.vue'
-	import DefaultItem from './default-item.vue'
 	import Tab from './tab.vue';
 	import Tabs from './tabs.vue';
 
@@ -76,6 +78,9 @@
 			},
 			sites: function () {
 				return this.$store.state.sitesData
+			},
+			editors: function(){
+				return this.$store.state.sitesData.editors
 			},
 			previewOpen: function () {
 				return this.$store.state.previewOpen
@@ -104,7 +109,6 @@
 			Preview,
 			ImportModal,
 			MigrateNotice,
-			DefaultItem,
 			Tab,
 			Tabs
 		},

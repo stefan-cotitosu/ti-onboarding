@@ -146,6 +146,7 @@ class Themeisle_OB_Admin {
 			'cancel_btn'        => __( 'Cancel', 'textdomain' ),
 			'loading'           => __( 'Loading', 'textdomain' ),
 			'go_to_site'        => __( 'View Website', 'textdomain' ),
+			'edit_template'     => __( 'Edit template', 'textdomain' ),
 			'back'              => __( 'Back to Sites Library', 'textdomain' ),
 			'note'              => __( 'Note', 'textdomain' ),
 			'advanced_options'  => __( 'Advanced Options', 'textdomain' ),

@@ -71,7 +71,7 @@
 				<div v-else class="after__actions">
 					<button class="button button-secondary" v-if="this.$store.state.onboard !== 'yes'" v-on:click="resetImport">{{strings.back}}</button>
 					<button class="button button-primary" v-on:click="redirectToHome">{{strings.go_to_site}}</button>
-					<button class="button button-primary" v-on:click="editTemplate">{{strings.go_to_site}}</button>
+					<button class="button button-primary" v-on:click="editTemplate">{{strings.edit_template}}</button>
 				</div>
 			</div>
 		</div>
@@ -130,6 +130,12 @@
 			willInstallPlugin: function ( slug ) {
 				return this.$store.state.importOptions.installablePlugins[ slug ];
 			},
+			getEditor:function(){
+				return this.$store.state.editor;
+			},
+			getPageId: function(){
+				return this.$store.state.frontPageId;
+			},
 			closeModal: function () {
 				if ( this.importing ) {
 					return false
@@ -163,10 +169,16 @@
 				this.$store.commit( 'resetStates' );
 			},
 			editTemplate: function (  ) {
-				var currentTab = Tabs.getActiveTab();
-				if( currentTab === 'elementor' ){
-					alert('sss');
+				var editor = this.getEditor();
+				var pageId = this.getPageId();
+				var url = this.homeUrl;
+				if( editor === 'elementor'){
+					url = this.homeUrl + '/wp-admin/post.php?post='+pageId+'&action=elementor';
 				}
+				if( editor === 'gutenberg'){
+					url = this.homeUrl + '/wp-admin/post.php?post='+pageId+'&action=edit';
+				}
+				window.location.replace( url );
 			}
 		},
 		directives: {
