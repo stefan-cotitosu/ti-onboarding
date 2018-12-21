@@ -69,8 +69,8 @@
 					<button class="button button-primary" :disabled="! checIfShouldImport" v-on:click="startImport">{{strings.import_btn}}</button>
 				</template>
 				<div v-else class="after__actions">
-					<button class="button button-secondary" v-if="this.$store.state.onboard !== 'yes'" v-on:click="resetImport">{{strings.back}}</button>
-					<button class="button button-primary" v-on:click="redirectToHome">{{strings.go_to_site}}</button>
+					<a class="button-link" v-if="this.$store.state.onboard !== 'yes'" v-on:click="resetImport">{{strings.back}}</a>
+					<button class="button button-secondary" v-on:click="redirectToHome">{{strings.go_to_site}}</button>
 					<button class="button button-primary" v-on:click="editTemplate">{{strings.edit_template}}</button>
 				</div>
 			</div>

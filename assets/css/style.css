@@ -1,4 +1,4 @@
-[id*='templates-in-']{
+.templates-wrapper{
 	display: -ms-grid;
 	display: grid;
 
@@ -150,6 +150,10 @@
 	-webkit-align-self: flex-end;
 	align-self: flex-end;
 	-ms-flex-item-align: end;
+}
+
+.modal__footer .after__actions .button-link{
+	float: left;
 }
 
 .modal__content.import__done {
@@ -491,4 +495,16 @@ a.expander {
 	padding: .75em 1em;
 	text-decoration: none;
 	text-transform: capitalize;
+}
+
+.template-serach-wrapper{
+	text-align: right;
+	width: 100%;
+	margin-bottom: 20px;
+}
+.template-serach{
+	line-height: 1.5;
+	font-size: 16px;
+	font-weight: 300;
+	padding: 3px 5px;
 }

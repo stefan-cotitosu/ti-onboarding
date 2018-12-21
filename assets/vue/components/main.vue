@@ -18,30 +18,7 @@
 				<p v-if="containsKey(themeStrings, 'templates_description')">{{themeStrings.templates_description}}</p>
 				</template>
 				<div class="ti-sites-lib">
-					<tabs>
-						<template v-for="editor in editors">
-							<tab v-bind:name="editor">
-								<template v-for="(editor_sites, site_editor) in sites.local">
-									<div v-if="site_editor===editor" v-for="site in editor_sites" >
-										<SiteItem :site_data="site"></SiteItem>
-									</div>
-								</template>
-
-								<template v-for="(editor_sites, site_editor) in sites.remote">
-									<div v-if="site_editor===editor" v-for="site in editor_sites" >
-										<SiteItem :site_data="site"></SiteItem>
-									</div>
-								</template>
-
-								<template v-for="(editor_sites, site_editor) in sites.upsell">
-									<div v-if="site_editor===editor" v-for="site in editor_sites" >
-										<SiteItem :site_data="site"></SiteItem>
-									</div>
-								</template>
-
-							</tab>
-						</template>
-					</tabs>
+					<EditorsTabs></EditorsTabs>
 					<Preview v-if="previewOpen"></Preview>
 				</div>
 			</template>
@@ -58,13 +35,10 @@
 
 <script>
 	import Loader from './loader.vue'
-	import SiteItem from './site-item.vue'
 	import Preview from './preview.vue'
 	import ImportModal from './import-modal.vue'
 	import MigrateNotice from './migrate-notice.vue'
-	import Tab from './tab.vue';
-	import Tabs from './tabs.vue';
-
+	import EditorsTabs from './editors-tabs.vue';
 	module.exports = {
 		name: 'app',
 		data: function () {
@@ -75,12 +49,6 @@
 		computed: {
 			isLoading: function () {
 				return this.$store.state.ajaxLoader
-			},
-			sites: function () {
-				return this.$store.state.sitesData
-			},
-			editors: function(){
-				return this.$store.state.sitesData.editors
 			},
 			previewOpen: function () {
 				return this.$store.state.previewOpen
@@ -105,12 +73,10 @@
 		},
 		components: {
 			Loader,
-			SiteItem,
 			Preview,
 			ImportModal,
 			MigrateNotice,
-			Tab,
-			Tabs
+			EditorsTabs,
 		},
 	}
 </script>
