@@ -246,7 +246,7 @@ a.expander {
 	justify-content: center;
 }
 
-.is__onboarding .ti-sites-lib > div,
+.is__onboarding .ti-sites-lib > div:not(.tabs-component),
 .migrate-notice .ti-sites-lib > div {
 	width: 32%;
 	margin-right: 2%;
@@ -430,6 +430,9 @@ a.expander {
 
 
 /* Tabs component */
+.tabs-component{
+	width: 100%;
+}
 .tabs-component-tabs {
 	border: solid 1px #ddd;
 	border-radius: 6px;
