@@ -76,9 +76,6 @@ class Themeisle_OB_Elementor_Meta_Handler {
 			if ( ! isset( $item['host'] ) ) {
 				return;
 			}
-			if ( $item['host'] !== 'demo.themeisle.com' ) {
-				return;
-			}
 			$uploads_dir  = wp_get_upload_dir();
 			$uploads_url  = $uploads_dir['baseurl'];
 			$item['path'] = preg_split( '/\//', $item['path'] );
