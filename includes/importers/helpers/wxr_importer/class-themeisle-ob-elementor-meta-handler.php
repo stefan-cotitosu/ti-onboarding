@@ -29,12 +29,35 @@ class Themeisle_OB_Elementor_Meta_Handler {
 	private $value = null;
 
 	/**
+	 * A list of allowed mimes.
+	 *
+	 * @var array
+	 */
+	protected $extensions = array(
+		'jpg|jpeg|jpe' => 'image/jpeg',
+		'png'          => 'image/png',
+		'webp'         => 'image/webp',
+		'svg'          => 'image/svg+xml',
+	);
+
+	/**
+	 * Current site url.
+	 *
+	 * @var |null
+	 */
+	private $site_url = null;
+
+	/**
 	 * Themeisle_OB_Elementor_Meta_Handler constructor.
 	 *
 	 * @param string $unfiltered_value the unfiltered meta value.
 	 */
 	public function __construct( $unfiltered_value ) {
-		$this->value = $unfiltered_value;
+		$this->value    = $unfiltered_value;
+
+		$site_url       = get_site_url();
+		$site_url       = parse_url( $site_url );
+		$this->site_url = $site_url['host'];
 	}
 
 	/**
@@ -67,26 +90,35 @@ class Themeisle_OB_Elementor_Meta_Handler {
 	 * Replace demo urls in meta with site urls.
 	 */
 	private function replace_urls() {
-		$string = str_replace( '\\', '', $this->value );
-		$urls   = wp_extract_urls( $string );
+		$old_urls = $this->get_urls_to_replace();
+		$urls     = array_combine( $old_urls, $old_urls );
+		$urls     = array_map( 'wp_unslash', $urls );
 
-		array_walk( $urls, function ( $item ) {
-			$old_url = $item;
-			$item    = parse_url( $item );
-			if ( ! isset( $item['host'] ) ) {
-				return;
-			}
-			$uploads_dir  = wp_get_upload_dir();
-			$uploads_url  = $uploads_dir['baseurl'];
-			$item['path'] = preg_split( '/\//', $item['path'] );
-			$item['path'] = array_slice( $item['path'], - 3 );
+		$urls = array_map( function ( $url ) {
+			$parsed   = parse_url( $url );
+			$old_site = $parsed['host'];
 
-			$item = array(
-				'old_url' => str_replace( '/', '\\/', $old_url ),
-				'new_url' => str_replace( '/', '\\/', esc_url( $uploads_url . '/' . join( '/', $item['path'] ) ) ),
-			);
+			return str_replace( $old_site, $this->site_url, $url );
+		}, $urls );
 
-			$this->value = str_replace( $item['old_url'], $item['new_url'], $this->value );
-		} );
+		$this->value = str_replace( array_keys( $urls ), array_values( $urls ), $this->value );
+	}
+
+	/**
+	 * Get url replace array.
+	 *
+	 * @return array
+	 */
+	private function get_urls_to_replace() {
+		$regex = '/(?:http(?:s?):)(?:[\/\\\\\\\\|.|\w|\s|-])*\.(?:' . implode( '|', array_keys( $this->extensions ) ) . ')/m';
+		preg_match_all( $regex, $this->value, $urls );
+
+		$urls = array_map( function ( $value ) {
+			return rtrim( html_entity_decode( $value ), '\\' );
+		}, $urls[0] );
+
+		$urls = array_unique( $urls );
+
+		return array_values( $urls );
 	}
 }
