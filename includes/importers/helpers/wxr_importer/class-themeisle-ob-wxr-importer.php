@@ -256,8 +256,6 @@ class Themeisle_OB_WXR_Importer extends WP_Importer {
 					$node   = $reader->expand();
 					$parsed = $this->parse_post_node( $node );
 					if ( is_wp_error( $parsed ) ) {
-						$this->log_error( $parsed );
-
 						$reader->next();
 						break;
 					}
@@ -276,8 +274,6 @@ class Themeisle_OB_WXR_Importer extends WP_Importer {
 
 					$parsed = $this->parse_term_node( $node, 'category' );
 					if ( is_wp_error( $parsed ) ) {
-						$this->log_error( $parsed );
-
 						$reader->next();
 						break;
 					}
@@ -292,8 +288,6 @@ class Themeisle_OB_WXR_Importer extends WP_Importer {
 
 					$parsed = $this->parse_term_node( $node, 'tag' );
 					if ( is_wp_error( $parsed ) ) {
-						$this->log_error( $parsed );
-
 						$reader->next();
 						break;
 					}
@@ -308,8 +302,6 @@ class Themeisle_OB_WXR_Importer extends WP_Importer {
 
 					$parsed = $this->parse_term_node( $node );
 					if ( is_wp_error( $parsed ) ) {
-						$this->log_error( $parsed );
-
 						$reader->next();
 						break;
 					}
@@ -614,22 +606,7 @@ class Themeisle_OB_WXR_Importer extends WP_Importer {
 			}
 		}
 
-		// Map the author, or mark it as one we need to fix
-		$author = sanitize_user( $data['post_author'], true );
-		if ( empty( $author ) ) {
-			// Missing or invalid author, use default if available.
-			$data['post_author'] = $this->options['default_author'];
-		} elseif ( isset( $this->mapping['user_slug'][ $author ] ) ) {
-			$data['post_author'] = $this->mapping['user_slug'][ $author ];
-		} else {
-			$meta[]             = array(
-				'key'   => '_wxr_import_user_slug',
-				'value' => $author,
-			);
-			$requires_remapping = true;
-
-			$data['post_author'] = (int) get_current_user_id();
-		}
+		$data['post_author'] = (int) get_current_user_id();
 
 		// Does the post look like it contains attachment images?
 		if ( preg_match( self::REGEX_HAS_ATTACHMENT_REFS, $data['post_content'] ) ) {
@@ -981,7 +958,6 @@ class Themeisle_OB_WXR_Importer extends WP_Importer {
 
 		return true;
 	}
-
 
 	protected function parse_category_node( $node ) {
 		$data = array(
