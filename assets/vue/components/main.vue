@@ -12,7 +12,7 @@
 							{{themeStrings.onboard_description}}</p>
 					</div>
 				</template>
-				<MigrateNotice></MigrateNotice>
+				<MigrateNotice v-if="this.$store.state.sitesData.migrate_data.length > 0"></MigrateNotice>
 				<template v-if="Object.keys(themeStrings).length">
 				<h3 v-if="containsKey(themeStrings, 'templates_title')">{{themeStrings.templates_title}}</h3>
 				<p v-if="containsKey(themeStrings, 'templates_description')">{{themeStrings.templates_description}}</p>
