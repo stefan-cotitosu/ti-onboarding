@@ -201,10 +201,14 @@ class Themeisle_OB_Content_Importer {
 			wp_send_json_error( 'error', 500 );
 		}
 		$this->load_importer();
+
+		require_once 'helpers/class-themeisle-ob-importer-alterator.php';
+		new Themeisle_OB_Importer_Alterator();
+
 		$importer = new Themeisle_OB_WXR_Importer();
 		$result = $importer->import( $file_path );
 		if ( is_wp_error( $result ) ) {
-			wp_send_json_error( 'error', 500 );
+			wp_send_json_error( $result, 500 );
 		}
 	}
 
