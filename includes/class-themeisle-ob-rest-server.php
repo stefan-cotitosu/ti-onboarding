@@ -36,6 +36,11 @@ class Themeisle_OB_Rest_Server {
 	private $data = array();
 
 	/**
+	 * @var bool
+	 */
+	private $valid_lic = false;
+
+	/**
 	 * Initialize the rest functionality.
 	 */
 	public function init() {
@@ -44,6 +49,9 @@ class Themeisle_OB_Rest_Server {
 		add_action( 'rest_api_init', array( $this, 'register_endpoints' ) );
 	}
 
+	/**
+	 * Setup class properties.
+	 */
 	public function setup_props() {
 		$theme_support = get_theme_support( 'themeisle-demo-import' );
 
@@ -52,6 +60,7 @@ class Themeisle_OB_Rest_Server {
 		}
 
 		$this->theme_support = $theme_support[0];
+		$this->valid_lic     = $this->is_valid_lic();
 	}
 
 	/**
@@ -124,7 +133,6 @@ class Themeisle_OB_Rest_Server {
 				},
 			)
 		);
-
 		register_rest_route(
 			Themeisle_Onboarding::API_ROOT,
 			'/dismiss_migration',
@@ -200,6 +208,10 @@ class Themeisle_OB_Rest_Server {
 	 * @return array
 	 */
 	private function get_remote_templates() {
+		if ( $this->valid_lic === false ) {
+			return array();
+		}
+
 		$returnable = array();
 
 		foreach ( $this->theme_support['editors'] as $editor ) {
@@ -237,6 +249,9 @@ class Themeisle_OB_Rest_Server {
 	 * @return array
 	 */
 	private function get_upsell_templates() {
+		if ( $this->valid_lic === true ) {
+			return array();
+		}
 		$returnable = array();
 
 		foreach ( $this->theme_support['editors'] as $editor ) {
@@ -425,5 +440,30 @@ class Themeisle_OB_Rest_Server {
 		}
 		set_theme_mod( $params['theme_mod'], 'yes' );
 		wp_send_json_success( $this->frontpage_id );
+	}
+
+	/**
+	 * Check license
+	 *
+	 * @return bool
+	 */
+	private function is_valid_lic() {
+		if ( ! class_exists( '\ThemeisleSDK\Common\Module_Factory' ) ) {
+			return false;
+		}
+		$sdk_modules = \ThemeisleSDK\Common\Module_Factory::get_modules_map();
+		$theme       = get_stylesheet();
+
+		if ( ! array_key_exists( $theme, $sdk_modules ) ) {
+			return false;
+		}
+
+		$licenser = $sdk_modules[ $theme ]['licenser'];
+		$validity = $licenser->get_license_status();
+		if ( $validity === 'valid' ) {
+			return true;
+		}
+
+		return false;
 	}
 }
