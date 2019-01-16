@@ -71,8 +71,9 @@
 		border: 1px solid #ccc;
 	}
 
-    .site-box:hover .footer .theme-actions {
-        display: block;
+    .site-box:hover .footer .theme-actions,
+    .site-box:focus-within .footer .theme-actions {
+		opacity: 1;
     }
 
 	.footer {
@@ -85,7 +86,8 @@
 	}
 
     .footer .theme-actions {
-        display: none;
+		opacity: 0;
+        display: block;
         position: absolute;
         right: 0;
         padding: 10px 15px;
