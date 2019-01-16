@@ -22,9 +22,17 @@ You have to declare theme support in order to make the Onboarding work. Here's a
 ```
 add_theme_support( 'themeisle-demo-import', array(
 	'local' => array(
-		'neve-main' => array(
-			'url'   => 'https://demo.themeisle.com/neve',
-			'title' => 'Neve 2018',
+		'elementor' => array(
+			'neve-main' => array(
+				'url'   => 'https://demo.themeisle.com/neve',
+				'title' => 'Neve 2018',
+			),
+		),
+		'beaver_builder' => array(
+			'neve-main' => array(
+				'url'   => 'https://demo.themeisle.com/neve',
+				'title' => 'Neve 2018',
+			),
 		),
 	),
 	'i18n'  => array(
