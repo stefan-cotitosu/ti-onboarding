@@ -1,7 +1,6 @@
 <template>
 	<div class="site-box" :class="site_data.pricing">
-		<div v-if="site_data.in_pro" class="demo-pro"></div>
-		<div class="preview-image">
+		<div class="preview-image" :class="{ 'demo-pro' : site_data.in_pro }">
 			<img :src="site_data.screenshot" :alt="site_data.title">
 		</div>
 		<div class="footer">
@@ -55,62 +54,3 @@
 		},
 	}
 </script>
-
-<style scoped>
-	h4 {
-		display: block;
-		white-space: nowrap;
-		text-overflow: ellipsis;
-		margin: 0;
-		overflow: hidden;
-		max-width: 70%;
-		font-size: 15px;
-	}
-
-	.site-box {
-		border: 1px solid #ccc;
-	}
-
-    .site-box:hover .footer .theme-actions,
-    .site-box:focus-within .footer .theme-actions {
-		opacity: 1;
-    }
-
-	.footer {
-        position: relative;
-		border-top: 1px solid #ccc;
-		display: flex;
-		padding: 15px;
-		flex-wrap: wrap;
-		align-items: center;
-	}
-
-    .footer .theme-actions {
-		opacity: 0;
-        display: block;
-        position: absolute;
-        right: 0;
-        padding: 10px 15px;
-        background-color: rgba(244, 244, 244, 0.7);
-        border-left: 1px solid rgba(0,0,0,0.05);
-    }
-
-	button.button-secondary.button {
-		align-self: flex-end;
-		margin-left: auto;
-	}
-
-	.demo-pro {
-		position: relative;
-	}
-	.demo-pro::after {
-		content: "Pro";
-		position: absolute;
-		top: 0;
-		right: 0;
-		color: #fff;
-		background-color: #e91e63;
-		border-radius: 5px;
-		padding: 5px;
-	}
-</style>

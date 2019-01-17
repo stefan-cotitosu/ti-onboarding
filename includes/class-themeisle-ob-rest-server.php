@@ -318,6 +318,7 @@ class Themeisle_OB_Rest_Server {
 		$data = $this->theme_support['can_migrate'];
 
 		$old_theme = get_theme_mod( 'ti_prev_theme', 'ti_onboarding_undefined' );
+		$old_theme = 'zerif-lite';
 		if ( ! array_key_exists( $old_theme, $data ) ) {
 			return array();
 		}

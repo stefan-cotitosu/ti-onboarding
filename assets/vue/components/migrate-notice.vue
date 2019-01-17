@@ -1,5 +1,5 @@
 <template>
-	<div class="migrate-notice" v-if="Object.keys(this.migrationData).length && !dismissed">
+	<div class="migrate-notice" v-if="migrationdata && !dismissed">
 		<a class="migration-dismiss"
 				aria-label="Dismiss the migration notice" @click="dismissMigration()">{{ strings.dismiss}}</a>
 
@@ -76,53 +76,3 @@
 		}
 	}
 </script>
-
-<style>
-	h4 {
-		display: block;
-		white-space: nowrap;
-		text-overflow: ellipsis;
-		margin: 0;
-		overflow: hidden;
-		max-width: 70%;
-		font-size: 15px;
-	}
-
-	.site-box {
-		border: 1px solid #ccc;
-	}
-
-	.site-box:hover .footer .theme-actions {
-		display: block;
-	}
-
-	.footer {
-		position: relative;
-		border-top: 1px solid #ccc;
-		display: flex;
-		padding: 15px;
-		flex-wrap: wrap;
-		align-items: center;
-	}
-
-	.footer .theme-actions {
-		display: none;
-		position: absolute;
-		right: 0;
-		padding: 10px 15px;
-		background-color: rgba(244, 244, 244, 0.7);
-		border-left: 1px solid rgba(0, 0, 0, 0.05);
-	}
-
-	.button .updating-message p{
-		margin: auto;
-	}
-
-	.migration-dismiss{
-		cursor: pointer;
-	}
-
-	.migration-dismiss:hover:before{
-		color: #c00;
-	}
-</style>

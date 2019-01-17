@@ -1,0 +1,29 @@
+.ellipsis {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+a.button.skip-onboarding {
+  margin: 15px auto;
+}
+
+.skip-wrap {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.updating-message {
+  text-align: center;
+}
+
+.updating-message:before {
+  margin-right: 5px;
+}
+
+button.button-secondary.button {
+  align-self: flex-end;
+  margin-left: auto;
+}

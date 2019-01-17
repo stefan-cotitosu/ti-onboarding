@@ -2,71 +2,68 @@
 	<div class="import-modal__wrapper">
 		<div class="modal__item" v-on-clickaway="closeModal">
 			<div class="modal__header">
-				<h4 class="title ellipsis">{{strings.import_btn}}: {{siteData.title}}</h4>
+				<div class="background" :style="{ backgroundImage: 'url(' + siteData.screenshot + ')' }"></div>
+				<button type="button" class="close" @click="closeModal">×</button>
+				<h2 class="title ellipsis">{{siteData.title}}</h2>
 			</div>
-			<hr>
-			<div class="modal__content" v-bind:class="currentStep === 'done' ? 'import__done' : ''">
+			<div class="modal__content">
 				<template v-if="currentStep !== 'done'">
-					<div class="right__content" v-if="! importing">
-						<p class="import__paragraph"><strong>{{strings.note}}:</strong> {{strings.import_disclaimer}}</p>
-						<p class="import__paragraph">{{strings.onboard_description}}</p>
-						<div class="import__options" v-show-slide="advancedExpanded">
-							<h4>{{strings.general}}:</h4>
-							<ul class="features">
-								<li class="option_toggle">
-									<label class="option-toggle-label"
-											:class="importOptions.content ? 'active' : 'inactive'"><span
-											class="dashicons dashicons-admin-post"></span><span>{{strings.content}}</span></label>
-									<toggle-button @change="adjustImport( 'content' )" :value="importOptions.content"
-											color="#28da00"></toggle-button>
-								</li>
-							<li class="option_toggle">
-									<label class="option-toggle-label"
-											:class="importOptions.customizer ? 'active' : 'inactive'"><span
-											class="dashicons dashicons-admin-customizer"></span><span>{{strings.customizer}}</span></label>
-									<toggle-button @change="adjustImport( 'customizer' )" :value="importOptions.customizer"
-											color="#28da00"></toggle-button>
-								</li>
-							<li class="option_toggle">
-									<label class="option-toggle-label"
-											:class="importOptions.widgets ? 'active' : 'inactive'"><span
-											class="dashicons dashicons-admin-generic"></span><span>{{strings.widgets}}</span></label>
-									<toggle-button @change="adjustImport( 'widgets' )" :value="importOptions.widgets"
-											color="#28da00"></toggle-button>
-								</li>
-							</ul>
-							<hr>
-							<h4>{{strings.plugins}}:</h4>
-							<ul class="features">
-								<li class="option_toggle" v-for="( plugin, index ) in siteData.recommended_plugins">
-									<label class="option-toggle-label ellipsis"
-											:class="willInstallPlugin( index ) ? 'active' : 'inactive'"><span
-											class="dashicons dashicons-admin-plugins"></span><span
-											v-html="plugin"></span></label>
-									<toggle-button @change="adjustPlugins( index, plugin )" :value="importOptions.installablePlugins[index]"
-											color="#28da00"></toggle-button>
-								</li>
-							</ul>
-							<hr>
-						</div>
-						<a @click="toggleAdvanced" class="expander"><span class="dashicons"
-								:class=" advancedExpanded ? 'dashicons-arrow-up-alt2' : 'dashicons-arrow-down-alt2' "></span>{{
-							strings.advanced_options }}</a>
-
+					<div class="disclaimers">
+						<strong><i class="dashicons dashicons-info"></i>{{strings.note}}:</strong>
+						<ol>
+							<li>{{strings.backup_disclaimer}}</li>
+							<li>{{strings.placeholders_disclaimer}}</li>
+						</ol>
 					</div>
-					<div class="right__content importing" v-else>
-						<Stepper>
-						</Stepper>
+
+					<div class="import__options">
+						<h4>{{strings.general}}:</h4>
+						<ul class="features">
+							<li class="option_toggle">
+								<label class="option-toggle-label"
+										:class="importOptions.content ? 'active' : 'inactive'"><span
+										class="dashicons dashicons-admin-post"></span><span>{{strings.content}}</span></label>
+								<toggle-button @change="adjustImport( 'content' )" :value="importOptions.content"
+										color="#008ec2"></toggle-button>
+							</li>
+							<li class="option_toggle">
+								<label class="option-toggle-label"
+										:class="importOptions.customizer ? 'active' : 'inactive'"><span
+										class="dashicons dashicons-admin-customizer"></span><span>{{strings.customizer}}</span></label>
+								<toggle-button @change="adjustImport( 'customizer' )" :value="importOptions.customizer"
+										color="#008ec2"></toggle-button>
+							</li>
+							<li class="option_toggle">
+								<label class="option-toggle-label"
+										:class="importOptions.widgets ? 'active' : 'inactive'"><span
+										class="dashicons dashicons-admin-generic"></span><span>{{strings.widgets}}</span></label>
+								<toggle-button @change="adjustImport( 'widgets' )" :value="importOptions.widgets"
+										color="#008ec2"></toggle-button>
+							</li>
+						</ul>
+						<h4>{{strings.plugins}}:</h4>
+						<ul class="features">
+							<li class="option_toggle" v-for="( plugin, index ) in siteData.recommended_plugins">
+								<label class="option-toggle-label ellipsis"
+										:class="{ 'active' : importOptions.installablePlugins[index] }">
+									<span class="dashicons dashicons-admin-plugins"></span>
+									<span v-html="plugin"></span></label>
+								<toggle-button @change="adjustPlugins( index, plugin )"
+										:value="importOptions.installablePlugins[index]"
+										color="#008ec2"></toggle-button>
+							</li>
+						</ul>
 					</div>
 				</template>
 				<h3 v-else>{{strings.import_done}}</h3>
 			</div>
-			<hr>
 
 			<div class="modal__footer" v-if="! importing">
 				<template v-if="currentStep !== 'done'">
 					<button class="button button-secondary" v-on:click="closeModal">{{strings.cancel_btn}}</button>
-					<button class="button button-primary" :disabled="! checIfShouldImport" v-on:click="startImport">{{strings.import_btn}}</button>
+					<button class="button button-primary" :disabled="! checIfShouldImport" v-on:click="startImport">
+						{{strings.import_btn}}
+					</button>
 				</template>
 				<div v-else class="after__actions">
 					<a class="button-link" v-if="this.$store.state.onboard !== 'yes'" v-on:click="resetImport">{{strings.back}}</a>
@@ -92,7 +89,6 @@
 				homeUrl: this.$store.state.homeUrl,
 				siteData: this.$store.state.previewData,
 				advancedExpanded: false,
-				importOptions: this.$store.state.importOptions,
 			}
 		},
 		computed: {
@@ -103,7 +99,7 @@
 				return this.$store.state.importing;
 			},
 			checIfShouldImport() {
-				if(
+				if (
 					this.$store.state.importOptions.content ||
 					this.$store.state.importOptions.customizer ||
 					this.$store.state.importOptions.widgets
@@ -111,6 +107,9 @@
 					return true;
 				}
 				return false;
+			},
+			importOptions() {
+				return this.$store.state.importOptions;
 			}
 		},
 		methods: {
@@ -122,18 +121,15 @@
 				plugins[ index ] = !plugins[ index ];
 				this.$store.commit( 'updatePlugins', plugins );
 			},
-			adjustImport: function( context ) {
+			adjustImport: function ( context ) {
 				let options = this.$store.state.importOptions;
-				options[context] = ! options[context];
+				options[ context ] = !options[ context ];
 				this.$store.commit( 'updateImportOptions', options );
 			},
-			willInstallPlugin: function ( slug ) {
-				return this.$store.state.importOptions.installablePlugins[ slug ];
-			},
-			getEditor:function(){
+			getEditor: function () {
 				return this.$store.state.editor;
 			},
-			getPageId: function(){
+			getPageId: function () {
 				return this.$store.state.frontPageId;
 			},
 			closeModal: function () {
@@ -168,18 +164,26 @@
 			resetImport: function () {
 				this.$store.commit( 'resetStates' );
 			},
-			editTemplate: function (  ) {
+			editTemplate: function () {
 				var editor = this.getEditor();
 				var pageId = this.getPageId();
 				var url = this.homeUrl;
-				if( editor === 'elementor'){
-					url = this.homeUrl + '/wp-admin/post.php?post='+pageId+'&action=elementor';
+				if ( editor === 'elementor' ) {
+					url = this.homeUrl + '/wp-admin/post.php?post=' + pageId + '&action=elementor';
 				}
-				if( editor === 'gutenberg'){
-					url = this.homeUrl + '/wp-admin/post.php?post='+pageId+'&action=edit';
+				if ( editor === 'gutenberg' ) {
+					url = this.homeUrl + '/wp-admin/post.php?post=' + pageId + '&action=edit';
 				}
 				window.location.replace( url );
 			}
+		},
+		beforeMount() {
+			let body = document.querySelectorAll( '#ti-sites-library .is__onboarding' )[ 0 ];
+			body.style.overflow = 'hidden';
+		},
+		beforeDestroy() {
+			let body = document.querySelectorAll( '#ti-sites-library .is__onboarding' )[ 0 ];
+			body.style.overflow = '';
 		},
 		directives: {
 			onClickaway,
@@ -191,61 +195,3 @@
 		}
 	}
 </script>
-
-<style scoped>
-	.modal__header .title {
-		margin: 0;
-	}
-
-	.modal__header {
-		padding: 10px;
-	}
-
-	.modal__content {
-		padding: 10px;
-	}
-
-	.modal__footer {
-		padding: 10px;
-		text-align: right;
-	}
-
-	h3 {
-		font-size: 17px;
-		font-weight: 300;
-		color: #444;
-		margin: 20px;
-		width: 100%;
-	}
-
-	.importing {
-		width: 100%;
-		text-align: center;
-	}
-
-	.option_toggle {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-	}
-
-	.option-toggle-label {
-		display: flex;
-		align-items: center;
-		cursor: default;
-		line-height: 1.6;
-		max-width: 80%;
-	}
-
-	.option-toggle-label.inactive {
-		opacity: .5;
-	}
-
-	.option-toggle-label .dashicons {
-		margin-right: 5px;
-	}
-
-	.import__options hr {
-		margin: 10px 0;
-	}
-</style>

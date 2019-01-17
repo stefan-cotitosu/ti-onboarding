@@ -101,8 +101,6 @@ class Themeisle_OB_Admin {
 		wp_localize_script( 'themeisle-site-lib', 'themeisleSitesLibApi', $this->localize_sites_library() );
 
 		wp_enqueue_script( 'themeisle-site-lib' );
-
-		wp_enqueue_style( 'themeisle-site-lib', Themeisle_Onboarding::get_dir() . '/assets/css/style.css', array(), Themeisle_Onboarding::VERSION );
 	}
 
 	/**
@@ -139,33 +137,34 @@ class Themeisle_OB_Admin {
 	 */
 	private function get_strings() {
 		return array(
-			'preview_btn'       => __( 'Preview', 'textdomain' ),
-			'import_btn'        => __( 'Import', 'textdomain' ),
-			'pro_btn'           => __( 'Get the PRO version!', 'textdomain' ),
-			'importing'         => __( 'Importing', 'textdomain' ),
-			'cancel_btn'        => __( 'Cancel', 'textdomain' ),
-			'loading'           => __( 'Loading', 'textdomain' ),
-			'go_to_site'        => __( 'View Website', 'textdomain' ),
-			'edit_template'     => __( 'Add your own content', 'textdomain' ),
-			'back'              => __( 'Back to Sites Library', 'textdomain' ),
-			'note'              => __( 'Note', 'textdomain' ),
-			'advanced_options'  => __( 'Advanced Options', 'textdomain' ),
-			'plugins'           => __( 'Plugins', 'textdomain' ),
-			'general'           => __( 'General', 'textdomain' ),
-			'later'             => __( 'Keep current layout', 'textdomain' ),
-			'search'			=> __( 'Search', 'textdomain' ),
-			'content'           => __( 'Content', 'textdomain' ),
-			'customizer'        => __( 'Customizer', 'textdomain' ),
-			'widgets'           => __( 'Widgets', 'textdomain' ),
-			'import_steps'      => array(
+			'preview_btn'             => __( 'Preview', 'textdomain' ),
+			'import_btn'              => __( 'Import', 'textdomain' ),
+			'pro_btn'                 => __( 'Get the PRO version!', 'textdomain' ),
+			'importing'               => __( 'Importing', 'textdomain' ),
+			'cancel_btn'              => __( 'Cancel', 'textdomain' ),
+			'loading'                 => __( 'Loading', 'textdomain' ),
+			'go_to_site'              => __( 'View Website', 'textdomain' ),
+			'edit_template'           => __( 'Add your own content', 'textdomain' ),
+			'back'                    => __( 'Back to Sites Library', 'textdomain' ),
+			'note'                    => __( 'Note', 'textdomain' ),
+			'advanced_options'        => __( 'Advanced Options', 'textdomain' ),
+			'plugins'                 => __( 'Plugins', 'textdomain' ),
+			'general'                 => __( 'General', 'textdomain' ),
+			'later'                   => __( 'Keep current layout', 'textdomain' ),
+			'search'                  => __( 'Search', 'textdomain' ),
+			'content'                 => __( 'Content', 'textdomain' ),
+			'customizer'              => __( 'Customizer', 'textdomain' ),
+			'widgets'                 => __( 'Widgets', 'textdomain' ),
+			'import_steps'            => array(
 				'plugins'    => __( 'Installing Plugins', 'textdomain' ),
 				'content'    => __( 'Importing Content', 'textdomain' ),
 				'theme_mods' => __( 'Setting Up Customizer', 'textdomain' ),
 				'widgets'    => __( 'Importing Widgets', 'textdomain' ),
 			),
-			'import_disclaimer' => __( 'We recommend you backup your website content before attempting a full site import.', 'textdomain' ),
-			'import_done'       => __( 'Content was successfully imported. Enjoy your new site!', 'textdomain' ),
-			'pro_demo'          => __( 'Available in the PRO version', 'textdomain' ),
+			'backup_disclaimer'       => __( 'We recommend you backup your website content before attempting a full site import.', 'textdomain' ),
+			'placeholders_disclaimer' => __( 'Due to copyright issues, some of the demo images will not be imported and will be replaced by placeholder images.', 'textdomain' ),
+			'import_done'             => __( 'Content was successfully imported. Enjoy your new site!', 'textdomain' ),
+			'pro_demo'                => __( 'Available in the PRO version', 'textdomain' ),
 		);
 	}
 
