@@ -1,6 +1,7 @@
 #ti-sites-library {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  @import "components/variables";
   @import "components/generic";
   @import "components/layout-onboarding";
   @import "components/layout";
@@ -8,5 +9,6 @@
   @import "components/import-modal";
   @import "components/migration";
   @import "components/tabs";
+  @import "components/stepper";
   @import "components/media-queries";
 }

@@ -103,6 +103,27 @@ class Themeisle_OB_Admin {
 		wp_enqueue_script( 'themeisle-site-lib' );
 	}
 
+	private function get_import_steps() {
+		return array(
+			'plugins'    => array(
+				'nicename' => __( 'Installing Plugins', 'textdomain' ),
+				'done'     => 'no',
+			),
+			'content'    => array(
+				'nicename' => __( 'Importing Content', 'textdomain' ),
+				'done'     => 'no',
+			),
+			'theme_mods' => array(
+				'nicename' => __( 'Setting Up Customizer', 'textdomain' ),
+				'done'     => 'no',
+			),
+			'widgets'    => array(
+				'nicename' => __( 'Importing Widgets', 'textdomain' ),
+				'done'     => 'no',
+			),
+		);
+	}
+
 	/**
 	 * Localize the sites library.
 	 *
@@ -120,6 +141,7 @@ class Themeisle_OB_Admin {
 			'onboarding'      => 'no',
 			'contentImported' => $this->escape_bool_text( get_theme_mod( 'ti_content_imported', 'no' ) ),
 			'aboutUrl'        => esc_url( admin_url( 'themes.php?page=' . $theme->__get( 'stylesheet' ) . '-welcome' ) ),
+			'importSteps'     => $this->get_import_steps(),
 		);
 
 		$is_onboarding = isset( $_GET['onboarding'] ) && $_GET['onboarding'] === 'yes';
@@ -155,12 +177,6 @@ class Themeisle_OB_Admin {
 			'content'                 => __( 'Content', 'textdomain' ),
 			'customizer'              => __( 'Customizer', 'textdomain' ),
 			'widgets'                 => __( 'Widgets', 'textdomain' ),
-			'import_steps'            => array(
-				'plugins'    => __( 'Installing Plugins', 'textdomain' ),
-				'content'    => __( 'Importing Content', 'textdomain' ),
-				'theme_mods' => __( 'Setting Up Customizer', 'textdomain' ),
-				'widgets'    => __( 'Importing Widgets', 'textdomain' ),
-			),
 			'backup_disclaimer'       => __( 'We recommend you backup your website content before attempting a full site import.', 'textdomain' ),
 			'placeholders_disclaimer' => __( 'Due to copyright issues, some of the demo images will not be imported and will be replaced by placeholder images.', 'textdomain' ),
 			'import_done'             => __( 'Content was successfully imported. Enjoy your new site!', 'textdomain' ),

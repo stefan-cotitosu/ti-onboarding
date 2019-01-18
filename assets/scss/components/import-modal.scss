@@ -1,5 +1,4 @@
 .import-modal__wrapper {
-
   .modal__item {
     display: flex;
     flex-direction: column;
@@ -27,11 +26,11 @@
       left: 0;
       right: 0;
       z-index: 0;
-      background-size: 110% auto;
+      background-size: cover;
       background-position: center;
-      filter: blur(5px);
+      filter: blur(4px);
       &:after {
-        background-color: rgba(0,0,0,0.75);
+        background-color: rgba(0,0,0,0.7);
         position: absolute;
         content: "";
         top: 0;
@@ -42,6 +41,7 @@
       }
     }
     .title {
+      @include unblur( .3s );
       position: relative;
       z-index:10000000;
       font-size: 30px;
@@ -61,7 +61,7 @@
       border: 0;
       font-weight: 600;
       &:hover {
-        color: #ff6e5a;
+        color: $error;
       }
     }
   }
@@ -72,10 +72,12 @@
   .modal__footer {
     margin-top: auto;
     min-height: 30px;
-    background: #fff;
+    background: #fafafa;
     border-top: 1px solid #ccc;
     padding: 15px 10px;
     display: flex;
+    align-items: center;
+    justify-content: flex-end;
     button {
       margin-bottom: 0;
 
@@ -100,6 +102,27 @@
       i {
         margin-right: 5px;
         font-size: 1em;
+      }
+    }
+  }
+
+  .success {
+    @include unblur(.3s);
+    color: #23282d;
+    font-weight: 300;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    .dashicons {
+      @include heartpop();
+      color: $error;
+      font-size: 18px;
+      margin-right: 10px;
+      &:before {
+        right: 1px;
+        position: relative;
       }
     }
   }
@@ -160,6 +183,7 @@
       bottom: unset;
       max-height: 100vh;
       max-width: 675px;
+      width: 675px;
       background: #fff;
       .close {
         top: 10px;

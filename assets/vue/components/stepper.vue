@@ -1,32 +1,61 @@
 <template>
-	<div class="ti__stepper updating-message">
-		<div class="container">
-			<ul class="progressbar">
-				<li
-					v-for="(step, slug) in steps"
-					:key="step.id"
-					:class="{'active-step': slug === currentStep}" class="step">{{step}}</li>
-			</ul>
-		</div>
-		<!--<template v-for="(step, slug) in steps">-->
-			<!--<p :key="step.id" v-if="slug === currentStep">-->
-				<!--{{ step }}...-->
-			<!--</p>-->
-		<!--</template>-->
+	<div class="ti__stepper">
+		<ul>
+			<li
+					v-for="(step, slug, index) in steps"
+					:key="slug"
+					:class="{
+					'active-step': slug === currentStep,
+					'waiting' : step.done === 'no' && slug !== currentStep,
+					'done' : step.done === 'yes',
+					'error' : step.done === 'error',
+					'skip' : step.done === 'skip',
+					 }" class="step">
+				<div class="step-count">
+					<i class="dashicons"
+							:class="{
+					'dashicons-update': slug === currentStep,
+					'dashicons-clock' : step.done === 'no' && slug !== currentStep,
+					'dashicons-yes' : step.done === 'yes',
+					'dashicons-no' : step.done === 'error',
+					'dashicons-redo' : step.done === 'skip',
+				}"></i>
+				</div>
+				<span class="nicename">{{step.nicename}}</span>
+
+			</li>
+		</ul>
 	</div>
 </template>
 
 <script>
 	module.exports = {
 		name: 'stepper',
-		data: function () {
-			return {
-				steps: this.$store.state.strings.import_steps
-			}
-		},
 		computed: {
 			currentStep: function () {
 				return this.$store.state.currentStep;
+			},
+			steps: function () {
+				return this.$store.state.importSteps;
+			}
+		},
+		mounted() {
+			let importOptions = this.$store.state.importOptions;
+
+			console.log(Object.values( importOptions.installablePlugins ).indexOf( true ));
+			if ( Object.values( importOptions.installablePlugins ).indexOf( true ) < 0 ) {
+				this.$store.state.importSteps.plugins.done = 'skip';
+			}
+
+			if ( importOptions.content === false ) {
+				this.$store.state.importSteps.content.done = 'skip';
+			}
+
+			if ( importOptions.customizer === false ) {
+				this.$store.state.importSteps.theme_mods.done = 'skip';
+			}
+			if ( importOptions.widgets === false ) {
+				this.$store.state.importSteps.widgets.done = 'skip';
 			}
 		}
 	}

@@ -5,7 +5,7 @@ import VueResource from 'vue-resource';
 
 Vue.use( VueResource );
 
-const initialize = function ( { commit }, data ) {
+const initialize = function ( { commit, state }, data ) {
 	commit( 'setAjaxState', true );
 	console.log( '%c Fetching sites.', 'color: #FADD6E' );
 	Vue.http( {
@@ -20,6 +20,8 @@ const initialize = function ( { commit }, data ) {
 			commit( 'setAjaxState', false );
 			commit( 'saveSitesData', response.body );
 		}
+	} ).catch( function ( error ) {
+		toastError( error, state, 'initialization' );
 	} );
 };
 
@@ -40,13 +42,12 @@ const doneImport = function ( { commit } ) {
 
 const installPlugins = function ( { commit, state }, data ) {
 	let result = false;
-	for ( let i in state.importOptions.installablePlugins ) {
-		if ( state.importOptions.installablePlugins[ i ] === true ) {
-			result = true;
-			break;
-		}
+	if ( Object.values( state.importOptions.installablePlugins ).indexOf( true ) > -1 ) {
+		result = true;
 	}
+
 	if ( result === false ) {
+		state.importSteps.plugins.done = 'skip';
 		importContent( { commit, state }, data );
 		return false;
 	}
@@ -64,61 +65,18 @@ const installPlugins = function ( { commit, state }, data ) {
 		responseType: 'json',
 	} ).then( function ( response ) {
 		if ( response.ok ) {
+			state.importSteps.plugins.done = 'yes';
 			console.log( '%c Installed Plugins.', 'color: #4B9BE7' );
 			importContent( { commit, state }, data );
-		} else {
-			console.error( response );
 		}
-	} );
-};
-
-const migrateTemplate = function ( { commit, state }, data ) {
-
-	Vue.http( {
-		url: themeisleSitesLibApi.root + '/migrate_frontpage',
-		method: 'POST',
-		headers: { 'X-WP-Nonce': themeisleSitesLibApi.nonce },
-		params: {
-			'req': data.req,
-		},
-		body: {
-			'template': data.template,
-			'template_name': data.template_name,
-		},
-		responseType: 'json',
-	} ).then( function ( response ) {
-		if ( response.ok ) {
-			console.log( '%c Imported front page.', 'color: #4B9BE7' );
-			commit( 'migrationComplete', 'done');
-		} else {
-			console.error( response );
-		}
-	} );
-};
-
-const dismissMigration = function ( { commit, state }, data ) {
-	Vue.http( {
-		url: themeisleSitesLibApi.root + '/dismiss_migration',
-		method: 'POST',
-		headers: { 'X-WP-Nonce': themeisleSitesLibApi.nonce },
-		params: {
-			'req': data.req,
-		},
-		body: {
-			'theme_mod': data.theme_mod,
-		},
-		responseType: 'json',
-	} ).then( function ( response ) {
-		if ( response.ok ) {
-			console.log( '%c Notice was dismissed.', 'color: #4B9BE7' );
-		} else {
-			console.error( response );
-		}
+	} ).catch( function ( error ) {
+		toastError( error, state, 'plugins' );
 	} );
 };
 
 const importContent = function ( { commit, state }, data ) {
 	if ( state.importOptions.content === false ) {
+		state.importSteps.content.done = 'skip';
 		importThemeMods( { commit, state }, data );
 		return false;
 	}
@@ -141,20 +99,54 @@ const importContent = function ( { commit, state }, data ) {
 		responseType: 'json',
 	} ).then( function ( response ) {
 		if ( response.ok ) {
-			console.log(response.data.data.frontpage_id);
-			if( response.data.data.frontpage_id ){
-				commit( 'setFrontPageId', response.data.data.frontpage_id);
+			state.importSteps.content.done = 'yes';
+			if ( response.data.data.frontpage_id ) {
+				commit( 'setFrontPageId', response.data.data.frontpage_id );
 			}
 			console.log( '%c Imported Content.', 'color: #4B9BE7' );
 			importThemeMods( { commit, state }, data );
-		} else {
-			console.error( response );
 		}
+	} ).catch( function ( error ) {
+		toastError( error, state, 'content' );
 	} );
+};
+
+const toastError = function ( errorObj, state, step ) {
+	console.error( errorObj );
+	state.errorToast = errorObj.statusText + ' (' + errorObj.status + ')' + ': ' + errorObj.body.data;
+	if( step === 'initialization' ) {
+		state.ajaxLoader = false;
+		return;
+	}
+
+	state.currentStep = 'error';
+	state.importing = false;
+	switch ( step ) {
+		case 'plugins':
+			state.importSteps.plugins.done = 'error';
+			state.importSteps.content.done = 'skip';
+			state.importSteps.theme_mods.done = 'skip';
+			state.importSteps.widgets.done = 'skip';
+			break;
+		case 'content':
+			state.importSteps.content.done = 'error';
+			state.importSteps.theme_mods.done = 'skip';
+			state.importSteps.widgets.done = 'skip';
+			break;
+		case 'theme_mods':
+			state.importSteps.theme_mods.done = 'error';
+			state.importSteps.widgets.done = 'skip';
+			break;
+		case 'widgets':
+			state.importSteps.widgets.done = 'error';
+			break;
+	}
+	console.error( errorObj );
 };
 
 const importThemeMods = function ( { commit, state }, data ) {
 	if ( state.importOptions.customizer === false ) {
+		state.importSteps.theme_mods.done = 'skip';
 		importWidgets( { commit, state }, data );
 		return false;
 	}
@@ -172,16 +164,18 @@ const importThemeMods = function ( { commit, state }, data ) {
 		responseType: 'json',
 	} ).then( function ( response ) {
 		if ( response.ok ) {
+			state.importSteps.theme_mods.done = 'yes';
 			console.log( '%c Imported Customizer.', 'color: #4B9BE7' );
 			importWidgets( { commit, state }, data );
-		} else {
-			console.error( response );
 		}
+	} ).catch( function ( error ) {
+		toastError( error, state, 'theme_mods' );
 	} );
 };
 
 const importWidgets = function ( { commit, state }, data ) {
 	if ( state.importOptions.widgets === false ) {
+		state.importSteps.widgets.done = 'skip';
 		doneImport( { commit } );
 		return false;
 	}
@@ -199,11 +193,56 @@ const importWidgets = function ( { commit, state }, data ) {
 		responseType: 'json',
 	} ).then( function ( response ) {
 		if ( response.ok ) {
+			state.importSteps.widgets.done = 'yes';
 			console.log( '%c Imported Widgets.', 'color: #4B9BE7' );
 			doneImport( { commit } );
-		} else {
-			console.error( response );
 		}
+	} ).catch( function ( error ) {
+		toastError( error, state, 'widgets' );
+	} );
+};
+
+const migrateTemplate = function ( { commit, state }, data ) {
+	Vue.http( {
+		url: themeisleSitesLibApi.root + '/migrate_frontpage',
+		method: 'POST',
+		headers: { 'X-WP-Nonce': themeisleSitesLibApi.nonce },
+		params: {
+			'req': data.req,
+		},
+		body: {
+			'template': data.template,
+			'template_name': data.template_name,
+		},
+		responseType: 'json',
+	} ).then( function ( response ) {
+		if ( response.ok ) {
+			console.log( '%c Imported front page.', 'color: #4B9BE7' );
+			commit( 'migrationComplete', 'done' );
+		}
+	} ).catch( function ( error ) {
+		toastError( error, state, 'migration' );
+	} );
+};
+
+const dismissMigration = function ( { commit, state }, data ) {
+	Vue.http( {
+		url: themeisleSitesLibApi.root + '/dismiss_migration',
+		method: 'POST',
+		headers: { 'X-WP-Nonce': themeisleSitesLibApi.nonce },
+		params: {
+			'req': data.req,
+		},
+		body: {
+			'theme_mod': data.theme_mod,
+		},
+		responseType: 'json',
+	} ).then( function ( response ) {
+		if ( response.ok ) {
+			console.log( '%c Notice was dismissed.', 'color: #4B9BE7' );
+		}
+	} ).catch( function ( error ) {
+		console.log( error )
 	} );
 };
 

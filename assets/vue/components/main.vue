@@ -2,7 +2,12 @@
 	<div :class="{ 'is__onboarding' : this.$store.state.onboard === 'yes' && ! previewOpen } ">
 		<div :class="! isLoading ? 'library-wrapper' : '' ">
 			<loader v-if="isLoading" :loading-message="strings.loading"></loader>
-			<template v-else>
+			<template v-else-if="errorMessage">
+				<div class="error-well">
+					{{errorMessage}}
+				</div>
+			</template>
+			<template v-else >
 				<template v-if="this.$store.state.onboard === 'yes'">
 					<div class="header" v-if="themeStrings.onboard_header ||themeStrings.onboard_description">
 						<h1 v-if="themeStrings.onboard_header">{{themeStrings.onboard_header}}</h1>
@@ -12,7 +17,7 @@
 
 				<migrate-notice v-if="this.$store.state.sitesData.migrate_data"></migrate-notice>
 
-				<template v-if="themeStrings">
+				<template>
 					<h3 v-if="themeStrings.templates_title">{{themeStrings.templates_title}}</h3>
 					<p v-if="themeStrings.templates_description">{{themeStrings.templates_description}}</p>
 					<div class="skip-wrap" v-if="this.$store.state.onboard === 'yes' && ! isLoading">
@@ -60,6 +65,9 @@
 			},
 			themeStrings: function () {
 				return this.$store.state.sitesData.i18n
+			},
+			errorMessage() {
+				return this.$store.state.errorToast;
 			}
 		},
 		methods: {
