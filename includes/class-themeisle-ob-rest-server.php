@@ -45,7 +45,6 @@ class Themeisle_OB_Rest_Server {
 	 */
 	public function init() {
 		$this->setup_props();
-
 		add_action( 'rest_api_init', array( $this, 'register_endpoints' ) );
 	}
 
@@ -311,6 +310,7 @@ class Themeisle_OB_Rest_Server {
 	 * @return array
 	 */
 	private function get_migrateable() {
+
 		if ( ! isset( $this->theme_support['can_migrate'] ) ) {
 			return array();
 		}
@@ -318,7 +318,7 @@ class Themeisle_OB_Rest_Server {
 		$data = $this->theme_support['can_migrate'];
 
 		$old_theme = get_theme_mod( 'ti_prev_theme', 'ti_onboarding_undefined' );
-		$old_theme = 'zerif-lite';
+
 		if ( ! array_key_exists( $old_theme, $data ) ) {
 			return array();
 		}
@@ -335,7 +335,7 @@ class Themeisle_OB_Rest_Server {
 
 		return array(
 			'theme_name'    => ! empty( $data[ $old_theme ]['theme_name'] ) ? esc_html( $data[ $old_theme ]['theme_name'] ) : '',
-			'screenshot'    => get_template_directory_uri() . '/vendor/codeinwp/ti-onboarding/migration/' . $folder_name . '/' . $data[ $old_theme ]['template'] . '.png',
+			'screenshot'    => get_template_directory_uri() . Themeisle_Onboarding::OBOARDING_PATH . '/migration/' . $folder_name . '/' . $data[ $old_theme ]['template'] . '.png',
 			'template'      => get_template_directory() . Themeisle_Onboarding::OBOARDING_PATH . '/migration/' . $folder_name . '/' . $data[ $old_theme ]['template'] . '.json',
 			'template_name' => $data[ $old_theme ]['template'],
 			'heading'       => $data[ $old_theme ]['heading'],

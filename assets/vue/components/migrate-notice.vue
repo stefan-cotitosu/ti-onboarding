@@ -1,5 +1,5 @@
 <template>
-	<div class="migrate-notice" v-if="migrationdata && !dismissed">
+	<div class="migrate-notice" v-if="migrationData.length && !dismissed">
 		<a class="migration-dismiss"
 				aria-label="Dismiss the migration notice" @click="dismissMigration()">{{ strings.dismiss}}</a>
 
@@ -44,12 +44,8 @@
 			return {
 				strings: this.$store.state.strings,
 				dismissed: false,
+				migrationData: this.$store.state.sitesData.migrate_data
 			}
-		},
-		computed: {
-			migrationData: function () {
-				return this.$store.state.sitesData.migrate_data
-			},
 		},
 		methods: {
 			dismissMigration: function (  ) {
