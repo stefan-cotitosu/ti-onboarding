@@ -9,7 +9,7 @@
 				<template v-for="(data, index) in sites">
 					<template v-for="(editor_sites, site_editor) in data">
 						<div v-for="site in filterTemplates(editor_sites)">
-							<SiteItem :site_data="site"></SiteItem>
+							<SiteItem :site-data="site"></SiteItem>
 						</div>
 					</template>
 				</template>
@@ -26,7 +26,7 @@
 					<template v-for="(data, index) in sites">
 						<template v-for="(editor_sites, site_editor) in data">
 							<div v-if="site_editor===editor" v-for="site in filterTemplates(editor_sites)">
-								<SiteItem :site_data="site"></SiteItem>
+								<SiteItem :site-data="site"></SiteItem>
 							</div>
 						</template>
 					</template>

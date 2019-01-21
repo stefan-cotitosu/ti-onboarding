@@ -317,6 +317,7 @@ class Themeisle_OB_Rest_Server {
 		$data = $this->theme_support['can_migrate'];
 
 		$old_theme = get_theme_mod( 'ti_prev_theme', 'ti_onboarding_undefined' );
+		$old_theme = 'zerif-lite';
 
 		if ( ! array_key_exists( $old_theme, $data ) ) {
 			return array();
@@ -333,13 +334,15 @@ class Themeisle_OB_Rest_Server {
 		}
 
 		return array(
-			'theme_name'    => ! empty( $data[ $old_theme ]['theme_name'] ) ? esc_html( $data[ $old_theme ]['theme_name'] ) : '',
-			'screenshot'    => get_template_directory_uri() . Themeisle_Onboarding::OBOARDING_PATH . '/migration/' . $folder_name . '/' . $data[ $old_theme ]['template'] . '.png',
-			'template'      => get_template_directory() . Themeisle_Onboarding::OBOARDING_PATH . '/migration/' . $folder_name . '/' . $data[ $old_theme ]['template'] . '.json',
-			'template_name' => $data[ $old_theme ]['template'],
-			'heading'       => $data[ $old_theme ]['heading'],
-			'description'   => $data[ $old_theme ]['description'],
-			'theme_mod'     => $data[ $old_theme ]['theme_mod_check'],
+			'theme_name'        => ! empty( $data[ $old_theme ]['theme_name'] ) ? esc_html( $data[ $old_theme ]['theme_name'] ) : '',
+			'screenshot'        => get_template_directory_uri() . Themeisle_Onboarding::OBOARDING_PATH . '/migration/' . $folder_name . '/' . $data[ $old_theme ]['template'] . '.png',
+			'template'          => get_template_directory() . Themeisle_Onboarding::OBOARDING_PATH . '/migration/' . $folder_name . '/' . $data[ $old_theme ]['template'] . '.json',
+			'template_name'     => $data[ $old_theme ]['template'],
+			'heading'           => $data[ $old_theme ]['heading'],
+			'description'       => $data[ $old_theme ]['description'],
+			'theme_mod'         => $data[ $old_theme ]['theme_mod_check'],
+			'mandatory_plugins' => $data[ $old_theme ]['mandatory_plugins'] ? $data[ $old_theme ]['mandatory_plugins'] : array(),
+			'recommended_plugins' => $data[ $old_theme ]['recommended_plugins'] ? $data[ $old_theme ]['recommended_plugins'] : array(),
 		);
 	}
 
@@ -459,6 +462,10 @@ class Themeisle_OB_Rest_Server {
 		}
 
 		if ( ! array_key_exists( $theme, $sdk_modules ) ) {
+			return false;
+		}
+
+		if( ! isset( $sdk_modules[$theme]['licenser'] ) ) {
 			return false;
 		}
 

@@ -42,17 +42,20 @@
 										color="#008ec2"></toggle-button>
 							</li>
 						</ul>
-						<h4>{{strings.plugins}}:</h4>
+						<h4 v-if="allPlugins.length">{{strings.plugins}}:</h4>
 						<ul class="features">
-							<li class="option_toggle" v-for="( plugin, index ) in siteData.recommended_plugins">
-								<label class="option-toggle-label ellipsis"
-										:class="importOptions.installablePlugins[index] ?  'active' : 'inactive'">
-									<span class="dashicons dashicons-admin-plugins"></span>
-									<span v-html="plugin"></span></label>
-								<toggle-button @change="adjustPlugins( index, plugin )"
-										:value="importOptions.installablePlugins[index]"
-										color="#008ec2"></toggle-button>
-							</li>
+							<template class="option_toggle" v-for="( plugins, pluginType ) in allPlugins">
+								<li class="option_toggle" v-for="( plugin, index ) in plugins">
+									<label class="option-toggle-label ellipsis"
+											:class="importOptions.installablePlugins[index] ?  'active' : 'inactive'">
+										<span class="dashicons dashicons-admin-plugins"></span>
+										<span v-html="plugin"></span></label>
+									<toggle-button v-if="pluginType !== 'mandatory'"
+											@change="adjustPlugins( index, plugin )"
+											:value="importOptions.installablePlugins[index]"
+											color="#008ec2"></toggle-button>
+								</li>
+							</template>
 						</ul>
 					</div>
 				</template>
@@ -107,6 +110,12 @@
 			}
 		},
 		computed: {
+			allPlugins() {
+				return {
+					recommended: this.siteData.recommended_plugins,
+					mandatory: this.siteData.mandatory_plugins
+				}
+			},
 			currentStep() {
 				return this.$store.state.currentStep;
 			},
@@ -157,7 +166,20 @@
 				this.$store.commit( 'showImportModal', false );
 				this.resetImport();
 			},
+			runMigration: function(){
+				this.$store.state.importOptions.isMigration = true;
+				this.$store.state.migration = 'isRunning';
+				this.$store.dispatch( 'importSite', {
+					req: 'Migrate Site',
+					template: this.siteData.template,
+					template_name: this.siteData.template_name,
+				} )
+			},
 			startImport: function () {
+				if ( this.siteData.template_name ) {
+					this.runMigration();
+					return false
+				}
 				this.$store.dispatch( 'importSite', {
 					req: 'Import Site',
 					plugins: this.siteData.recommended_plugins,
