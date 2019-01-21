@@ -456,11 +456,16 @@ class Themeisle_OB_Rest_Server {
 		$theme       = get_stylesheet();
 
 		if ( ! array_key_exists( $theme, $sdk_modules ) ) {
+			$theme = 'neve-pro-addon';
+		}
+
+		if ( ! array_key_exists( $theme, $sdk_modules ) ) {
 			return false;
 		}
 
 		$licenser = $sdk_modules[ $theme ]['licenser'];
 		$validity = $licenser->get_license_status();
+
 		if ( $validity === 'valid' ) {
 			return true;
 		}
