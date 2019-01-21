@@ -5,7 +5,7 @@
 				<div class="background" :style="{ backgroundImage: 'url(' + siteData.screenshot + ')' }"></div>
 				<button v-if="!importing || currentStep === 'error'" type="button" class="close" @click="closeModal">×
 				</button>
-				<h2 class="title ellipsis">{{siteData.title}}</h2>
+				<h2 class="title ellipsis">{{isMigration? siteData.theme_name : siteData.title}}</h2>
 			</div>
 			<div class="modal__content">
 				<template v-if="currentStep !== 'done' && currentStep !== 'error' && !importing ">
@@ -42,7 +42,7 @@
 										color="#008ec2"></toggle-button>
 							</li>
 						</ul>
-						<h4 v-if="allPlugins.length">{{strings.plugins}}:</h4>
+						<h4>{{strings.plugins}}:</h4>
 						<ul class="features">
 							<template class="option_toggle" v-for="( plugins, pluginType ) in allPlugins">
 								<li class="option_toggle" v-for="( plugin, index ) in plugins">

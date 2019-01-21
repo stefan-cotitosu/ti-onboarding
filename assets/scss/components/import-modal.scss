@@ -148,9 +148,6 @@
     .option-toggle-label.inactive > .dashicons {
       opacity: .35;
     }
-    &:hover {
-      background-color: #eee;
-    }
     &:not(:last-of-type) {
       border-bottom: 1px solid #eeeeee;
     }
