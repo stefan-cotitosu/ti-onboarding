@@ -113,7 +113,8 @@ const importContent = function ( { commit, state }, data ) {
 
 const toastError = function ( errorObj, state, step ) {
 	console.error( errorObj );
-	state.errorToast = errorObj.statusText + ' (' + errorObj.status + ')' + ': ' + errorObj.body.data;
+	// state.errorToast = errorObj.statusText + ' (' + errorObj.status + ')' + ': ' + errorObj.body.data;
+	state.errorToast = errorObj;
 	if( step === 'initialization' ) {
 		state.ajaxLoader = false;
 		return;
@@ -141,7 +142,7 @@ const toastError = function ( errorObj, state, step ) {
 			state.importSteps.widgets.done = 'error';
 			break;
 	}
-	console.error( errorObj );
+	console.log( errorObj );
 };
 
 const importThemeMods = function ( { commit, state }, data ) {

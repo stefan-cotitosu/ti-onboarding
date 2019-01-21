@@ -4,8 +4,10 @@ import Vue from 'vue';
 import App from './components/main.vue';
 import store from './store/store.js';
 import ToggleButton from 'vue-js-toggle-button';
+import Clipboard from 'v-clipboard';
 
 Vue.use( ToggleButton );
+Vue.use(Clipboard);
 
 window.onload = function () {
 	new Vue( {

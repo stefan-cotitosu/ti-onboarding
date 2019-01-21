@@ -8,9 +8,9 @@ $warning: #F8AC59;
   animation: unblur $time cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
 }
 
-@mixin heartpop() {
+@mixin heartpop( $delay: .7s ) {
   -webkit-animation: heartpop 0.9s both;
   animation: heartpop 0.9s both;
-  animation-delay: .7s;
-  -webkit-animation-delay: .7s;
+  animation-delay: $delay;
+  -webkit-animation-delay: $delay;
 }

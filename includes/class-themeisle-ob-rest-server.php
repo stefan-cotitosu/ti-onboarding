@@ -285,7 +285,6 @@ class Themeisle_OB_Rest_Server {
 	 * @return array
 	 */
 	public function init_library() {
-
 		if ( empty( $this->theme_support ) ) {
 			return array();
 		}

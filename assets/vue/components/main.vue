@@ -2,11 +2,7 @@
 	<div :class="{ 'is__onboarding' : this.$store.state.onboard === 'yes' && ! previewOpen } ">
 		<div :class="! isLoading ? 'library-wrapper' : '' ">
 			<loader v-if="isLoading" :loading-message="strings.loading"></loader>
-			<template v-else-if="errorMessage">
-				<div class="error-well">
-					{{errorMessage}}
-				</div>
-			</template>
+			<error-well v-else-if="errorMessage && !modalOpen"></error-well>
 			<template v-else >
 				<template v-if="this.$store.state.onboard === 'yes'">
 					<div class="header" v-if="themeStrings.onboard_header ||themeStrings.onboard_description">
@@ -42,10 +38,8 @@
 	import MigrateNotice from "./migrate-notice.vue";
 	import EditorsTabs from "./editors-tabs.vue";
 	import Preview from "./preview.vue";
+	import ErrorWell from "./error-well.vue";
 
-	export default {
-		components: { Preview, EditorsTabs, MigrateNotice, ImportModal }
-	}
 	module.exports = {
 		name: 'app',
 		data: function () {
@@ -81,6 +75,7 @@
 			ImportModal,
 			MigrateNotice,
 			EditorsTabs,
+			ErrorWell,
 		},
 	}
 </script>

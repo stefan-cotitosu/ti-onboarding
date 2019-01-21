@@ -28,17 +28,6 @@ button.button-secondary.button {
   margin-left: auto;
 }
 
-.error-well {
-  @include unblur(.3s);
-  background: #fff2f2;
-  padding: 10px;
-  border: 1px solid #df8a89;
-  border-radius: 3px;
-  line-height: 1.6;
-  color: #23282d;
-  font-size: 14px;
-}
-
 @-webkit-keyframes unblur {
   0% {
     -webkit-filter: blur(12px);

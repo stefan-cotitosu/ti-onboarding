@@ -3,66 +3,67 @@
 		<div class="modal__item" v-on-clickaway="closeModal">
 			<div class="modal__header">
 				<div class="background" :style="{ backgroundImage: 'url(' + siteData.screenshot + ')' }"></div>
-				<button v-if="!importing || currentStep === 'error'" type="button" class="close" @click="closeModal">×</button>
+				<button v-if="!importing || currentStep === 'error'" type="button" class="close" @click="closeModal">×
+				</button>
 				<h2 class="title ellipsis">{{siteData.title}}</h2>
 			</div>
 			<div class="modal__content">
-					<template v-if="currentStep !== 'done' && currentStep !== 'error' && !importing ">
-						<div class="disclaimers">
-							<strong><i class="dashicons dashicons-info"></i>{{strings.note}}:</strong>
-							<ol>
-								<li>{{strings.backup_disclaimer}}</li>
-								<li>{{strings.placeholders_disclaimer}}</li>
-							</ol>
-						</div>
+				<template v-if="currentStep !== 'done' && currentStep !== 'error' && !importing ">
+					<div class="disclaimers">
+						<strong><i class="dashicons dashicons-info"></i>{{strings.note}}:</strong>
+						<ol>
+							<li>{{strings.backup_disclaimer}}</li>
+							<li>{{strings.placeholders_disclaimer}}</li>
+						</ol>
+					</div>
 
-						<div class="import__options">
-							<h4>{{strings.general}}:</h4>
-							<ul class="features">
-								<li class="option_toggle">
-									<label class="option-toggle-label"
-											:class="importOptions.content ? 'active' : 'inactive'"><span
-											class="dashicons dashicons-admin-post"></span><span>{{strings.content}}</span></label>
-									<toggle-button @change="adjustImport( 'content' )" :value="importOptions.content"
-											color="#008ec2"></toggle-button>
-								</li>
-								<li class="option_toggle">
-									<label class="option-toggle-label"
-											:class="importOptions.customizer ? 'active' : 'inactive'"><span
-											class="dashicons dashicons-admin-customizer"></span><span>{{strings.customizer}}</span></label>
-									<toggle-button @change="adjustImport( 'customizer' )" :value="importOptions.customizer"
-											color="#008ec2"></toggle-button>
-								</li>
-								<li class="option_toggle">
-									<label class="option-toggle-label"
-											:class="importOptions.widgets ? 'active' : 'inactive'"><span
-											class="dashicons dashicons-admin-generic"></span><span>{{strings.widgets}}</span></label>
-									<toggle-button @change="adjustImport( 'widgets' )" :value="importOptions.widgets"
-											color="#008ec2"></toggle-button>
-								</li>
-							</ul>
-							<h4>{{strings.plugins}}:</h4>
-							<ul class="features">
-								<li class="option_toggle" v-for="( plugin, index ) in siteData.recommended_plugins">
-									<label class="option-toggle-label ellipsis"
-											:class="importOptions.installablePlugins[index] ?  'active' : 'inactive'">
-										<span class="dashicons dashicons-admin-plugins"></span>
-										<span v-html="plugin"></span></label>
-									<toggle-button @change="adjustPlugins( index, plugin )"
-											:value="importOptions.installablePlugins[index]"
-											color="#008ec2"></toggle-button>
-								</li>
-							</ul>
-						</div>
-					</template>
-					<template v-else>
-						<stepper></stepper>
-						<h3 class="success" v-if="currentStep === 'done'">
-							<span class="dashicons dashicons-heart"></span>
-							<span>{{strings.import_done}}</span>
-						</h3>
-						<div class="error-well" v-if="errorMessage">{{errorMessage}}</div>
-					</template>
+					<div class="import__options">
+						<h4>{{strings.general}}:</h4>
+						<ul class="features">
+							<li class="option_toggle">
+								<label class="option-toggle-label"
+										:class="importOptions.content ? 'active' : 'inactive'"><span
+										class="dashicons dashicons-admin-post"></span><span>{{strings.content}}</span></label>
+								<toggle-button @change="adjustImport( 'content' )" :value="importOptions.content"
+										color="#008ec2"></toggle-button>
+							</li>
+							<li class="option_toggle">
+								<label class="option-toggle-label"
+										:class="importOptions.customizer ? 'active' : 'inactive'"><span
+										class="dashicons dashicons-admin-customizer"></span><span>{{strings.customizer}}</span></label>
+								<toggle-button @change="adjustImport( 'customizer' )" :value="importOptions.customizer"
+										color="#008ec2"></toggle-button>
+							</li>
+							<li class="option_toggle">
+								<label class="option-toggle-label"
+										:class="importOptions.widgets ? 'active' : 'inactive'"><span
+										class="dashicons dashicons-admin-generic"></span><span>{{strings.widgets}}</span></label>
+								<toggle-button @change="adjustImport( 'widgets' )" :value="importOptions.widgets"
+										color="#008ec2"></toggle-button>
+							</li>
+						</ul>
+						<h4>{{strings.plugins}}:</h4>
+						<ul class="features">
+							<li class="option_toggle" v-for="( plugin, index ) in siteData.recommended_plugins">
+								<label class="option-toggle-label ellipsis"
+										:class="importOptions.installablePlugins[index] ?  'active' : 'inactive'">
+									<span class="dashicons dashicons-admin-plugins"></span>
+									<span v-html="plugin"></span></label>
+								<toggle-button @change="adjustPlugins( index, plugin )"
+										:value="importOptions.installablePlugins[index]"
+										color="#008ec2"></toggle-button>
+							</li>
+						</ul>
+					</div>
+				</template>
+				<template v-else>
+					<stepper></stepper>
+					<h3 class="success" v-if="currentStep === 'done'">
+						<span class="dashicons dashicons-heart"></span>
+						<span>{{strings.import_done}}</span>
+					</h3>
+					<error-well v-if="errorMessage"></error-well>
+				</template>
 			</div>
 
 
@@ -77,7 +78,9 @@
 					<button class="button button-secondary" v-on:click="resetImport">{{strings.back}}</button>
 				</template>
 				<template v-else>
-					<button class="button button-link" v-if="this.$store.state.onboard !== 'yes'" v-on:click="resetImport">{{strings.back}}</button>
+					<button class="button button-link" v-if="this.$store.state.onboard !== 'yes'"
+							v-on:click="resetImport">{{strings.back}}
+					</button>
 					<button class="button button-secondary" v-on:click="redirectToHome">{{strings.go_to_site}}</button>
 					<button class="button button-primary" v-on:click="editTemplate">{{strings.edit_template}}</button>
 				</template>
@@ -91,6 +94,7 @@
 	import Stepper from './stepper.vue'
 	import Loader from './loader.vue'
 	import Tabs from './tabs.vue'
+	import ErrorWell from './error-well.vue'
 
 	export default {
 		name: 'import-modal',
@@ -203,7 +207,8 @@
 		components: {
 			Stepper,
 			Loader,
-			Tabs
+			Tabs,
+			ErrorWell,
 		}
 	}
 </script>
