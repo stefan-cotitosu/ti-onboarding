@@ -209,7 +209,7 @@
 				var editor = this.getEditor();
 				var pageId = this.getPageId();
 				var url = this.homeUrl;
-				if ( editor === 'elementor' ) {
+				if ( editor === 'elementor' || isMigration ) {
 					url = this.homeUrl + '/wp-admin/post.php?post=' + pageId + '&action=elementor';
 				}
 				if ( editor === 'gutenberg' ) {

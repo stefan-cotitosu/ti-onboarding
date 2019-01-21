@@ -324,7 +324,7 @@ class Themeisle_OB_Rest_Server {
 
 		$content_imported = get_theme_mod( $data[ $old_theme ]['theme_mod_check'], 'not-imported' );
 		if ( $content_imported === 'yes' ) {
-			return array();
+//			return array();
 		}
 
 		$folder_name = $old_theme;
