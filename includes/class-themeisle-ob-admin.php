@@ -101,8 +101,27 @@ class Themeisle_OB_Admin {
 		wp_localize_script( 'themeisle-site-lib', 'themeisleSitesLibApi', $this->localize_sites_library() );
 
 		wp_enqueue_script( 'themeisle-site-lib' );
+	}
 
-		wp_enqueue_style( 'themeisle-site-lib', Themeisle_Onboarding::get_dir() . '/assets/css/style.css', array(), Themeisle_Onboarding::VERSION );
+	private function get_import_steps() {
+		return array(
+			'plugins'    => array(
+				'nicename' => __( 'Installing Plugins', 'textdomain' ),
+				'done'     => 'no',
+			),
+			'content'    => array(
+				'nicename' => __( 'Importing Content', 'textdomain' ),
+				'done'     => 'no',
+			),
+			'theme_mods' => array(
+				'nicename' => __( 'Setting Up Customizer', 'textdomain' ),
+				'done'     => 'no',
+			),
+			'widgets'    => array(
+				'nicename' => __( 'Importing Widgets', 'textdomain' ),
+				'done'     => 'no',
+			),
+		);
 	}
 
 	/**
@@ -122,6 +141,7 @@ class Themeisle_OB_Admin {
 			'onboarding'      => 'no',
 			'contentImported' => $this->escape_bool_text( get_theme_mod( 'ti_content_imported', 'no' ) ),
 			'aboutUrl'        => esc_url( admin_url( 'themes.php?page=' . $theme->__get( 'stylesheet' ) . '-welcome' ) ),
+			'importSteps'     => $this->get_import_steps(),
 		);
 
 		$is_onboarding = isset( $_GET['onboarding'] ) && $_GET['onboarding'] === 'yes';
@@ -139,34 +159,32 @@ class Themeisle_OB_Admin {
 	 */
 	private function get_strings() {
 		return array(
-			'preview_btn'       => __( 'Preview', 'textdomain' ),
-			'import_btn'        => __( 'Import', 'textdomain' ),
-			'pro_btn'           => __( 'Get the PRO version!', 'textdomain' ),
-			'importing'         => __( 'Importing', 'textdomain' ),
-			'cancel_btn'        => __( 'Cancel', 'textdomain' ),
-			'loading'           => __( 'Loading', 'textdomain' ),
-			'go_to_site'        => __( 'View Website', 'textdomain' ),
-			'edit_template'     => __( 'Add your own content', 'textdomain' ),
-			'back'              => __( 'Back to Sites Library', 'textdomain' ),
-			'note'              => __( 'Note', 'textdomain' ),
-			'advanced_options'  => __( 'Advanced Options', 'textdomain' ),
-			'plugins'           => __( 'Plugins', 'textdomain' ),
-			'general'           => __( 'General', 'textdomain' ),
-			'later'             => __( 'Keep current layout', 'textdomain' ),
-			'search'			=> __( 'Search', 'textdomain' ),
-			'content'           => __( 'Content', 'textdomain' ),
-			'customizer'        => __( 'Customizer', 'textdomain' ),
-			'widgets'           => __( 'Widgets', 'textdomain' ),
-			'import_steps'      => array(
-				'plugins'    => __( 'Installing Plugins', 'textdomain' ),
-				'content'    => __( 'Importing Content', 'textdomain' ),
-				'theme_mods' => __( 'Setting Up Customizer', 'textdomain' ),
-				'widgets'    => __( 'Importing Widgets', 'textdomain' ),
-			),
-			'import_disclaimer' => __( 'We recommend you backup your website content before attempting a full site import.', 'textdomain' ),
-			'import_done'       => __( 'Content was successfully imported. Enjoy your new site!', 'textdomain' ),
-			'pro_demo'          => __( 'Available in the PRO version', 'textdomain' ),
-		);
+			'preview_btn'             => __( 'Preview', 'textdomain' ),
+			'import_btn'              => __( 'Import', 'textdomain' ),
+			'pro_btn'                 => __( 'Get the PRO version!', 'textdomain' ),
+			'importing'               => __( 'Importing', 'textdomain' ),
+			'cancel_btn'              => __( 'Cancel', 'textdomain' ),
+			'loading'                 => __( 'Loading', 'textdomain' ),
+			'go_to_site'              => __( 'View Website', 'textdomain' ),
+			'edit_template'           => __( 'Add your own content', 'textdomain' ),
+			'back'                    => __( 'Back to Sites Library', 'textdomain' ),
+			'note'                    => __( 'Note', 'textdomain' ),
+			'advanced_options'        => __( 'Advanced Options', 'textdomain' ),
+			'plugins'                 => __( 'Plugins', 'textdomain' ),
+			'general'                 => __( 'General', 'textdomain' ),
+			'later'                   => __( 'Keep current layout', 'textdomain' ),
+			'search'                  => __( 'Search', 'textdomain' ),
+			'content'                 => __( 'Content', 'textdomain' ),
+			'customizer'              => __( 'Customizer', 'textdomain' ),
+			'widgets'                 => __( 'Widgets', 'textdomain' ),
+			'backup_disclaimer'       => __( 'We recommend you backup your website content before attempting a full site import.', 'textdomain' ),
+			'placeholders_disclaimer' => __( 'Due to copyright issues, some of the demo images will not be imported and will be replaced by placeholder images.', 'textdomain' ),
+			'import_done'             => __( 'Content was successfully imported. Enjoy your new site!', 'textdomain' ),
+			'pro_demo'                => __( 'Available in the PRO version', 'textdomain' ),
+			'copy_error_code'            => __( 'Copy error code', 'textdomain' ),
+			'error_report'            => sprintf( __( 'Hi! It seems there is a configuration issue with your server that\'s causing the import to fail. Please %1$s with us with the error code below, so we can help you fix this.', 'textdomain' ),
+				sprintf( '<a href="https://themeisle.com/contact">%1$s</a>', __( 'get in touch', 'textdomain' ) ) ),
+	);
 	}
 
 	/**
