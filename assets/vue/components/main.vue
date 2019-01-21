@@ -11,7 +11,7 @@
 					</div>
 				</template>
 
-				<migrate-notice v-if="this.$store.state.sitesData.migrate_data"></migrate-notice>
+				<migrate-notice v-if="this.$store.state.sitesData.migrate_data.screenshot"></migrate-notice>
 
 				<template>
 					<h3 v-if="themeStrings.templates_title">{{themeStrings.templates_title}}</h3>

@@ -1,5 +1,5 @@
 <template>
-	<div class="migrate-notice" v-if="migrationData && !dismissed">
+	<div class="migrate-notice" v-if="!dismissed">
 		<a class="migration-dismiss"
 				aria-label="Dismiss the migration notice" @click="dismissMigration()">{{ strings.dismiss}}</a>
 
