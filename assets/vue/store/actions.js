@@ -67,6 +67,11 @@ const installPlugins = function ( { commit, state }, data ) {
 		if ( response.ok ) {
 			state.importSteps.plugins.done = 'yes';
 			console.log( '%c Installed Plugins.', 'color: #4B9BE7' );
+			if ( state.importOptions.isMigration === true ) {
+				state.currentStep = 'content';
+				migrateTemplate( { commit, state }, data );
+				return false;
+			}
 			importContent( { commit, state }, data );
 		}
 	} ).catch( function ( error ) {
@@ -113,9 +118,8 @@ const importContent = function ( { commit, state }, data ) {
 
 const toastError = function ( errorObj, state, step ) {
 	console.error( errorObj );
-	// state.errorToast = errorObj.statusText + ' (' + errorObj.status + ')' + ': ' + errorObj.body.data;
 	state.errorToast = errorObj;
-	if( step === 'initialization' ) {
+	if ( step === 'initialization' ) {
 		state.ajaxLoader = false;
 		return;
 	}
@@ -219,7 +223,13 @@ const migrateTemplate = function ( { commit, state }, data ) {
 	} ).then( function ( response ) {
 		if ( response.ok ) {
 			console.log( '%c Imported front page.', 'color: #4B9BE7' );
+			state.currentStep = 'done';
+			state.importSteps.content.done = 'yes';
 			commit( 'migrationComplete', 'done' );
+			if( response.body.data ) {
+				commit( 'setFrontPageId', response.body.data);
+			}
+			doneImport( { commit } );
 		}
 	} ).catch( function ( error ) {
 		toastError( error, state, 'migration' );

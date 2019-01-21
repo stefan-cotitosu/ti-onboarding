@@ -37,12 +37,14 @@
 			},
 			steps: function () {
 				return this.$store.state.importSteps;
+			},
+			isMigration: function () {
+				return this.$store.state.importOptions.isMigration
 			}
 		},
 		mounted() {
 			let importOptions = this.$store.state.importOptions;
 
-			console.log(Object.values( importOptions.installablePlugins ).indexOf( true ));
 			if ( Object.values( importOptions.installablePlugins ).indexOf( true ) < 0 ) {
 				this.$store.state.importSteps.plugins.done = 'skip';
 			}
@@ -51,10 +53,10 @@
 				this.$store.state.importSteps.content.done = 'skip';
 			}
 
-			if ( importOptions.customizer === false ) {
+			if ( importOptions.customizer === false || this.isMigration ) {
 				this.$store.state.importSteps.theme_mods.done = 'skip';
 			}
-			if ( importOptions.widgets === false ) {
+			if ( importOptions.widgets === false || this.isMigration ) {
 				this.$store.state.importSteps.widgets.done = 'skip';
 			}
 		}

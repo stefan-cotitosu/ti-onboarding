@@ -7,9 +7,9 @@ import ToggleButton from 'vue-js-toggle-button';
 import Clipboard from 'v-clipboard';
 
 Vue.use( ToggleButton );
-Vue.use(Clipboard);
+Vue.use( Clipboard );
 
-window.onload = function () {
+window.addEventListener( 'load', function () {
 	new Vue( {
 		el: '#ti-sites-library',
 		store,
@@ -20,4 +20,4 @@ window.onload = function () {
 			store.dispatch( 'initialize', { req: 'Init Sites Library', data: {} } );
 		}
 	} );
-};
+} );

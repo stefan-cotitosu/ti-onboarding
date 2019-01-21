@@ -39,7 +39,8 @@
 
 <script>
 	import Loader from './loader.vue';
-	import {getInstallablePlugins} from '../common/common.js';
+	import { getInstallablePlugins } from '../common/common.js';
+
 	export default {
 		name: 'migrate-notice',
 		data: function () {
@@ -61,8 +62,9 @@
 					theme_mod: this.migrationData.theme_mod,
 				} )
 			},
-			openModal: function() {
+			openModal: function () {
 				this.setupImportData();
+				this.$store.state.importOptions.isMigration = true;
 				this.$store.commit( 'populatePreview', this.migrationData );
 				this.$store.commit( 'showImportModal', true );
 			},

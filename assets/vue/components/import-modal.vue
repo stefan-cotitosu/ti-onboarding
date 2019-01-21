@@ -24,21 +24,21 @@
 								<label class="option-toggle-label"
 										:class="importOptions.content ? 'active' : 'inactive'"><span
 										class="dashicons dashicons-admin-post"></span><span>{{strings.content}}</span></label>
-								<toggle-button @change="adjustImport( 'content' )" :value="importOptions.content"
+								<toggle-button v-if="! isMigration" @change="adjustImport( 'content' )" :value="importOptions.content"
 										color="#008ec2"></toggle-button>
 							</li>
 							<li class="option_toggle">
 								<label class="option-toggle-label"
 										:class="importOptions.customizer ? 'active' : 'inactive'"><span
 										class="dashicons dashicons-admin-customizer"></span><span>{{strings.customizer}}</span></label>
-								<toggle-button @change="adjustImport( 'customizer' )" :value="importOptions.customizer"
+								<toggle-button v-if="! isMigration" @change="adjustImport( 'customizer' )" :value="importOptions.customizer"
 										color="#008ec2"></toggle-button>
 							</li>
 							<li class="option_toggle">
 								<label class="option-toggle-label"
 										:class="importOptions.widgets ? 'active' : 'inactive'"><span
 										class="dashicons dashicons-admin-generic"></span><span>{{strings.widgets}}</span></label>
-								<toggle-button @change="adjustImport( 'widgets' )" :value="importOptions.widgets"
+								<toggle-button v-if="! isMigration" @change="adjustImport( 'widgets' )" :value="importOptions.widgets"
 										color="#008ec2"></toggle-button>
 							</li>
 						</ul>
@@ -137,6 +137,9 @@
 			},
 			errorMessage() {
 				return this.$store.state.errorToast;
+			},
+			isMigration() {
+				return this.$store.state.importOptions.isMigration;
 			}
 		},
 		methods: {
@@ -176,7 +179,7 @@
 				} )
 			},
 			startImport: function () {
-				if ( this.siteData.template_name ) {
+				if ( this.isMigration ) {
 					this.runMigration();
 					return false
 				}
