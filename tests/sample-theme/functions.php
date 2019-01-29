@@ -1,4 +1,7 @@
 <?php
+if ( ! class_exists( 'Themeisle_Onboarding' ) ) {
+	include_once dirname( dirname( dirname( __FILE__ ) ) ) . '/load.php';
+}
 /**
  * This example use the composer library as mu-plugin.
  * If you use this in the theme vendor folder, you dont need to tweak this.
@@ -16,13 +19,7 @@ add_theme_support( 'themeisle-demo-import', array(
 		'elementor'
 	),
 	'local'   => array(
-		'elementor'      => array(
-			'neve-main' => array(
-				'url'   => 'https://demo.themeisle.com/neve',
-				'title' => 'Neve 2018',
-			),
-		),
-		'beaver_builder' => array(
+		'elementor' => array(
 			'neve-main' => array(
 				'url'   => 'https://demo.themeisle.com/neve',
 				'title' => 'Neve 2018',

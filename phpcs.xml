@@ -12,9 +12,7 @@
     <exclude-pattern type="relative">node_modules</exclude-pattern>
     <exclude-pattern type="relative">tests</exclude-pattern>
 
-
     <rule ref="WordPress-Core">
-
         <exclude name="WordPress.PHP.YodaConditions.NotYoda"/>
         <exclude name="Squiz.Commenting.InlineComment.InvalidEndChar"/>
         <exclude name="WordPress.DB.PreparedSQL.NotPrepared"/>
@@ -31,11 +29,7 @@
         <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
         <exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
         <exclude name="Squiz.PHP.DisallowMultipleAssignments.Found"/>
-    </rule>
-    <rule ref="Generic.Files.LineEndings">
-        <properties>
-            <property name="eolChar" value="\r\n" />
-        </properties>
+        <exclude name="Generic.Files.LineEndings.InvalidEOLChar"/>
     </rule>
 
 </ruleset>
