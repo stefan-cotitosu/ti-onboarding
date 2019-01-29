@@ -48,6 +48,6 @@ jobs:
 
 stages:
   - name: deploy
-    if: branch = master and type != "pull_request" and repo = "Codeinwp/ti-oboarding"
+    if: branch = master and type != "pull_request" and repo = "Codeinwp/ti-onboarding"
   - name: test
     if: type = "pull_request"
