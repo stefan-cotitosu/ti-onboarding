@@ -9,6 +9,8 @@
 
     <exclude-pattern type="relative">vendor</exclude-pattern>
     <exclude-pattern type="relative">sample-theme</exclude-pattern>
+    <exclude-pattern type="relative">node_modules</exclude-pattern>
+    <exclude-pattern type="relative">tests</exclude-pattern>
 
 
     <rule ref="WordPress-Core">
@@ -29,35 +31,6 @@
         <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
         <exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
         <exclude name="Squiz.PHP.DisallowMultipleAssignments.Found"/>
-    </rule>
-    <rule ref="WordPress-Docs"/>
-    <rule ref="WordPress.WP.I18n"/>
-    <rule ref="Squiz.Commenting.FunctionComment.Missing">
-        <exclude-pattern>tests/*</exclude-pattern>
-    </rule>
-    <rule ref="Squiz.Commenting.FileComment.Missing">
-        <exclude-pattern>tests/*</exclude-pattern>
-    </rule>
-    <rule ref="Squiz.Commenting.ClassComment.Missing">
-        <exclude-pattern>tests/*</exclude-pattern>
-    </rule>
-    <rule ref="Squiz.Commenting.ClassComment.SpacingAfter">
-        <exclude-pattern>tests/*</exclude-pattern>
-    </rule>
-    <rule ref="Squiz.Commenting.FunctionComment.MissingParamTag">
-        <exclude-pattern>tests/*</exclude-pattern>
-    </rule>
-    <rule ref="Generic.Commenting.DocComment.MissingShort">
-        <exclude-pattern>tests/*</exclude-pattern>
-    </rule>
-    <rule ref="Squiz.Commenting.VariableComment.Missing">
-        <exclude-pattern>tests/*</exclude-pattern>
-    </rule>
-    <rule ref="Squiz.Commenting.FunctionCommentThrowTag.Missing">
-        <exclude-pattern>tests/*</exclude-pattern>
-    </rule>
-    <rule ref="WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid">
-        <exclude-pattern>tests/*</exclude-pattern>
     </rule>
     <rule ref="Generic.Files.LineEndings">
         <properties>
