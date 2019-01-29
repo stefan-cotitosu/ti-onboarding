@@ -66,7 +66,6 @@ class Themeisle_Onboarding {
 		if ( ! $this->should_load() ) {
 			return;
 		}
-
 		$this->setup_admin();
 		$this->setup_api();
 	}
@@ -121,6 +120,7 @@ class Themeisle_Onboarding {
 		if ( ! class_exists( 'Themeisle_OB_Rest_Server' ) ) {
 			return;
 		}
+
 		$api = new Themeisle_OB_Rest_Server();
 		$api->init();
 	}
@@ -133,7 +133,7 @@ class Themeisle_Onboarding {
 	 * @return string
 	 */
 	static public function get_dir() {
-		return trailingslashit( get_template_directory_uri() ) . self::OBOARDING_PATH;
+		return apply_filters( 'themeisle_site_import_uri', trailingslashit( get_template_directory_uri() ) . self::OBOARDING_PATH );
 	}
 
 	/**

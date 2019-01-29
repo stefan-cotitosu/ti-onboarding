@@ -18,12 +18,14 @@ class Themeisle_OB_Rest_Server {
 
 	/**
 	 * Front Page Id
+	 *
 	 * @var
 	 */
 	private $frontpage_id;
 
 	/**
 	 * The theme support contents.
+	 *
 	 * @var
 	 */
 	private $theme_support = array();
@@ -333,14 +335,14 @@ class Themeisle_OB_Rest_Server {
 		}
 
 		return array(
-			'theme_name'        => ! empty( $data[ $old_theme ]['theme_name'] ) ? esc_html( $data[ $old_theme ]['theme_name'] ) : '',
-			'screenshot'        => get_template_directory_uri() . Themeisle_Onboarding::OBOARDING_PATH . '/migration/' . $folder_name . '/' . $data[ $old_theme ]['template'] . '.png',
-			'template'          => get_template_directory() . Themeisle_Onboarding::OBOARDING_PATH . '/migration/' . $folder_name . '/' . $data[ $old_theme ]['template'] . '.json',
-			'template_name'     => $data[ $old_theme ]['template'],
-			'heading'           => $data[ $old_theme ]['heading'],
-			'description'       => $data[ $old_theme ]['description'],
-			'theme_mod'         => $data[ $old_theme ]['theme_mod_check'],
-			'mandatory_plugins' => $data[ $old_theme ]['mandatory_plugins'] ? $data[ $old_theme ]['mandatory_plugins'] : array(),
+			'theme_name'          => ! empty( $data[ $old_theme ]['theme_name'] ) ? esc_html( $data[ $old_theme ]['theme_name'] ) : '',
+			'screenshot'          => get_template_directory_uri() . Themeisle_Onboarding::OBOARDING_PATH . '/migration/' . $folder_name . '/' . $data[ $old_theme ]['template'] . '.png',
+			'template'            => get_template_directory() . Themeisle_Onboarding::OBOARDING_PATH . '/migration/' . $folder_name . '/' . $data[ $old_theme ]['template'] . '.json',
+			'template_name'       => $data[ $old_theme ]['template'],
+			'heading'             => $data[ $old_theme ]['heading'],
+			'description'         => $data[ $old_theme ]['description'],
+			'theme_mod'           => $data[ $old_theme ]['theme_mod_check'],
+			'mandatory_plugins'   => $data[ $old_theme ]['mandatory_plugins'] ? $data[ $old_theme ]['mandatory_plugins'] : array(),
 			'recommended_plugins' => $data[ $old_theme ]['recommended_plugins'] ? $data[ $old_theme ]['recommended_plugins'] : array(),
 		);
 	}
@@ -464,7 +466,7 @@ class Themeisle_OB_Rest_Server {
 			return false;
 		}
 
-		if( ! isset( $sdk_modules[$theme]['licenser'] ) ) {
+		if ( ! isset( $sdk_modules[ $theme ]['licenser'] ) ) {
 			return false;
 		}
 

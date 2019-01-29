@@ -118,7 +118,7 @@ class Themeisle_OB_Importer_Alterator {
 	private function count_posts_by_post_type() {
 		foreach ( $this->filtered_post_types as $post_type ) {
 			$args      = array(
-				'post_type' => $post_type
+				'post_type' => $post_type,
 			);
 			$the_query = new WP_Query( $args );
 
