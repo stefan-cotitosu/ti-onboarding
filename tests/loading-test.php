@@ -7,7 +7,7 @@
 
 /**
  * Test onboarding loading.
- *
+ * @runTestsInSeparateProcesses
  */
 class Onboarding_Loading_Test extends WP_UnitTestCase {
 	/**

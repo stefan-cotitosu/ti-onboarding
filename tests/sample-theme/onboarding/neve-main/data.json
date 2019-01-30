@@ -19,10 +19,7 @@
     "neve_footer_text": "<a href=\"https://themeisle.com/themes/neve/\" target=\"_blank\" rel=\"nofollow\">Neve Charity</a> | Powered by <a href=\"http://wordpress.org\" rel=\"nofollow\">WordPress</a>",
     "neve_footer_widget_columns": 2,
     "neve_text_color": "#404248",
-    "neve_generated_style_version": 1544175692,
-    "__ti_import_menus_location": {
-      "primary": "main"
-    }
+    "neve_generated_style_version": 1544175692
   },
   "widgets": {
     "blog-sidebar": {

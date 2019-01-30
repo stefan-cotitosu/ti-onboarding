@@ -19,37 +19,14 @@ if ( ! file_exists( $_tests_dir . '/includes/functions.php' ) ) {
 // Give access to tests_add_filter() function.
 require_once $_tests_dir . '/includes/functions.php';
 
-
-global $phpunit_theme_root, $phpunit_current_theme;
-$phpunit_theme_root    = dirname( __FILE__ );
-$phpunit_current_theme = 'sample-theme';
-
-function _get_current_theme() {
-	global $phpunit_current_theme;
-
-	return $phpunit_current_theme;
-}
-
-function _get_theme_root() {
-	global $phpunit_theme_root;
-
-	return $phpunit_theme_root;
-}
-
 /**
  * Registers theme
  */
-function _register_theme() {
-	global $phpunit_theme_root;
-	add_filter( 'theme_root', '_get_theme_root' );
-
-	register_theme_directory( $phpunit_theme_root );
-
-	add_filter( 'pre_option_template', '_get_current_theme' );
-	add_filter( 'pre_option_stylesheet', '_get_current_theme' );
+function _register_module() {
+	require_once dirname( dirname( __FILE__ ) ) . '/load.php';
 }
 
-tests_add_filter( 'muplugins_loaded', '_register_theme' );
+tests_add_filter( 'muplugins_loaded', '_register_module' );
 
 // Start up the WP testing environment.
 require $_tests_dir . '/includes/bootstrap.php';

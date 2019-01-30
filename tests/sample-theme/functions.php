@@ -1,14 +1,16 @@
 <?php
-if ( ! class_exists( 'Themeisle_Onboarding' ) ) {
+if ( ! class_exists( 'Themeisle_Onboarding', false ) ) {
 	include_once dirname( dirname( dirname( __FILE__ ) ) ) . '/load.php';
 }
 /**
  * This example use the composer library as mu-plugin.
  * If you use this in the theme vendor folder, you dont need to tweak this.
  */
-add_filter( 'themeisle_site_import_uri', function () {
+add_filter( 'themeisle_site_import_uri', 'change_uri' );
+
+function change_uri() {
 	return WPMU_PLUGIN_URL;
-} );
+}
 
 /**
  * Bootstraping the onboarding library.
@@ -32,7 +34,10 @@ add_theme_support( 'themeisle-demo-import', array(
 	),
 ) );
 
-\Themeisle_Onboarding::instance();
+add_action( 'init', '_load_onboarding' );
+function _load_onboarding() {
+	Themeisle_Onboarding::instance();
+}
 
 add_action( 'admin_menu', 'stub_admin_menu' );
 /**
@@ -40,7 +45,7 @@ add_action( 'admin_menu', 'stub_admin_menu' );
  */
 function stub_admin_menu() {
 	add_menu_page( 'My sites', 'My sites', 'manage_options', 'tionboard_sites', array(
-		\Themeisle_Onboarding::instance(),
+		Themeisle_Onboarding::instance(),
 		'render_onboarding'
 	), 'dashicons-tickets', 6 );
 }
