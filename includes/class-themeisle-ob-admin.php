@@ -189,7 +189,7 @@ class Themeisle_OB_Admin {
 			'copy_error_code'         => __( 'Copy error code', 'textdomain' ),
 			'error_report'            => sprintf(
 				__( 'Hi! It seems there is a configuration issue with your server that\'s causing the import to fail. Please %1$s with us with the error code below, so we can help you fix this.', 'textdomain' ),
-				sprintf( '<a href="https://themeisle.com/contact">%1$s</a>', __( 'get in touch', 'textdomain' ) )
+				sprintf( '<a href="https://themeisle.com/contact">%1$s <i class="dashicons dashicons-external"></i></a>', __( 'get in touch', 'textdomain' ) )
 			),
 		);
 	}

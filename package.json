@@ -9,7 +9,8 @@
     "watchify": "watchify -vd -p browserify-hmr -e assets/vue/app.js -o assets/js/bundle.js",
     "dev": "npm-run-all --parallel watchify",
     "semantic-release": "semantic-release --debug",
-    "build": "cross-env NODE_ENV=production browserify -g envify assets/vue/app.js | uglifyjs -c warnings=false -m > assets/js/bundle.js"
+    "build": "cross-env NODE_ENV=production browserify -g envify assets/vue/app.js | uglifyjs -c warnings=false -m > assets/js/bundle.js",
+    "addToCommit": "git add assets/js"
   },
   "devDependencies": {
     "@commitlint/cli": "^7.4.0",
@@ -61,7 +62,8 @@
   "pre-commit": {
     "run": [
       "phpcs",
-      "build"
+      "build",
+      "addToCommit"
     ]
   },
   "husky": {
