@@ -13,7 +13,6 @@
   "devDependencies": {
     "cross-env": "^1.0.6",
     "css-loader": "^0.23.0",
-    "grunt-plugin-fleet": "codeinwp/grunt-plugin-fleet",
     "load-project-config": "~0.2.0",
     "babel-core": "^6.0.0",
     "babel-preset-es2015": "^6.0.0",
