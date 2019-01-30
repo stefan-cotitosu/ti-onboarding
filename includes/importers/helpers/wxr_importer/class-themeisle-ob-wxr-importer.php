@@ -355,7 +355,7 @@ class Themeisle_OB_WXR_Importer extends WP_Importer {
 		/**
 		 * Begin the import.
 		 */
-		do_action( 'import_start' );
+		do_action( 'ti_ob_content_import_start' );
 	}
 
 	/**
@@ -376,7 +376,7 @@ class Themeisle_OB_WXR_Importer extends WP_Importer {
 		/**
 		 * Complete the import.
 		 */
-		do_action( 'import_end' );
+		do_action( 'ti_ob_content_import_end' );
 	}
 
 	/**
