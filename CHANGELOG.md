@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/Codeinwp/ti-onboarding/compare/v1.0.0...v1.1.0) (2019-01-30)
+
+
+### Features
+
+* adds CI integration and basic unit tests ([7c011ed](https://github.com/Codeinwp/ti-onboarding/commit/7c011ed))
+
 # 1.0.0 (2019-01-30)
 
 
