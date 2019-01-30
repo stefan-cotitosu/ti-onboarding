@@ -33,7 +33,7 @@
           "composer.json",
           "package-lock.json",
           "package.json",
-          "load.php"
+          "class-themeisle-onboarding.php"
         ]
       }
     ],
