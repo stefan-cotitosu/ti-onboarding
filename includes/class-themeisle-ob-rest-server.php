@@ -424,7 +424,12 @@ class Themeisle_OB_Rest_Server {
 		require_once 'importers/class-themeisle-ob-theme-mods-importer.php';
 
 		if ( ! class_exists( 'Themeisle_OB_Theme_Mods_Importer' ) ) {
-			return new WP_REST_Response( array( 'data' => 'ti__ob_rest_err_3', 'success' => false ) );
+			return new WP_REST_Response(
+				array(
+					'data'    => 'ti__ob_rest_err_3',
+					'success' => false,
+				)
+			);
 		}
 		$theme_mods_importer = new Themeisle_OB_Theme_Mods_Importer();
 		return $theme_mods_importer->import_theme_mods( $request );
