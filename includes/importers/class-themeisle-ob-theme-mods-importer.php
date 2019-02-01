@@ -13,6 +13,14 @@
  * Class Themeisle_OB_Theme_Mods_Importer
  */
 class Themeisle_OB_Theme_Mods_Importer {
+
+	/**
+	 * Log
+	 *
+	 * @var
+	 */
+	private $log = '';
+
 	/**
 	 * Source URL.
 	 *
@@ -88,6 +96,7 @@ class Themeisle_OB_Theme_Mods_Importer {
 			array(
 				'data'    => 'success',
 				'success' => true,
+				'log'     => $this->log,
 			)
 		);
 	}
@@ -112,12 +121,13 @@ class Themeisle_OB_Theme_Mods_Importer {
 			$setup_menus[ $location ] = $term_id;
 		}
 		if ( empty( $setup_menus ) ) {
-			print_r( 'No menus to set up locations for.' . "\n" );
+			$this->log .= 'No menus to set up locations for.' . "\n";
 
 			return;
 		}
 		set_theme_mod( 'nav_menu_locations', $setup_menus );
-		print_r( 'Menus are set up.' . "\n" );
+
+		$this->log .= 'Menus are set up.' . "\n";
 
 		do_action( 'themeisle_ob_after_nav_menus_setup' );
 	}

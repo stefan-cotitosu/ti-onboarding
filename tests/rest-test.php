@@ -45,7 +45,7 @@ class Onboarding_Rest_Test extends WP_UnitTestCase {
 		$api = new Themeisle_OB_Rest_Server();
 		$api->init();
 		$templates = $api->init_library();
-
+		$templates = $templates->data['data'];
 		$this->assertNotEmpty( $templates );
 		$this->assertArrayHasKey( 'local', $templates );
 

@@ -8,6 +8,7 @@
  * @package    themeisle-onboarding
  * @soundtrack Milk Carton Kid - The Milk Carton Kids
  */
+
 /**
  * Class Themeisle_OB_Widgets_Importer
  */
@@ -22,16 +23,33 @@ class Themeisle_OB_Widgets_Importer {
 		$params  = $request->get_json_params();
 		$widgets = $params['data'];
 		if ( empty( $widgets ) || ! is_array( $widgets ) ) {
-			wp_send_json_success( 'success', 200 );
+			return new WP_REST_Response(
+				array(
+					'success' => true,
+				)
+			);
 		}
 
 		do_action( 'themeisle_ob_before_widgets_import' );
 
-		$this->actually_import( $widgets );
+		$import = $this->actually_import( $widgets );
+
+		if ( is_wp_error( $import ) ) {
+			return new WP_REST_Response(
+				array(
+					'success' => false,
+
+				)
+			);
+		}
 
 		do_action( 'themeisle_ob_after_widgets_import' );
 
-		wp_send_json_success( 'success', 200 );
+		return new WP_REST_Response(
+			array(
+				'success' => true,
+			)
+		);
 	}
 
 	/**
@@ -42,7 +60,7 @@ class Themeisle_OB_Widgets_Importer {
 	private function actually_import( $data ) {
 		global $wp_registered_sidebars;
 		if ( empty( $data ) || ! is_array( $data ) ) {
-			wp_send_json_error( 'ti__ob_widget_err_1', 500 );
+			return new WP_Error( 'ti__ob_widget_err_1' );
 		}
 
 		$available_widgets = $this->available_widgets();

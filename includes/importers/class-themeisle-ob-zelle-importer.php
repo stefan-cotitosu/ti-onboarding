@@ -66,7 +66,7 @@ class Themeisle_OB_Zelle_Importer {
 		unset( $this->content[9] );
 
 		if ( empty( $data ) ) {
-			wp_send_json_error( 'ti__ob_zelle_err_1', 500 );
+			return new WP_Error( 'ti__ob_zelle_err_1' );
 		}
 
 		$this->map_bigtitle_section();
@@ -98,7 +98,7 @@ class Themeisle_OB_Zelle_Importer {
 		$el_template_post = $elementor->import_template( $this->name, $path_to_file );
 
 		if ( empty( $el_template_post ) ) {
-			wp_send_json_error( 'ti__ob_zelle_err_2', 500 );
+			return new WP_Error( 'ti__ob_zelle_err_2' );
 		}
 
 		unlink( $path_to_file );
@@ -112,11 +112,12 @@ class Themeisle_OB_Zelle_Importer {
 			update_option( 'show_on_front', 'page' );
 
 			set_theme_mod( 'ti_content_imported', 'yes' );
+
 			// on success we return the page url because we'll redirect to it.
-			wp_send_json_success( $post_id );
+			return new WP_REST_Response( array( 'data' => $post_id ) );
 		}
 
-		wp_send_json_error( 'ti__ob_zelle_err_3', 500 );
+		return new WP_Error( 'ti__ob_zelle_err_3' );
 
 	}
 
