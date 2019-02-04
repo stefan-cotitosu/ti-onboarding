@@ -67,6 +67,7 @@ class Onboarding_Rest_Test extends WP_UnitTestCase {
 
 		require_once dirname( __FILE__ ) . '/../includes/importers/class-themeisle-ob-widgets-importer.php';
 		$this->widget_importer = new Themeisle_OB_Widgets_Importer();
+		add_filter( 'async_update_translation', '__return_false' );
 	}
 
 	/**
