@@ -1,7 +1,7 @@
 <template>
 	<div class="error-well">
 		<div class="message">
-		<p v-html="strings.error_report"></p>
+			<p v-html="strings.error_report"></p>
 		</div>
 		<div class="buttons">
 			<button v-clipboard="errorMessage"
@@ -18,33 +18,29 @@
 </template>
 
 <script>
-	export default {
-		name: "error-well",
-		data() {
-			return {
-				copied: false,
-				collapsed: true
-			}
-		},
-		computed: {
-			errorMessage() {
-				return this.$store.state.errorToast;
-			},
-			strings() {
-				return this.$store.state.strings;
-			}
-		},
-		methods: {
-			handleCopy() {
-				this.copied = true;
-			},
-			togglePre() {
-				this.collapsed = ! this.collapsed;
-			}
-		}
-	}
+  export default {
+    name: 'error-well',
+    data () {
+      return {
+        copied: false,
+        collapsed: true
+      }
+    },
+    computed: {
+      errorMessage () {
+        return this.$store.state.errorToast
+      },
+      strings () {
+        return this.$store.state.strings
+      }
+    },
+    methods: {
+      handleCopy () {
+        this.copied = true
+      },
+      togglePre () {
+        this.collapsed = !this.collapsed
+      }
+    }
+  }
 </script>
-
-<style scoped>
-
-</style>
