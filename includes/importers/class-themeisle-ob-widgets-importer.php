@@ -18,6 +18,8 @@ class Themeisle_OB_Widgets_Importer {
 	 * Import Widgets.
 	 *
 	 * @param WP_REST_Request $request contains the widgets that should be imported.
+	 *
+	 * @return WP_REST_Response
 	 */
 	public function import_widgets( WP_REST_Request $request ) {
 		$params  = $request->get_body_params();
@@ -37,6 +39,7 @@ class Themeisle_OB_Widgets_Importer {
 		if ( is_wp_error( $import ) ) {
 			return new WP_REST_Response(
 				array(
+					'data'    => 'ti__ob_widgets_err_1',
 					'success' => false,
 				)
 			);

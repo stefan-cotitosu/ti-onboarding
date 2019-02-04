@@ -39,6 +39,8 @@ class Themeisle_OB_Theme_Mods_Importer {
 	 * Import theme mods.
 	 *
 	 * @param WP_REST_Request $request the async request.
+	 *
+	 * @return WP_REST_Response
 	 */
 	public function import_theme_mods( WP_REST_Request $request ) {
 		if ( ! current_user_can( 'customize' ) ) {

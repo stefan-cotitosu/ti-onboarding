@@ -247,7 +247,7 @@ class Themeisle_OB_Rest_Server {
 		$data = $this->theme_support['can_migrate'];
 
 		$old_theme = get_theme_mod( 'ti_prev_theme', 'ti_onboarding_undefined' );
-
+		$old_theme = 'zerif-lite';
 		if ( ! array_key_exists( $old_theme, $data ) ) {
 			return array();
 		}
@@ -496,7 +496,7 @@ class Themeisle_OB_Rest_Server {
 	 */
 	public function run_front_page_migration( WP_REST_Request $request ) {
 
-		$params = $request->get_json_params();
+		$params = $request->get_body_params();
 		if ( ! isset( $params['template'] ) ) {
 			return new WP_REST_Response(
 				array(
@@ -524,9 +524,23 @@ class Themeisle_OB_Rest_Server {
 			);
 		}
 		$migrator = new $class_name;
-		$migrator->import_zelle_frontpage( $params['template'] );
+		$import   = $migrator->import_zelle_frontpage( $params['template'] );
 
-		return new WP_REST_Response( array( 'success' => true ) );
+		if ( is_wp_error( $import ) ) {
+			return new WP_REST_Response(
+				array(
+					'message' => 'ti__ob_zelle_err_1',
+					'success' => false,
+				)
+			);
+		}
+
+		return new WP_REST_Response(
+			array(
+				'success' => true,
+				'data'    => $import,
+			)
+		);
 	}
 
 	/**

@@ -34,6 +34,7 @@ class Themeisle_OB_Plugin_Importer {
 				array(
 					'success' => false,
 					'log'     => $this->log,
+					'data'    => 'ti__ob_perm_err_1',
 				)
 			);
 		}

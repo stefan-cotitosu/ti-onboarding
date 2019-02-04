@@ -69,9 +69,9 @@
   "pre-commit": {
     "run": [
       "phpcs",
+      "lint",
       "build",
-      "addToCommit",
-      "lint"
+      "addToCommit"
     ]
   },
   "husky": {

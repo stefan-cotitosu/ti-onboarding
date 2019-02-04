@@ -42,6 +42,8 @@ class Themeisle_OB_Zelle_Importer {
 
 	/**
 	 * The callback of an ajax request when the user requests an import action.
+	 *
+	 * @return WP_Error
 	 */
 	public function import_zelle_frontpage( $template_path ) {
 		$this->previous_theme_content = get_option( 'theme_mods_zerif-pro' );
@@ -114,7 +116,7 @@ class Themeisle_OB_Zelle_Importer {
 			set_theme_mod( 'ti_content_imported', 'yes' );
 
 			// on success we return the page url because we'll redirect to it.
-			return new WP_REST_Response( array( 'data' => $post_id ) );
+			return $post_id;
 		}
 
 		return new WP_Error( 'ti__ob_zelle_err_3' );
@@ -931,7 +933,7 @@ class Themeisle_OB_Zelle_Importer {
 	 *
 	 * @param number $id The Elementor template id.
 	 *
-	 * @return bool|int|WP_Error
+	 * @return bool|int
 	 */
 	private function insert_page( $id ) {
 		$args = array(
