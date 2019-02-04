@@ -80,6 +80,11 @@ class Themeisle_OB_Admin {
 	 * Render the sites library.
 	 */
 	public function render_site_library() {
+		if ( version_compare( PHP_VERSION, '5.4.0', '<' ) ) {
+			echo '<div>' . apply_filters( 'themeisle_onboarding_phprequired_text', 'ti_ob_err_phpv_less_than_5-4-0' ) . '</div>';
+
+			return;
+		}
 
 		$this->enqueue();
 		?>
