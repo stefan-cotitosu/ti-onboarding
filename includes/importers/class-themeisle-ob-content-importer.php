@@ -17,6 +17,8 @@ class Themeisle_OB_Content_Importer {
 	 * Import Remote XML file.
 	 *
 	 * @param WP_REST_Request $request the async request.
+	 *
+	 * @return WP_REST_Response
 	 */
 	public function import_remote_xml( WP_REST_Request $request ) {
 		if ( ! current_user_can( 'manage_options' ) ) {
@@ -30,7 +32,7 @@ class Themeisle_OB_Content_Importer {
 
 		do_action( 'themeisle_ob_before_xml_import' );
 
-		$params           = $request->get_json_params();
+		$params           = $request->get_body_params();
 		$body             = $params['data'];
 		$content_file_url = $body['contentFile'];
 
@@ -141,6 +143,8 @@ class Themeisle_OB_Content_Importer {
 	 * Set up front page options by `post_name`.
 	 *
 	 * @param array $args the front page array.
+	 *
+	 * @return int|void
 	 */
 	private function setup_front_page( $args ) {
 		if ( ! is_array( $args ) ) {
@@ -221,6 +225,8 @@ class Themeisle_OB_Content_Importer {
 	 * Import file
 	 *
 	 * @param string $file_path the file path to import.
+	 *
+	 * @return WP_Error|true
 	 */
 	private function import_file( $file_path ) {
 		if ( empty( $file_path ) || ! file_exists( $file_path ) || ! is_readable( $file_path ) ) {

@@ -173,12 +173,14 @@ const importThemeMods = function ({ commit, state }, data) {
       'data': data.themeMods,
     },
     responseType: 'json',
-    emulateJSON: true,
+    emulateJSON: true
   }).then(function (response) {
-    if (response.ok) {
+    if (response.body.success) {
       state.importSteps.theme_mods.done = 'yes';
       console.log('%c Imported Customizer.', 'color: #4B9BE7');
       importWidgets({ commit, state }, data);
+    } else {
+      toastError(response, state, 'initialization');
     }
   }).catch(function (error) {
     toastError(error, state, 'theme_mods');

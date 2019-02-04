@@ -25,16 +25,23 @@ class Themeisle_OB_Plugin_Importer {
 	 * Install Plugins.
 	 *
 	 * @param WP_REST_Request $request contains the plugins that should be installed.
+	 *
+	 * @return WP_REST_Response
 	 */
 	public function install_plugins( WP_REST_Request $request ) {
 		if ( ! current_user_can( 'install_plugins' ) ) {
-			return new WP_Error( 'ti__ob_permission_err_3' );
+			return new WP_REST_Response(
+				array(
+					'success' => false,
+					'log'     => $this->log,
+				)
+			);
 		}
 
 		do_action( 'themeisle_ob_before_plugins_install' );
 
-		$params  = $request->get_json_params();
-		$plugins = $params['data'];
+		$plugins = $request->get_body_params();
+		$plugins = $plugins['data'];
 
 		foreach ( $plugins as $slug => $state ) {
 			if ( $state === false ) {
@@ -43,10 +50,10 @@ class Themeisle_OB_Plugin_Importer {
 		}
 
 		if ( empty( $plugins ) || ! is_array( $plugins ) ) {
-			return new \WP_REST_Response(
+			return new WP_REST_Response(
 				array(
-					'status' => 'success',
-					'log'    => $this->log,
+					'success' => true,
+					'log'     => $this->log,
 				)
 			);
 		}
@@ -63,10 +70,10 @@ class Themeisle_OB_Plugin_Importer {
 
 		do_action( 'themeisle_ob_after_plugins_install' );
 
-		return new \WP_REST_Response(
+		return new WP_REST_Response(
 			array(
-				'status' => 'success',
-				'log'    => $this->log,
+				'success' => true,
+				'log'     => $this->log,
 			)
 		);
 	}

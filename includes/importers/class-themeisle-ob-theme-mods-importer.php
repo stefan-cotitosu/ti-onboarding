@@ -52,8 +52,8 @@ class Themeisle_OB_Theme_Mods_Importer {
 
 		do_action( 'themeisle_ob_before_customizer_import' );
 
-		$params = $request->get_json_params();
-		$data   = $params['data'];
+		$data = $request->get_body_params();
+		$data = $data['data'];
 
 		if ( ! isset( $data['source_url'] ) || empty( $data['source_url'] ) ) {
 

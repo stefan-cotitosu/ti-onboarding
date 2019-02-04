@@ -20,7 +20,7 @@ class Themeisle_OB_Widgets_Importer {
 	 * @param WP_REST_Request $request contains the widgets that should be imported.
 	 */
 	public function import_widgets( WP_REST_Request $request ) {
-		$params  = $request->get_json_params();
+		$params  = $request->get_body_params();
 		$widgets = $params['data'];
 		if ( empty( $widgets ) || ! is_array( $widgets ) ) {
 			return new WP_REST_Response(
@@ -38,7 +38,6 @@ class Themeisle_OB_Widgets_Importer {
 			return new WP_REST_Response(
 				array(
 					'success' => false,
-
 				)
 			);
 		}
@@ -200,7 +199,7 @@ class Themeisle_OB_Widgets_Importer {
 	 * @global array $wp_registered_widget_updates
 	 * @return array Widget information
 	 */
-	function available_widgets() {
+	public function available_widgets() {
 
 		global $wp_registered_widget_controls;
 
