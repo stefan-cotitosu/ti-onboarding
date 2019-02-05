@@ -14,8 +14,6 @@
     "addToCommit": "git add assets/js"
   },
   "devDependencies": {
-    "@commitlint/cli": "^7.4.0",
-    "@commitlint/config-conventional": "^7.3.1",
     "@semantic-release/changelog": "^3.0.1",
     "@semantic-release/exec": "^3.3.1",
     "@semantic-release/git": "^7.0.6",
@@ -35,11 +33,9 @@
     "eslint-plugin-vue": "^5.1.0",
     "grunt-version": "^1.3.0",
     "http-server": "^0.11.1",
-    "husky": "^1.3.1",
     "load-project-config": "~0.2.0",
     "node-sass": "^4.10.0",
     "npm-run-all": "^2.1.2",
-    "pre-commit": "^1.2.2",
     "sass-loader": "^7.1.0",
     "semantic-release": "^15.13.1",
     "style-loader": "^0.13.0",
@@ -65,18 +61,5 @@
   },
   "browser": {
     "vue": "vue/dist/vue.common.js"
-  },
-  "pre-commit": {
-    "run": [
-      "phpcs",
-      "lint",
-      "build",
-      "addToCommit"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
   }
 }
