@@ -1,3 +1,11 @@
+## [1.1.1](https://github.com/Codeinwp/ti-onboarding/compare/v1.1.0...v1.1.1) (2019-02-05)
+
+
+### Bug Fixes
+
+* block rendering for PHP < 5.4.0 ([e3b2131](https://github.com/Codeinwp/ti-onboarding/commit/e3b2131))
+* some error handling ([5bd0849](https://github.com/Codeinwp/ti-onboarding/commit/5bd0849))
+
 # [1.1.0](https://github.com/Codeinwp/ti-onboarding/compare/v1.0.0...v1.1.0) (2019-01-30)
 
 
