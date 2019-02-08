@@ -205,6 +205,7 @@ class Themeisle_OB_Rest_Server {
 		$this->data['local']            = $this->get_local_templates();
 		$this->data['remote']           = $this->get_remote_templates();
 		$this->data['upsell']           = $this->get_upsell_templates();
+		$this->data['listing_demo']     = $this->get_listing_demo();
 
 		return new WP_REST_Response(
 			array(
@@ -212,6 +213,31 @@ class Themeisle_OB_Rest_Server {
 				'success' => true,
 			)
 		);
+	}
+
+	/**
+	 * Get listing demo if the theme was installed through a niche child theme.
+	 *
+	 * @return array
+	 */
+	private function get_listing_demo() {
+		if ( ! defined( 'TI_ONBOARDING_ACTIVE_SITE' ) ) {
+			return array();
+		}
+
+		$data = array();
+
+		foreach ( $this->data['local'] as $editor_slug => $editor_data ) {
+			if ( ! array_key_exists( TI_ONBOARDING_ACTIVE_SITE, $editor_data ) ) {
+				continue;
+			}
+
+			$data[ $editor_slug ] = $editor_data[ TI_ONBOARDING_ACTIVE_SITE ];
+
+			unset( $this->data['local'][ $editor_slug ][ TI_ONBOARDING_ACTIVE_SITE ] );
+		}
+
+		return $data;
 	}
 
 	/**
