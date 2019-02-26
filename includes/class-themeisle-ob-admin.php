@@ -12,7 +12,7 @@
 /**
  * Class Themeisle_OB_Admin
  *
- * @package ThemeIsle
+ * @package themeisle-onboarding
  */
 class Themeisle_OB_Admin {
 
@@ -22,6 +22,15 @@ class Themeisle_OB_Admin {
 	public function init() {
 		add_filter( 'query_vars', array( $this, 'add_onboarding_query_var' ) );
 		add_filter( 'ti_about_config_filter', array( $this, 'add_demo_import_tab' ), 15 );
+		add_action( 'after_switch_theme', array( $this, 'get_previous_theme' ) );
+	}
+
+	/**
+	 * Memorize the previous theme to later display the import template for it.
+	 */
+	public function get_previous_theme() {
+		$previous_theme = strtolower( get_option( 'theme_switched' ) );
+		set_theme_mod( 'ti_prev_theme', $previous_theme );
 	}
 
 	/**
@@ -41,11 +50,12 @@ class Themeisle_OB_Admin {
 	 * Add about page tab list item.
 	 *
 	 * @param array $config about page config.
+	 *
 	 * @return array
 	 */
 	public function add_demo_import_tab( $config ) {
 		$config['custom_tabs']['sites_library'] = array(
-			'title'           => __( 'Sites Library', 'hestia-pro' ),
+			'title'           => __( 'Sites Library', 'textdomain' ),
 			'render_callback' => array(
 				$this,
 				'add_demo_import_tab_content',
@@ -70,6 +80,16 @@ class Themeisle_OB_Admin {
 	 * Render the sites library.
 	 */
 	public function render_site_library() {
+		if ( version_compare( PHP_VERSION, '5.4.0', '<' ) ) {
+			echo '<div>' . apply_filters( 'themeisle_onboarding_phprequired_text', 'ti_ob_err_phpv_less_than_5-4-0' ) . '</div>';
+
+			return;
+		}
+
+		if ( apply_filters( 'ti_onboarding_filter_module_status', true ) !== true ) {
+			return;
+		}
+
 		$this->enqueue();
 		?>
 		<div class="ti-sites-lib__wrap">
@@ -84,13 +104,38 @@ class Themeisle_OB_Admin {
 	 * Enqueue script and styles.
 	 */
 	public function enqueue() {
-		wp_register_script( 'themeisle-site-lib', Themeisle_Onboarding::get_dir() . '/assets/js/bundle.min.js', array(), Themeisle_Onboarding::VERSION, true );
+
+		wp_register_script( 'themeisle-site-lib', Themeisle_Onboarding::get_dir() . '/assets/js/bundle.js', array(), Themeisle_Onboarding::VERSION, true );
 
 		wp_localize_script( 'themeisle-site-lib', 'themeisleSitesLibApi', $this->localize_sites_library() );
 
 		wp_enqueue_script( 'themeisle-site-lib' );
+	}
 
-		wp_enqueue_style( 'themeisle-site-lib', Themeisle_Onboarding::get_dir() . '/assets/css/style.css', array(), Themeisle_Onboarding::VERSION );
+	/**
+	 * Get return steps.
+	 *
+	 * @return array Import steps.
+	 */
+	private function get_import_steps() {
+		return array(
+			'plugins'    => array(
+				'nicename' => __( 'Installing Plugins', 'textdomain' ),
+				'done'     => 'no',
+			),
+			'content'    => array(
+				'nicename' => __( 'Importing Content', 'textdomain' ),
+				'done'     => 'no',
+			),
+			'theme_mods' => array(
+				'nicename' => __( 'Setting Up Customizer', 'textdomain' ),
+				'done'     => 'no',
+			),
+			'widgets'    => array(
+				'nicename' => __( 'Importing Widgets', 'textdomain' ),
+				'done'     => 'no',
+			),
+		);
 	}
 
 	/**
@@ -99,12 +144,18 @@ class Themeisle_OB_Admin {
 	 * @return array
 	 */
 	private function localize_sites_library() {
+
+		$theme = wp_get_theme();
+
 		$api = array(
-			'root'       => esc_url_raw( rest_url( Themeisle_Onboarding::API_ROOT ) ),
-			'nonce'      => wp_create_nonce( 'wp_rest' ),
-			'homeUrl'    => home_url(),
-			'i18ln'      => $this->get_strings(),
-			'onboarding' => 'no',
+			'root'            => esc_url_raw( rest_url( Themeisle_Onboarding::API_ROOT ) ),
+			'nonce'           => wp_create_nonce( 'wp_rest' ),
+			'homeUrl'         => esc_url( home_url() ),
+			'i18ln'           => $this->get_strings(),
+			'onboarding'      => 'no',
+			'contentImported' => $this->escape_bool_text( get_theme_mod( 'ti_content_imported', 'no' ) ),
+			'aboutUrl'        => esc_url( admin_url( 'themes.php?page=' . $theme->__get( 'stylesheet' ) . '-welcome' ) ),
+			'importSteps'     => $this->get_import_steps(),
 		);
 
 		$is_onboarding = isset( $_GET['onboarding'] ) && $_GET['onboarding'] === 'yes';
@@ -122,32 +173,50 @@ class Themeisle_OB_Admin {
 	 */
 	private function get_strings() {
 		return array(
-			'preview_btn'         => __( 'Preview', 'hestia-pro' ),
-			'import_btn'          => __( 'Import', 'hestia-pro' ),
-			'pro_btn'             => __( 'Get the PRO version!', 'hestia-pro' ),
-			'cancel_btn'          => __( 'Cancel', 'hestia-pro' ),
-			'loading'             => __( 'Loading', 'hestia-pro' ),
-			'go_to_site'          => __( 'View Website', 'hestia-pro' ),
-			'back'                => __( 'Back to Sites Library', 'hestia-pro' ),
-			'note'                => __( 'Note', 'hestia-pro' ),
-			'advanced_options'    => __( 'Advanced Options', 'hestia-pro' ),
-			'plugins'             => __( 'Plugins', 'hestia-pro' ),
-			'general'             => __( 'General', 'hestia-pro' ),
-			'later'               => __( 'Not right now.', 'hestia-pro' ),
-			'onboard_header'      => __( 'Get started here', 'hestia-pro' ),
-			'onboard_description' => __( 'This process will set up your website, install required plugins, import demo content (pages, posts, media) and set up the customizer options.', 'hestia-pro' ),
-			'content'             => __( 'Content', 'hestia-pro' ),
-			'customizer'          => __( 'Customizer', 'hestia-pro' ),
-			'widgets'             => __( 'Widgets', 'hestia-pro' ),
-			'import_steps'        => array(
-				'plugins'    => __( 'Installing Plugins', 'hestia-pro' ),
-				'content'    => __( 'Importing Content', 'hestia-pro' ),
-				'theme_mods' => __( 'Setting Up Customizer', 'hestia-pro' ),
-				'widgets'    => __( 'Importing Widgets', 'hestia-pro' ),
+			'preview_btn'             => __( 'Preview', 'textdomain' ),
+			'import_btn'              => __( 'Import', 'textdomain' ),
+			'pro_btn'                 => __( 'Get the PRO version!', 'textdomain' ),
+			'importing'               => __( 'Importing', 'textdomain' ),
+			'cancel_btn'              => __( 'Cancel', 'textdomain' ),
+			'loading'                 => __( 'Loading', 'textdomain' ),
+			'go_to_site'              => __( 'View Website', 'textdomain' ),
+			'edit_template'           => __( 'Add your own content', 'textdomain' ),
+			'back'                    => __( 'Back to Sites Library', 'textdomain' ),
+			'note'                    => __( 'Note', 'textdomain' ),
+			'advanced_options'        => __( 'Advanced Options', 'textdomain' ),
+			'plugins'                 => __( 'Plugins', 'textdomain' ),
+			'general'                 => __( 'General', 'textdomain' ),
+			'later'                   => __( 'Keep current layout', 'textdomain' ),
+			'search'                  => __( 'Search', 'textdomain' ),
+			'content'                 => __( 'Content', 'textdomain' ),
+			'customizer'              => __( 'Customizer', 'textdomain' ),
+			'widgets'                 => __( 'Widgets', 'textdomain' ),
+			'backup_disclaimer'       => __( 'We recommend you backup your website content before attempting a full site import.', 'textdomain' ),
+			'placeholders_disclaimer' => __( 'Due to copyright issues, some of the demo images will not be imported and will be replaced by placeholder images.', 'textdomain' ),
+			'import_done'             => __( 'Content was successfully imported. Enjoy your new site!', 'textdomain' ),
+			'pro_demo'                => __( 'Available in the PRO version', 'textdomain' ),
+			'copy_error_code'         => __( 'Copy error code', 'textdomain' ),
+			'error_report'            => sprintf(
+				__( 'Hi! It seems there is a configuration issue with your server that\'s causing the import to fail. Please %1$s with us with the error code below, so we can help you fix this.', 'textdomain' ),
+				sprintf( '<a href="https://themeisle.com/contact">%1$s <i class="dashicons dashicons-external"></i></a>', __( 'get in touch', 'textdomain' ) )
 			),
-			'import_disclaimer'   => __( 'We recommend you backup your website content before attempting a full site import.', 'hestia-pro' ),
-			'import_done'         => __( 'Content was successfully imported. Enjoy your new site!', 'hestia-pro' ),
-			'pro_demo'            => __( 'Available in the PRO version', 'hestia-pro' ),
 		);
+	}
+
+	/**
+	 * Escape settings that return 'yes', 'no'.
+	 *
+	 * @param $value
+	 *
+	 * @return string
+	 */
+	private function escape_bool_text( $value ) {
+		$allowed = array( 'yes', 'no' );
+
+		if ( ! in_array( $value, $allowed ) ) {
+			return 'no';
+		}
+
+		return esc_html( $value );
 	}
 }

@@ -4,50 +4,80 @@
  * Author:          Andrei Baicus <andrei@themeisle.com>
  * Created on:      12/07/2018
  *
- * @package themeisle-onboarding
+ * @package         themeisle-onboarding
  * @soundtrack      Summer On Lock (feat. Pusha T, Jadakiss, Fabolous, Agent Sasco - Royce da 5'9"
  */
 
 /**
  * Class Themeisle_Onboarding
  *
- * @package ThemeIsle
+ * @package themeisle-onboarding
  */
 class Themeisle_Onboarding {
-	/**
-	 * Instance of Site_Import
-	 *
-	 * @var Themeisle_Onboarding
-	 */
-	protected static $instance = null;
-
 	/**
 	 * The version of this library
 	 *
 	 * @var string Version string.
 	 */
-	const VERSION = '1.0.0';
-
+	const VERSION = '1.1.1';
 	/**
 	 * Sites Library API URL.
 	 *
 	 * @var string API root string.
 	 */
 	const API_ROOT = 'ti-sites-lib/v1';
-
 	/**
 	 * Storage for the remote fetched info.
 	 *
 	 * @var string Transient slug.
 	 */
 	const STORAGE_TRANSIENT = 'themeisle_sites_library_data';
-
 	/**
 	 * Onboarding Path Relative to theme dir.
 	 *
 	 * @var string Onboarding root path.
 	 */
-	const OBOARDING_PATH = '/inc/admin/onboarding';
+	const OBOARDING_PATH = '/vendor/codeinwp/ti-onboarding';
+	/**
+	 * Instance of Themeisle_Onboarding
+	 *
+	 * @var Themeisle_Onboarding
+	 */
+	protected static $instance = null;
+	/**
+	 * Instance of Themeisle_OB_Admin
+	 *
+	 * @var Themeisle_OB_Admin
+	 */
+	protected $admin = null;
+
+	/**
+	 * Method to return path to child class in a Reflective Way.
+	 *
+	 * @since   1.0.0
+	 * @access  public
+	 * @return string
+	 */
+	static public function get_dir() {
+		return apply_filters( 'themeisle_site_import_uri', trailingslashit( get_template_directory_uri() ) . self::OBOARDING_PATH );
+	}
+
+	/**
+	 * Instantiate the class.
+	 *
+	 * @static
+	 * @since  1.0.0
+	 * @access public
+	 * @return Themeisle_Onboarding
+	 */
+	public static function instance() {
+		if ( is_null( self::$instance ) ) {
+			self::$instance = new self();
+			self::$instance->init();
+		}
+
+		return self::$instance;
+	}
 
 	/**
 	 * Holds the sites data.
@@ -55,10 +85,10 @@ class Themeisle_Onboarding {
 	 * @var null
 	 */
 	private function init() {
+
 		if ( ! $this->should_load() ) {
 			return;
 		}
-
 		$this->setup_admin();
 		$this->setup_api();
 	}
@@ -92,8 +122,8 @@ class Themeisle_Onboarding {
 		if ( ! class_exists( 'Themeisle_OB_Admin' ) ) {
 			return;
 		}
-		$admin = new Themeisle_OB_Admin();
-		$admin->init();
+		$this->admin = new Themeisle_OB_Admin();
+		$this->admin->init();
 	}
 
 	/**
@@ -106,36 +136,16 @@ class Themeisle_Onboarding {
 		if ( ! class_exists( 'Themeisle_OB_Rest_Server' ) ) {
 			return;
 		}
+
 		$api = new Themeisle_OB_Rest_Server();
 		$api->init();
 	}
 
 	/**
-	 * Method to return path to child class in a Reflective Way.
-	 *
-	 * @since   1.0.0
-	 * @access  public
-	 * @return string
+	 * Render the onboarding.
 	 */
-	static public function get_dir() {
-		return trailingslashit( get_template_directory_uri() ) . self::OBOARDING_PATH;
-	}
-
-	/**
-	 * Instantiate the class.
-	 *
-	 * @static
-	 * @since  1.0.0
-	 * @access public
-	 * @return Themeisle_Onboarding
-	 */
-	public static function instance() {
-		if ( is_null( self::$instance ) ) {
-			self::$instance = new self();
-			self::$instance->init();
-		}
-
-		return self::$instance;
+	public function render_onboarding() {
+		$this->admin->render_site_library();
 	}
 
 	/**
@@ -145,7 +155,8 @@ class Themeisle_Onboarding {
 	 * @since  1.0.0
 	 * @return void
 	 */
-	public function __clone() {}
+	public function __clone() {
+	}
 
 	/**
 	 * Disable un-serializing
@@ -154,5 +165,6 @@ class Themeisle_Onboarding {
 	 * @since  1.0.0
 	 * @return void
 	 */
-	public function __wakeup() {}
+	public function __wakeup() {
+	}
 }

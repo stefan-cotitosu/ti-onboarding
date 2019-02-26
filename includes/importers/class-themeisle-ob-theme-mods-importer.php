@@ -13,6 +13,14 @@
  * Class Themeisle_OB_Theme_Mods_Importer
  */
 class Themeisle_OB_Theme_Mods_Importer {
+
+	/**
+	 * Log
+	 *
+	 * @var
+	 */
+	private $log = '';
+
 	/**
 	 * Source URL.
 	 *
@@ -31,23 +39,41 @@ class Themeisle_OB_Theme_Mods_Importer {
 	 * Import theme mods.
 	 *
 	 * @param WP_REST_Request $request the async request.
+	 *
+	 * @return WP_REST_Response
 	 */
 	public function import_theme_mods( WP_REST_Request $request ) {
 		if ( ! current_user_can( 'customize' ) ) {
-			wp_send_json_error( 'Not allowed to manage theme options' );
+			return new WP_REST_Response(
+				array(
+					'data'    => 'ti__ob_permission_err_2',
+					'success' => false,
+				)
+			);
 		}
 
 		do_action( 'themeisle_ob_before_customizer_import' );
 
-		$params = $request->get_json_params();
-		$data   = $params['data'];
+		$data = $request->get_body_params();
+		$data = $data['data'];
 
 		if ( ! isset( $data['source_url'] ) || empty( $data['source_url'] ) ) {
-			wp_send_json_error( 'Incomplete import.' );
+
+			return new WP_REST_Response(
+				array(
+					'data'    => 'ti__ob_theme_mods_err_1',
+					'success' => false,
+				)
+			);
 		}
 
 		if ( ! isset( $data['theme_mods'] ) || empty( $data['theme_mods'] ) ) {
-			wp_send_json_error( 'No theme mods to import.' );
+			return new WP_REST_Response(
+				array(
+					'data'    => 'ti__ob_theme_mods_err_2',
+					'success' => false,
+				)
+			);
 		}
 		$this->source_url = $data['source_url'];
 		$this->theme_mods = $data['theme_mods'];
@@ -68,27 +94,13 @@ class Themeisle_OB_Theme_Mods_Importer {
 
 		do_action( 'themeisle_ob_after_customizer_import' );
 
-		wp_send_json_success( 'Theme mods imported.' );
-	}
-
-	/**
-	 * Change the theme mods root url.
-	 *
-	 * @param string $item theme mod.
-	 *
-	 * @return void
-	 */
-	private function change_theme_mods_root_url( &$item ) {
-		do_action( 'themeisle_ob_before_change_theme_mods_root_url' );
-
-		$current_site        = esc_url( home_url() );
-		$source_site         = $this->source_url;
-		$item                = str_replace( $source_site, $current_site, $item );
-		$escaped_source_url  = str_replace( '/', '\/', $source_site );
-		$escaped_current_url = str_replace( '/', '\/', $current_site );
-		$item                = str_replace( $escaped_source_url, $escaped_current_url, $item );
-
-		do_action( 'themeisle_ob_after_change_theme_mods_root_url' );
+		return new WP_REST_Response(
+			array(
+				'data'    => 'success',
+				'success' => true,
+				'log'     => $this->log,
+			)
+		);
 	}
 
 	/**
@@ -102,21 +114,44 @@ class Themeisle_OB_Theme_Mods_Importer {
 		if ( empty( $menus ) || ! is_array( $menus ) ) {
 			return;
 		}
+
 		$setup_menus = array();
 		foreach ( $menus as $location => $menu_slug ) {
+
 			$menu_object              = wp_get_nav_menu_object( $menu_slug );
 			$term_id                  = $menu_object->term_id;
 			$setup_menus[ $location ] = $term_id;
 		}
 		if ( empty( $setup_menus ) ) {
-			print_r( 'No menus to set up locations for.' . "\n" );
+			$this->log .= 'No menus to set up locations for.' . "\n";
 
 			return;
 		}
 		set_theme_mod( 'nav_menu_locations', $setup_menus );
-		print_r( 'Menus are set up.' . "\n" );
+
+		$this->log .= 'Menus are set up.' . "\n";
 
 		do_action( 'themeisle_ob_after_nav_menus_setup' );
+	}
+
+	/**
+	 * Change the theme mods root url.
+	 *
+	 * @param string $item theme mod.
+	 *
+	 * @return void
+	 */
+	private function change_theme_mods_root_url( &$item ) {
+		do_action( 'themeisle_ob_before_change_theme_mods_root_url' );
+
+		$current_site        = home_url();
+		$source_site         = $this->source_url;
+		$item                = str_replace( $source_site, $current_site, $item );
+		$escaped_source_url  = str_replace( '/', '\/', $source_site );
+		$escaped_current_url = str_replace( '/', '\/', $current_site );
+		$item                = str_replace( $escaped_source_url, $escaped_current_url, $item );
+
+		do_action( 'themeisle_ob_after_change_theme_mods_root_url' );
 	}
 
 }
