@@ -215,7 +215,6 @@
         var editor = this.getEditor()
         var pageId = this.getPageId()
 	    let customizerRedirect = this.siteData.edit_content_redirect;
-        console.log( customizerRedirect );
         var url = this.homeUrl
         if (editor === 'elementor' || this.isMigration) {
           url = this.homeUrl + '/wp-admin/post.php?post=' + pageId + '&action=elementor'
