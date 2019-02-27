@@ -308,6 +308,10 @@ class Themeisle_OB_Rest_Server {
 				$returnable[ $editor ][ $template_slug ]['content_file'] = get_template_directory() . '/onboarding/' . $template_slug . '/export.xml';
 				$returnable[ $editor ][ $template_slug ]['screenshot']   = esc_url( get_template_directory_uri() . '/onboarding/' . $template_slug . '/screenshot.png' );
 				$returnable[ $editor ][ $template_slug ]['source']       = 'local';
+				$returnable[ $editor ][ $template_slug ]['edit_content_redirect'] = '';
+				if ( isset( $template_data['edit_content_redirect'] ) ) {
+					$returnable[ $editor ][ $template_slug ]['edit_content_redirect'] = esc_html( $template_data['edit_content_redirect'] );
+				}
 			}
 		}
 
