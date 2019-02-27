@@ -5,7 +5,6 @@
  *
  * @package themeisle-onboarding
  */
-
 if ( ! class_exists( 'Themeisle_Onboarding' ) ) {
 	require_once dirname( __FILE__ ) . '/class-themeisle-onboarding.php';
 }
